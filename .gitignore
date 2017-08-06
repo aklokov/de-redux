@@ -1,0 +1,6 @@
+/node_modules
+/out
+/test
+/.coverdata
+.coverrun
+npm-debug.log*

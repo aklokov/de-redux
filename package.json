@@ -1,0 +1,14 @@
+{
+  "name": "de-redux",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "vladimir-repin",
+  "license": "MIT",
+  "dependencies": {
+    "typescript": "^2.4.2"
+  }
+}

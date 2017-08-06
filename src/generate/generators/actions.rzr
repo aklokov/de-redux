@@ -1,0 +1,12 @@
+@import { IActions } from './IActions'
+@import { actionGenerator } from './action';
+@parameters actions: IActions
+
+@foreach(let imp of actions.imports) {
+import { @imp.name } from '@imp.path';
+}
+@eol
+@foreach(let action of actions.actions) {
+@[actionGenerator(action)]
+}
+@eol
