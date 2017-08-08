@@ -1,2 +1,8 @@
-@import { IAction } from './IActions'
+@import { IAction } from './IActionsFile';
 @exportname actionGenerator
+@parameters action: IAction
+export const @action.typeName = '@action.typeContent';
+export class @action.name implements IAction {
+  public type = @action.typeName;
+  constructor(@action.parameters) { }
+}

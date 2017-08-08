@@ -1,12 +1,12 @@
-@import { IActions } from './IActions'
+@import { IActionsFile } from './IActionsFile'
 @import { actionGenerator } from './action';
-@parameters actions: IActions
+@parameters file: IActionsFile
 
-@foreach(let imp of actions.imports) {
-import { @imp.name } from '@imp.path';
+@foreach(let imp of file.imports) {
+import { @imp.types } from '@imp.path';
 }
 @eol
-@foreach(let action of actions.actions) {
-@[actionGenerator(action)]
+@foreach(let action of file.actions) {
+@[actionGenerator(action)]@if(action !== file.actions[file.actions.length - 1]){@eol}
 }
 @eol
