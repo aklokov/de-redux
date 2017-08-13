@@ -1,12 +1,6 @@
-import parse from './parse/parse';
-import generateImpl from './generate/generate';
+import { collectModel } from './parse/parse';
+import { Options } from './Options';
 
-function generate(source: string): string {
-    const nodes = parse(source);
-    return generateImpl(nodes);
-}
-
-
-export {
-    generate
+export async function generate(options: Options): Promise<void> {
+    const nodes = collectModel(options.path);
 }

@@ -2,9 +2,10 @@
     "compilerOptions": {
         "module": "commonjs",
         "declaration": true,
+		"target": "es6",
         "noResolve": false,
         "removeComments": true,
         "preserveConstEnums": true,
-        "sourceMap": true
+        "sourceMap": true		
     }
 }
