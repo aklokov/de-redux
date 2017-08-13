@@ -4,7 +4,10 @@ import { combinePath, readFile } from '..';
 import { parseImports } from '.';
 
 export async function collectState(path: string, file: string): Promise<Model> {
-    const content = await readFile(combinePath(path, file));
-    const imports = parseImports(content, path);
-    return null;
+  const content = await readFile(combinePath(path, file));
+  const imports = parseImports(content, path);
+  return {
+    reductions: [],
+    states: []
+  };
 }

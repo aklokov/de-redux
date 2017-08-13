@@ -7,26 +7,10 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "test",
-            "program": "${workspaceRoot}/node_modules/gulp/bin/gulp.js",
-            "cwd": "${workspaceRoot}",
-            "outFiles": [
-                "${workspaceRoot}\\out\\**\\*.js"
-            ],
-            "sourceMaps": true,
-            "args": [
-                "test"
-            ]
-        },
-        {
-            "type": "node",
-            "request": "launch",
             "name": "Launch Gulp",
             "program": "${workspaceRoot}\\node_modules\\gulp\\bin\\gulp.js",
             "cwd": "${workspaceRoot}",
-            "outFiles": [
-                "${workspaceRoot}\\out\\**\\*.js"
-            ],
+            "outFiles": ["${workspaceRoot}\\out\\**\\*.js"],
             "sourceMaps": true
         },
         {
