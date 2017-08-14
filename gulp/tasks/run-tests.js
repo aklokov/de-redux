@@ -1,5 +1,4 @@
 const gulp = require('gulp');
-const ts = require('gulp-tsc');
 const settings = require('./extra/build-settings');
 const mocha = require('gulp-mocha');
 

@@ -7,11 +7,14 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Launch Gulp",
+            "name": "test",
             "program": "${workspaceRoot}\\node_modules\\gulp\\bin\\gulp.js",
             "cwd": "${workspaceRoot}",
             "outFiles": ["${workspaceRoot}\\out\\**\\*.js"],
-            "sourceMaps": true
+            "sourceMaps": true,
+			"args": [
+                "test"
+            ]
         },
         {
             "type": "node",

@@ -1,5 +1,5 @@
 import { IDataset } from '@mdminterfaces/data-preferences';
-import { IDataTable } from '@mdminterfaces/data-preferences/table';
+import { IDataTable } from '..\data-preferences\table';
 
 export interface DatasetSelectorState {
   datasetsLoaded: boolean;

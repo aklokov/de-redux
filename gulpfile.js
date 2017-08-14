@@ -10,5 +10,5 @@ function readTasks(dir) {
 	});
 }
 
-readTasks('./gulp');
-//readTasks('./gulp/sequences');
+readTasks('./gulp/tasks');
+readTasks('./gulp/sequences');

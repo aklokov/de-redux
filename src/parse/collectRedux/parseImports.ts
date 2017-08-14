@@ -1,21 +1,24 @@
 import { Type } from '../../model';
 import { calculatePath } from '.';
 import { combinePath } from '..';
+import { Options } from '../../Options';
+
 const regex = /import[\s]*{(.*)}[\s]*from[\s]*['|"](.*)['|"]/g;
-export function parseImports(content: string, path: string): Type[] {
+
+export function parseImports(options: Options, content: string, path: string): Type[] {
   let types: Type[] = [];
   let match = regex.exec(content);
 
   while (match) {
-    types = [...types, ...parseMatch(match[1], match[2], path)];
+    types = [...types, ...parseMatch(options, match[1], match[2], path)];
     match = regex.exec(content);
   }
-  return [];
+  return types;
 }
 
-function parseMatch(types: string, importline: string, path: string): Type[] {
+function parseMatch(options: Options, types: string, importline: string, path: string): Type[] {
   const typenames = types.split(',');
-  const resultPath = calculatePath(path, importline);
+  const resultPath = calculatePath(options, path, importline);
   return typenames.map(typename => createType(typename, resultPath));
 }
 
