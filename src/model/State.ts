@@ -1,10 +1,5 @@
-import { Type } from './';
-
-export interface ChildState {
-    stateId: string;
-    fieldName: string;
-}
+import { Type, Field } from './';
 
 export interface State extends Type {
-    childStates: ChildState[];
+  fields: Field[];
 }

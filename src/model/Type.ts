@@ -1,5 +1,5 @@
 export interface Type {
-    id: string;
-    path: string;
-    name: string;
+  id: string;
+  path: string;
+  name: string;
 }

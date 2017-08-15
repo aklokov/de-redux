@@ -3,8 +3,7 @@ import * as fs from 'fs';
 import { combinePath, isDirectory, readDir, mergeModels } from '.';
 import { collectState, collectReduction } from './collectRedux';
 import { Options } from '../Options';
-const state = '.state.ts';
-const reduction = '.reduction.ts';
+import { constants } from '../constants';
 
 export async function collectModel(options: Options, path: string): Promise<Model> {
   const files = await readDir(path);
@@ -18,12 +17,12 @@ function collectFile(options: Options, path: string, file: string): Promise<Mode
     return collectModel(options, combinePath(path, file));
   }
 
-  if (file.endsWith(state)) {
+  if (file.endsWith(constants.stateExt)) {
     return collectState(options, path, file)
       .then(states => ({ reductions: [], states }));
   }
 
-  if (file.endsWith(reduction)) {
+  if (file.endsWith(constants.reductionExt)) {
     return collectReduction(options, path, file)
       .then(reductions => ({ reductions, states: [] }));
   }
