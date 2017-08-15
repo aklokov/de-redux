@@ -1,24 +1,32 @@
 import { Model } from '../model';
 import * as fs from 'fs';
-import { combinePath, isFolder, readDir, readFile, mergeModels } from '.';
-import { collectRedux } from './collectRedux';
+import { combinePath, isDirectory, readDir, mergeModels } from '.';
+import { collectState, collectReduction } from './collectRedux';
 import { Options } from '../Options';
-const redux = 'redux';
+const state = '.state.ts';
+const reduction = '.reduction.ts';
+
 export async function collectModel(options: Options, path: string): Promise<Model> {
-  const allFiles = await readDir(path);
-  const folders = allFiles.filter(file => isFolder(file, path));
-  const models = await Promise.all(folders.map(file => collectModelIn(options, path, file)));
+  const files = await readDir(path);
+  const promises = files.map(file => collectFile(options, path, file)).filter(promise => promise);
+  const models = await Promise.all(promises);
   return mergeModels(models);
 }
 
-async function collectModelIn(options: Options, path: string, file: string): Promise<Model> {
-  const newPath = combinePath(path, file);
-  const dirPromise = collectModel(options, newPath);
-  if (file === redux) {
-    const reduxPromise = collectRedux(options, newPath);
-    const models = await Promise.all([dirPromise, reduxPromise]);
-    return mergeModels(models);
-  } else {
-    return dirPromise;
+function collectFile(options: Options, path: string, file: string): Promise<Model> {
+  if (isDirectory(path, file)) {
+    return collectModel(options, combinePath(path, file));
   }
+
+  if (file.endsWith(state)) {
+    return collectState(options, path, file)
+      .then(states => ({ reductions: [], states }));
+  }
+
+  if (file.endsWith(reduction)) {
+    return collectReduction(options, path, file)
+      .then(reductions => ({ reductions, states: [] }));
+  }
+
+  return null;
 }

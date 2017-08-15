@@ -1,6 +1,6 @@
 import { Options } from '../../Options';
 import * as _ from 'lodash';
-import { startsWith, endsWith, last } from '../../tools';
+import { last } from '../../tools';
 import { combinePath } from '..';
 
 export function calculatePath(options: Options, path: string, importLine: string): string {
