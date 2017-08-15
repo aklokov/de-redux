@@ -13,6 +13,7 @@
   "author": "vladimir-repin",
   "license": "MIT",
   "dependencies": {
+    "change-case": "^3.0.1",
     "lodash": "^4.17.4"
   },
   "devDependencies": {

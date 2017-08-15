@@ -1,6 +1,6 @@
-@import { IActionsFile } from './IActionsFile'
+@import { ActionsFile } from '../../derive/model';
 @import { actionGenerator } from './action';
-@parameters file: IActionsFile
+@parameters file: ActionsFile
 
 @foreach(let imp of file.imports) {
 import { @imp.types } from '@imp.path';

@@ -29,6 +29,7 @@ function toReduction(path: string, match: string[], imports: StringMap<Type>): R
   }
 
   return {
+    path,
     name: name.trim(),
     stateId: returnType.id,
     parameters: parameters

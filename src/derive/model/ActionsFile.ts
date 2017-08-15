@@ -2,8 +2,8 @@ import { Import } from '.';
 import { Field } from '../../parse/model';
 
 export interface Action {
-  typeName: string;
-  typeContent: string;
+  constantName: string;
+  constantContent: string;
   name: string;
   parameters: Field[];
 }
