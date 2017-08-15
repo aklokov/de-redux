@@ -1,12 +1,7 @@
-export interface Parameter {
-    name: string;
-    imported: boolean;
-    typename?: string;
-    typeId: string;
-}
+import { Field } from '.';
 
 export interface Reduction {
-    name: string;
-    stateId: string;
-    parameters: Parameter[];
+  name: string;
+  stateId: string;
+  parameters: Field[];
 }

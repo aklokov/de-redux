@@ -1,6 +1,5 @@
-import * as fs from 'fs';
 import { combinePath, readFile } from '..';
-import { parseImports } from '.';
+import { parseImports, createFileImport } from '.';
 import { Options } from '../../Options';
 import { StringMap, toStringMap, execRegex } from '../../tools';
 import { State, Type, Field } from '../../model';
@@ -10,10 +9,6 @@ export async function collectState(options: Options, path: string, file: string)
   const content = await readFile(combinePath(path, file));
   const imports = parseImports(options, content, path);
   return parseStates(content, createFileImport(path, file), imports);
-}
-
-function createFileImport(path: string, file: string): string {
-  return combinePath(path, file.substr(0, file.length - 3));
 }
 
 const typeRegex = /export interface (.*) {\r?\n((?:.*?|\r?\n)*?)}/g;

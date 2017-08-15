@@ -9,3 +9,4 @@ export function createField(name: string, typename: string, imports: StringMap<T
     imported: split.map(type => imports[type.trim()]).filter(type => type)
   };
 }
+
