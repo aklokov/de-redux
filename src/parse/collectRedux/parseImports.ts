@@ -1,4 +1,4 @@
-import { Type } from '../../model';
+import { Type } from '../model';
 import { calculatePath } from '.';
 import { combinePath } from '..';
 import { Options } from '../../Options';

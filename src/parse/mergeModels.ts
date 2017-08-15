@@ -1,4 +1,4 @@
-import { Model } from '../model';
+import { Model } from './model';
 import * as _ from 'lodash';
 
 export function mergeModels(models: Model[]): Model {

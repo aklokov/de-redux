@@ -2,7 +2,7 @@ import { combinePath, readFile } from '..';
 import { parseImports, createFileImport } from '.';
 import { Options } from '../../Options';
 import { StringMap, toStringMap, execRegex } from '../../tools';
-import { State, Type, Field } from '../../model';
+import { State, Type, Field } from '../model';
 import { createField } from '.';
 
 export async function collectState(options: Options, path: string, file: string): Promise<State[]> {

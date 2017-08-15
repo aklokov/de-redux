@@ -1,9 +1,8 @@
-import { Reduction } from '../../model';
 import { combinePath, readFile } from '..';
 import { Options } from '../../Options';
 import { parseImports, createFileImport } from '.';
 import { StringMap, toStringMap, execRegex } from '../../tools';
-import { State, Type, Field } from '../../model';
+import { State, Type, Field, Reduction } from '../model';
 import { createField } from '.';
 
 export async function collectReduction(options: Options, path: string, file: string): Promise<Reduction[]> {
