@@ -6,7 +6,7 @@
 //  manual changes to this file will be overwritten if the code is regenerated.
 // </auto-generated>
 // -----------------------------------------------------------------------------
-import { Action } from '../../derive/model';
+import { Import } from '../../derive/model';
 
 class Gen {
     public indent: string = '';
@@ -37,37 +37,26 @@ class Gen {
     }
 }
 
-function generate(action: Action): string {
+function generate(imports: Import[]): string {
     const gen = new Gen();
-    generateContent(gen, action);
+    generateContent(gen, imports);
     return gen.toString();
 }
 
-function generateContent(gen: any, action: Action): void {
+function generateContent(gen: any, imports: Import[]): void {
     const indent = gen.indent;
-    gen.append('export const ');
-    gen.append((action.constantName).toString());
-    gen.append(' = \'');
-    gen.append((action.constantContent).toString());
-    gen.append('\';');
-    gen.eol();
-    gen.append('export class ');
-    gen.append((action.name).toString());
-    gen.append(' implements IAction {');
-    gen.eol();
-    gen.append('  public type = ');
-    gen.append((action.constantName).toString());
-    gen.append(';');
-    gen.eol();
-    gen.append('  function Object() { [native code] }(');
-    gen.append((action.parameters).toString());
-    gen.append(') { }');
-    gen.eol();
-    gen.append('}');
-    gen.eol();
+    for (let imp of imports) {
+        gen.append('import { ');
+        gen.append((imp.types).toString());
+        gen.append(' } from \'');
+        gen.append((imp.path).toString());
+        gen.append('\';');
+        gen.eol();
+    }
+    gen.forceEol();
 }
 
-export const actionGenerator = {
+export const importsGenerator = {
     generate,
     generateContent
 };

@@ -5,7 +5,7 @@ export interface Action {
   constantName: string;
   constantContent: string;
   name: string;
-  parameters: Field[];
+  parameters: string;
 }
 
 export interface ActionsFile {

@@ -1,6 +1,7 @@
 import { Model } from './model';
 import * as fs from 'fs';
-import { combinePath, isDirectory, readDir, mergeModels } from '.';
+import { combinePath, isDirectory, mergeModels } from '.';
+import { readDir } from '../tools';
 import { collectState, collectReduction } from './collectRedux';
 import { Options } from '../Options';
 import { constants } from '../constants';

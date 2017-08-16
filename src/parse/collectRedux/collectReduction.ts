@@ -1,4 +1,5 @@
-import { combinePath, readFile } from '..';
+import { combinePath } from '..';
+import { readFile } from '../../tools';
 import { Options } from '../../Options';
 import { parseImports, createFileImport } from '.';
 import { StringMap, toStringMap, execRegex } from '../../tools';

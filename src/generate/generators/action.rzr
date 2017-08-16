@@ -1,8 +1,8 @@
-@import { IAction } from './IActionsFile';
+@import { Action } from '../../derive/model';
 @exportname actionGenerator
-@parameters action: IAction
-export const @action.typeName = '@action.typeContent';
+@parameters action: Action
+export const @action.constantName = '@action.constantContent';
 export class @action.name implements IAction {
-  public type = @action.typeName;
+  public type = @action.constantName;
   constructor(@action.parameters) { }
 }

@@ -1,0 +1,8 @@
+@import { Import } from '../../derive/model';
+@parameters imports: Import[]
+@exportname importsGenerator
+
+@foreach(let imp of imports) {
+import { @imp.types } from '@imp.path';
+}
+@eol

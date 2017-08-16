@@ -14,7 +14,8 @@
   "license": "MIT",
   "dependencies": {
     "change-case": "^3.0.1",
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.4",
+    "simple-map": "^0.1.0"
   },
   "devDependencies": {
     "@types/chai": "^4.0.3",

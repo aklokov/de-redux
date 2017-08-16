@@ -5,5 +5,4 @@ export enum Quotes {
 export interface Options {
   path: string;
   tsconfig?: any;
-  quotes?: Quotes;
 }

@@ -7,17 +7,17 @@
 // </auto-generated>
 // -----------------------------------------------------------------------------
 import { ActionsFile } from '../../derive/model';
-import { actionGenerator } from './action';
+import { actionGenerator, importsGenerator } from '.';
 
 class Gen {
     public indent: string = '';
     private lines: string[] = [];
-    private eolPrinted: boolean = false;
+    private eolPrinted: boolean = true;
 
     public append(text: string): void {
         if (this.eolPrinted) { this.lines.push(this.indent); }
         this.lines.push(text);
-        this.eolPrinted = true;
+        this.eolPrinted = false;
     }
 
     public eol(): void {
@@ -46,15 +46,10 @@ function generate(file: ActionsFile): string {
 
 function generateContent(gen: any, file: ActionsFile): void {
     const indent = gen.indent;
-    for (let imp of file.imports) {
-        gen.append('import { ');
-        gen.append((imp.types).toString());
-        gen.append(' } from \'');
-        gen.append((imp.path).toString());
-        gen.append('\';');
-        gen.eol();
-    }
-    gen.forceEol();
+    gen.indent = indent + '';
+    importsGenerator.generateContent(gen, file.imports);
+    gen.indent = indent;
+    gen.eol();
     for (let action of file.actions) {
         gen.indent = indent + '';
         actionGenerator.generateContent(gen, action);
@@ -67,7 +62,7 @@ function generateContent(gen: any, file: ActionsFile): void {
     gen.forceEol();
 }
 
-export const generator = {
+export const actionsGenerator = {
     generate,
     generateContent
 };

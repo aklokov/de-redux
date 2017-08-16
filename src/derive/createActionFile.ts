@@ -15,10 +15,12 @@ export function createActionFile(state: State, reductions: Reduction[]): Actions
 }
 
 function createAction(stateName: string, reduction: Reduction): Action {
+  const fields = reduction.parameters.map(parm => parm.name + ': ' + parm.typename);
+  const parameters = fields.join(', ');
   return {
     constantName: changeCase.constantCase(reduction.name),
     constantContent: `[${stateName}] - ${reduction.name}`,
-    name: reduction.name + 'Action',
-    parameters: reduction.parameters
+    name: changeCase.pascalCase(reduction.name) + 'Action',
+    parameters
   };
 }
