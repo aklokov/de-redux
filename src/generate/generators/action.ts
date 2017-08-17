@@ -59,7 +59,7 @@ function generateContent(gen: any, action: Action): void {
     gen.append((action.constantName).toString());
     gen.append(';');
     gen.eol();
-    gen.append('  function Object() { [native code] }(');
+    gen.append('  constructor(');
     gen.append((action.parameters).toString());
     gen.append(') { }');
     gen.eol();

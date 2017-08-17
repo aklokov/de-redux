@@ -14,6 +14,7 @@
   "license": "MIT",
   "dependencies": {
     "change-case": "^3.0.1",
+    "hash-map": "^1.0.2",
     "lodash": "^4.17.4",
     "simple-map": "^0.1.0"
   },
