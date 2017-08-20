@@ -7,6 +7,7 @@ import { Options } from '../../Options';
 
 export interface FileInfo {
   importPath: string;
+  folder: string;
   file: string;
   content: string;
   imports: StringMap<Type>;
@@ -22,6 +23,7 @@ export async function collectFileInfo(options: Options, path: string, file: stri
   const imports = await parseImports(options, content, path);
   return {
     importPath,
+    folder: path,
     file,
     content,
     imports

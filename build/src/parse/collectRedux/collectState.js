@@ -7,16 +7,17 @@ const hash_map_1 = require("hash-map");
 const typeRegex = /export interface (.*) {\r?\n((?:.*?|\r?\n)*?)}/g;
 function collectState(options, fileInfo) {
     const matches = tools_2.execRegex(typeRegex, fileInfo.content);
-    const tempStates = matches.map(match => createTempState(fileInfo.importPath, match[1], match[2]));
+    const tempStates = matches.map(match => createTempState(fileInfo.folder, fileInfo.importPath, match[1], match[2]));
     const fullImports = Object.assign({}, fileInfo.imports, hash_map_1.toStringMap(tempStates, ts => ts.name));
     return tempStates.map(ts => toState(ts, fullImports));
 }
 exports.collectState = collectState;
-function createTempState(path, name, content) {
+function createTempState(folder, importPath, name, content) {
     return {
-        id: tools_1.combinePath(path, name),
+        id: tools_1.combinePath(importPath, name),
+        folder,
         name: name,
-        path: path,
+        path: importPath,
         content: content
     };
 }
@@ -25,6 +26,7 @@ function toState(ts, imports) {
     const matches = tools_2.execRegex(fieldRegex, ts.content);
     return {
         id: ts.id,
+        folder: ts.folder,
         name: ts.name,
         path: ts.path,
         fields: matches.map(match => _1.createField(match[1], match[2], imports))

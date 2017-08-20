@@ -3,6 +3,7 @@ import { StringMap } from 'hash-map';
 import { Options } from '../../Options';
 export interface FileInfo {
     importPath: string;
+    folder: string;
     file: string;
     content: string;
     imports: StringMap<Type>;

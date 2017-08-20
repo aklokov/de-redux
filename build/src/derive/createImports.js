@@ -2,8 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const _ = require("lodash");
 const _1 = require(".");
+const tools_1 = require("../tools");
 function createImports(path, fields) {
-    const src = _1.truncatePath(path);
+    const src = tools_1.trimFilename(path);
     const imported = _.flatten(fields.map(field => field.imported));
     const unique = _.uniqBy(imported, imp => imp.id);
     const grouped = _.groupBy(unique, un => un.path);

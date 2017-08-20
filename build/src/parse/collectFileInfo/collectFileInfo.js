@@ -23,6 +23,7 @@ function collectFileInfo(options, path, file) {
         const imports = yield _1.parseImports(options, content, path);
         return {
             importPath,
+            folder: path,
             file,
             content,
             imports

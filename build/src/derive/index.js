@@ -9,5 +9,4 @@ __export(require("./createImports"));
 __export(require("./createRelativePath"));
 __export(require("./deriveModel"));
 __export(require("./isInit"));
-__export(require("./truncatePath"));
 //# sourceMappingURL=index.js.map

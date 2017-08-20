@@ -5,7 +5,7 @@ const constants_1 = require("../constants");
 const _ = require("lodash");
 const changeCase = require("change-case");
 function createActionFile(state, reductions) {
-    const filePath = _1.createFilePath(state.path, state.name, constants_1.constants.actionsFile);
+    const filePath = _1.createFilePath(state.folder, state.name, constants_1.constants.actionsFile);
     return {
         actionsFile: filePath,
         actions: reductions.filter(red => !_1.isInit(red)).map(reduction => createAction(state.name, reduction)),

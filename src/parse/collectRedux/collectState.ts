@@ -9,7 +9,7 @@ import { FileInfo } from '../collectFileInfo';
 const typeRegex = /export interface (.*) {\r?\n((?:.*?|\r?\n)*?)}/g;
 export function collectState(options: Options, fileInfo: FileInfo): State[] {
   const matches = execRegex(typeRegex, fileInfo.content);
-  const tempStates = matches.map(match => createTempState(fileInfo.importPath, match[1], match[2]));
+  const tempStates = matches.map(match => createTempState(fileInfo.folder, fileInfo.importPath, match[1], match[2]));
   const fullImports = {
     ...fileInfo.imports,
     ...toStringMap(tempStates, ts => ts.name)
@@ -19,14 +19,16 @@ export function collectState(options: Options, fileInfo: FileInfo): State[] {
 }
 
 interface TempState extends Type {
+  folder: string;
   content: string;
 }
 
-function createTempState(path: string, name: string, content: string): TempState {
+function createTempState(folder: string, importPath: string, name: string, content: string): TempState {
   return {
-    id: combinePath(path, name),
+    id: combinePath(importPath, name),
+    folder,
     name: name,
-    path: path,
+    path: importPath,
     content: content
   };
 }
@@ -36,6 +38,7 @@ function toState(ts: TempState, imports: StringMap<Type>): State {
   const matches = execRegex(fieldRegex, ts.content);
   return {
     id: ts.id,
+    folder: ts.folder,
     name: ts.name,
     path: ts.path,
     fields: matches.map(match => createField(match[1], match[2], imports))
