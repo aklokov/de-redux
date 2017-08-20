@@ -8,8 +8,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const tools_1 = require("../tools");
 const generators_1 = require("./generators");
+const _1 = require(".");
 function generateFiles(options, model) {
     return __awaiter(this, void 0, void 0, function* () {
         const rootPromise = model.rootState ? [generateRootState(options, model.rootState)] : [];
@@ -23,7 +23,7 @@ exports.generateFiles = generateFiles;
 function generateActionFile(options, file) {
     return __awaiter(this, void 0, void 0, function* () {
         const content = generators_1.actionsGenerator.generate(file);
-        return write(file.actionsFile, content);
+        return _1.writeGeneratedFile(file.actionsFile, content);
     });
 }
 function generateDispatcherFile(options, file) {
@@ -39,20 +39,6 @@ function generateReducerFile(options, file) {
 function generateRootState(options, file) {
     return __awaiter(this, void 0, void 0, function* () {
         return;
-    });
-}
-function write(path, content) {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            yield tools_1.ensureFolder(path);
-            const written = yield tools_1.gracefulWriteFile(path, content);
-            if (written) {
-                console.log('written file ' + path);
-            }
-        }
-        catch (err) {
-            console.log('error writing ' + path + ' : ' + err);
-        }
     });
 }
 //# sourceMappingURL=generate.js.map

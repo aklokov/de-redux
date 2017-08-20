@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const _ = require("lodash");
 const tools_1 = require("../../tools");
-const __1 = require("..");
 function calculatePath(options, path, importLine) {
     const splitPath = path.split('/');
     const splitImport = importLine.replace(/\\/g, '/').split('/');
@@ -21,10 +20,10 @@ function tryReplace(options, first) {
     let result = first;
     _.forIn(options.tsconfig.paths, (repl, path) => {
         if (path === first) {
-            result = __1.combinePath(pathstart, repl[0]);
+            result = tools_1.combinePath(pathstart, repl[0]);
         }
         else if (path === first + '/*') {
-            result = __1.combinePath(pathstart, repl[0].substr(0, repl[0].length - 2));
+            result = tools_1.combinePath(pathstart, repl[0].substr(0, repl[0].length - 2));
         }
     });
     return result;

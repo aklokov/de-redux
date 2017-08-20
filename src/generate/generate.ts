@@ -1,7 +1,7 @@
 import { Model, ActionsFile, DispatcherFile, ReducerFile, RootStateFile } from '../derive/model';
 import { Options } from '../Options';
-import { gracefulWriteFile, ensureFolder } from '../tools';
 import { actionsGenerator } from './generators';
+import { writeGeneratedFile } from '.';
 
 export async function generateFiles(options: Options, model: Model): Promise<void> {
   const rootPromise = model.rootState ? [generateRootState(options, model.rootState)] : [];
@@ -14,7 +14,7 @@ export async function generateFiles(options: Options, model: Model): Promise<voi
 }
 async function generateActionFile(options: Options, file: ActionsFile): Promise<void> {
   const content = actionsGenerator.generate(file);
-  return write(file.actionsFile, content);
+  return writeGeneratedFile(file.actionsFile, content);
 }
 
 async function generateDispatcherFile(options: Options, file: DispatcherFile): Promise<void> {
@@ -27,16 +27,4 @@ async function generateReducerFile(options: Options, file: ReducerFile): Promise
 
 async function generateRootState(options: Options, file: RootStateFile): Promise<void> {
   return;
-}
-
-async function write(path: string, content: string): Promise<void> {
-  try {
-    await ensureFolder(path);
-    const written = await gracefulWriteFile(path, content);
-    if (written) {
-      console.log('written file ' + path);
-    }
-  } catch (err) {
-    console.log('error writing ' + path + ' : ' + err);
-  }
 }

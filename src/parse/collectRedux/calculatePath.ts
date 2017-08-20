@@ -1,7 +1,6 @@
 import { Options } from '../../Options';
 import * as _ from 'lodash';
-import { last } from '../../tools';
-import { combinePath } from '..';
+import { last, combinePath } from '../../tools';
 
 export function calculatePath(options: Options, path: string, importLine: string): string {
   const splitPath = path.split('/');

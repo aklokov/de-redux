@@ -1,4 +1,4 @@
-export * from './combinePath';
-export * from './isDirectory';
+export * from './cachedReexport';
+export * from './createFileImport';
 export * from './mergeModels';
 export * from './parse';
