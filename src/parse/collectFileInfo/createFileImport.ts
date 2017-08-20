@@ -1,5 +1,5 @@
 import { cachedReexports } from '.';
-import { contains, combinePath, trimExtension } from '../tools';
+import { contains, combinePath, trimExtension } from '../../tools';
 
 export async function hasReexport(path: string, filename: string): Promise<boolean> {
   const matches = await cachedReexports(path);
@@ -8,7 +8,7 @@ export async function hasReexport(path: string, filename: string): Promise<boole
 
 export async function createFileImport(path: string, file: string): Promise<string> {
   const filename = trimExtension(file);
-  const reexported = await hasReexport(path, file);
+  const reexported = await hasReexport(path, filename);
   if (reexported) {
     return path;
   }

@@ -1,3 +1,4 @@
 import { Options } from '../../Options';
 import { State } from '../model';
-export declare function collectState(options: Options, importPath: string, file: string, content: string): State[];
+import { FileInfo } from '../collectFileInfo';
+export declare function collectState(options: Options, fileInfo: FileInfo): State[];

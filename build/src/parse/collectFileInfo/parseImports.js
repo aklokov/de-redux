@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const hash_map_1 = require("hash-map");
 const _1 = require(".");
 const tools_1 = require("../../tools");
-const hash_map_1 = require("hash-map");
 const _ = require("lodash");
 const regex = /import[\s]*{(.*)}[\s]*from[\s]*['|"](.*)['|"]/g;
 function parseImports(options, content, path) {

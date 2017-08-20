@@ -1,8 +1,8 @@
 import { Type } from '../model';
+import { StringMap, toStringMap } from 'hash-map';
 import { calculatePath } from '.';
 import { Options } from '../../Options';
 import { execRegex, combinePath } from '../../tools';
-import { StringMap, toStringMap } from 'hash-map';
 import * as _ from 'lodash';
 
 const regex = /import[\s]*{(.*)}[\s]*from[\s]*['|"](.*)['|"]/g;

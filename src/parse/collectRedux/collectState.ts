@@ -1,18 +1,17 @@
 import { combinePath } from '../../tools';
-import { parseImports } from '.';
 import { Options } from '../../Options';
 import { execRegex } from '../../tools';
 import { State, Type, Field } from '../model';
 import { createField } from '.';
 import { toStringMap, StringMap } from 'hash-map';
+import { FileInfo } from '../collectFileInfo';
 
 const typeRegex = /export interface (.*) {\r?\n((?:.*?|\r?\n)*?)}/g;
-export function collectState(options: Options, importPath: string, file: string, content: string): State[] {
-  const imports = parseImports(options, content, importPath);
-  const matches = execRegex(typeRegex, content);
-  const tempStates = matches.map(match => createTempState(importPath, match[1], match[2]));
+export function collectState(options: Options, fileInfo: FileInfo): State[] {
+  const matches = execRegex(typeRegex, fileInfo.content);
+  const tempStates = matches.map(match => createTempState(fileInfo.importPath, match[1], match[2]));
   const fullImports = {
-    ...imports,
+    ...fileInfo.imports,
     ...toStringMap(tempStates, ts => ts.name)
   };
 

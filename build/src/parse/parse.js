@@ -12,6 +12,7 @@ const fse = require("fs-extra");
 const _1 = require(".");
 const tools_1 = require("../tools");
 const collectRedux_1 = require("./collectRedux");
+const collectFileInfo_1 = require("./collectFileInfo");
 const constants_1 = require("../constants");
 function parseFiles(options, path) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -22,26 +23,19 @@ function parseFiles(options, path) {
     });
 }
 exports.parseFiles = parseFiles;
-function read(path, file) {
-    return __awaiter(this, void 0, void 0, function* () {
-        return fse.readFile(tools_1.combinePath(path, file), 'utf8');
-    });
-}
 function collectFile(options, path, file) {
     return __awaiter(this, void 0, void 0, function* () {
         if (yield tools_1.isDirectory(tools_1.combinePath(path, file))) {
             return yield parseFiles(options, tools_1.combinePath(path, file));
         }
         if (file.endsWith(constants_1.constants.stateExt)) {
-            const content = yield read(path, file);
-            const imp = yield _1.createFileImport(path, file);
-            const states = collectRedux_1.collectState(options, imp, file, content);
+            const fileInfo = yield collectFileInfo_1.collectFileInfo(options, path, file);
+            const states = collectRedux_1.collectState(options, fileInfo);
             return { reductions: [], states };
         }
         if (file.endsWith(constants_1.constants.reductionExt)) {
-            const content = yield read(path, file);
-            const imp = yield _1.createFileImport(path, file);
-            const reductions = collectRedux_1.collectReduction(options, imp, file, content);
+            const fileInfo = yield collectFileInfo_1.collectFileInfo(options, path, file);
+            const reductions = collectRedux_1.collectReduction(options, fileInfo);
             return { reductions, states: [] };
         }
         return null;

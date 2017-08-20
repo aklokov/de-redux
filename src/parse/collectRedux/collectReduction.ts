@@ -1,15 +1,14 @@
 import { Options } from '../../Options';
-import { parseImports } from '.';
 import { execRegex, combinePath } from '../../tools';
 import { State, Type, Field, Reduction } from '../model';
 import { createField } from '.';
 import { StringMap } from 'hash-map';
+import { FileInfo } from '../collectFileInfo';
 
 const funcRegex = /export function ([^\(]*)\(([^\)]*)\): ([^{]*)/g;
-export function collectReduction(options: Options, path: string, file: string, content: string): Reduction[] {
-  const imports = parseImports(options, content, path);
-  const matches = execRegex(funcRegex, content);
-  return matches.map(match => toReduction(path, match, imports)).filter(r => r);
+export function collectReduction(options: Options, fileInfo: FileInfo): Reduction[] {
+  const matches = execRegex(funcRegex, fileInfo.content);
+  return matches.map(match => toReduction(fileInfo.importPath, match, fileInfo.imports)).filter(r => r);
 }
 
 function toReduction(path: string, match: string[], imports: StringMap<Type>): Reduction {

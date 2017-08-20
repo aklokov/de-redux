@@ -8,14 +8,26 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const fse = require("fs-extra");
 const _1 = require(".");
-function isDirectory(path) {
+const tools_1 = require("../../tools");
+const fse = require("fs-extra");
+function read(path, file) {
     return __awaiter(this, void 0, void 0, function* () {
-        const stats = yield fse.lstat(path);
-        return stats.isDirectory();
+        return fse.readFile(tools_1.combinePath(path, file), 'utf8');
     });
 }
-exports.isDirectory = isDirectory;
-exports.cachedIsDirectory = _1.cachedPromise(isDirectory);
-//# sourceMappingURL=isDirectory.js.map
+function collectFileInfo(options, path, file) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const content = yield read(path, file);
+        const importPath = yield _1.createFileImport(path, file);
+        const imports = _1.parseImports(options, content, path);
+        return {
+            importPath,
+            file,
+            content,
+            imports
+        };
+    });
+}
+exports.collectFileInfo = collectFileInfo;
+//# sourceMappingURL=collectFileInfo.js.map

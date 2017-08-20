@@ -1,3 +1,4 @@
 import { Options } from '../../Options';
 import { Reduction } from '../model';
-export declare function collectReduction(options: Options, path: string, file: string, content: string): Reduction[];
+import { FileInfo } from '../collectFileInfo';
+export declare function collectReduction(options: Options, fileInfo: FileInfo): Reduction[];

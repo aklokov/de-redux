@@ -1,13 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const _1 = require(".");
 const tools_1 = require("../../tools");
-const _2 = require(".");
+const _1 = require(".");
 const funcRegex = /export function ([^\(]*)\(([^\)]*)\): ([^{]*)/g;
-function collectReduction(options, path, file, content) {
-    const imports = _1.parseImports(options, content, path);
-    const matches = tools_1.execRegex(funcRegex, content);
-    return matches.map(match => toReduction(path, match, imports)).filter(r => r);
+function collectReduction(options, fileInfo) {
+    const matches = tools_1.execRegex(funcRegex, fileInfo.content);
+    return matches.map(match => toReduction(fileInfo.importPath, match, fileInfo.imports)).filter(r => r);
 }
 exports.collectReduction = collectReduction;
 function toReduction(path, match, imports) {
@@ -29,7 +27,7 @@ function toReduction(path, match, imports) {
 }
 function toField(parm, imports) {
     const split = parm.split(':');
-    return _2.createField(split[0], split[1], imports);
+    return _1.createField(split[0], split[1], imports);
 }
 function findParameterEnd(content, index) {
     let angleBracketCount = 0;

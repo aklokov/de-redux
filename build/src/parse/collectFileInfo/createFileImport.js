@@ -8,23 +8,24 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const fse = require("fs-extra");
-const hash_map_1 = require("hash-map");
-const tools_1 = require("../tools");
-const constants_1 = require("../constants");
-const matchesMap = hash_map_1.stringMap();
-const reexportRegex = /export \* from '.\/([^\']*)'/g;
-function cachedReexports(path) {
+const _1 = require(".");
+const tools_1 = require("../../tools");
+function hasReexport(path, filename) {
     return __awaiter(this, void 0, void 0, function* () {
-        const existing = matchesMap[path];
-        if (existing) {
-            return existing;
-        }
-        const content = yield fse.readFile(tools_1.combinePath(path, constants_1.constants.index), 'utf8');
-        const matches = tools_1.execRegex(reexportRegex, content).map(match => match[1]);
-        matchesMap[path] = matches;
-        return matches;
+        const matches = yield _1.cachedReexports(path);
+        return tools_1.contains(matches, filename);
     });
 }
-exports.cachedReexports = cachedReexports;
-//# sourceMappingURL=cachedReexport.js.map
+exports.hasReexport = hasReexport;
+function createFileImport(path, file) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const filename = tools_1.trimExtension(file);
+        const reexported = yield hasReexport(path, filename);
+        if (reexported) {
+            return path;
+        }
+        return tools_1.combinePath(path, filename);
+    });
+}
+exports.createFileImport = createFileImport;
+//# sourceMappingURL=createFileImport.js.map

@@ -1,3 +1,4 @@
+export * from './cachedPromise';
 export * from './combinePath';
 export * from './contains';
 export * from './execRegex';
