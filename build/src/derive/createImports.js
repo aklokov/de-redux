@@ -1,0 +1,24 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const _ = require("lodash");
+const _1 = require(".");
+function createImports(path, fields) {
+    const src = _1.truncatePath(path);
+    const imported = _.flatten(fields.map(field => field.imported));
+    const unique = _.uniqBy(imported, imp => imp.id);
+    const grouped = _.groupBy(unique, un => un.path);
+    const result = [];
+    _.forIn(grouped, (grp, path) => {
+        result.push(createImport(grp, path, src));
+    });
+    return result;
+}
+exports.createImports = createImports;
+function createImport(types, path, src) {
+    const names = types.map(type => type.name).join(', ');
+    return {
+        types: names,
+        path: _1.createRelativePath(path, src)
+    };
+}
+//# sourceMappingURL=createImports.js.map

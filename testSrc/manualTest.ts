@@ -3,9 +3,9 @@ import { generate } from '../src';
 describe('manualTest', function (): void {
   it('should not throw', async function (): Promise<void> {
     const options = {
-      path: '../../nielsen/metadata-manager/app',
+      path: '../../nielsen/csapps-metadata-manager/app',
       tsconfig: {
-        baseUrl: '../../nielsen/metadata-manager',
+        baseUrl: '../../nielsen/csapps-metadata-manager',
         paths:
         {
           '@mdmapp/*': ['app/*'],
