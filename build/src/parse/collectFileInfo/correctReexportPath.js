@@ -17,9 +17,9 @@ function correctReexportPath(path) {
             return path;
         }
         const index = path.lastIndexOf('/');
-        const filename = tools_1.trimExtension(path.substr(index + 1));
+        const filename = path.substr(index + 1);
         const dir = path.substr(0, index);
-        const reexport = yield _1.hasReexport(path, filename);
+        const reexport = yield _1.hasReexport(dir, filename);
         return reexport ? dir : path;
     });
 }

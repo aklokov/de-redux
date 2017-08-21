@@ -49,7 +49,6 @@ function generateContent(gen, file) {
         }
         gen.eol();
     }
-    gen.forceEol();
 }
 exports.actionsGenerator = {
     generate,

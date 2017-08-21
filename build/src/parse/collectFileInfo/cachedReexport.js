@@ -14,6 +14,11 @@ const constants_1 = require("../../constants");
 const reexportRegex = /export \* from '.\/([^\']*)'/g;
 function getReexports(path) {
     return __awaiter(this, void 0, void 0, function* () {
+        const indexFile = tools_1.combinePath(path, constants_1.constants.index);
+        const exists = yield fse.pathExists(indexFile);
+        if (!exists) {
+            return [];
+        }
         const content = yield fse.readFile(tools_1.combinePath(path, constants_1.constants.index), 'utf8');
         return tools_1.execRegex(reexportRegex, content).map(match => match[1]);
     });

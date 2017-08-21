@@ -26,7 +26,7 @@ function parseMatch(options, types, importline, path) {
     return __awaiter(this, void 0, void 0, function* () {
         const typenames = types.split(',');
         const importPath = _1.calculatePath(options, path, importline);
-        const resultPath = yield _1.correctReexportPath(path);
+        const resultPath = yield _1.correctReexportPath(importPath);
         return typenames.map(typename => createType(typename, resultPath));
     });
 }

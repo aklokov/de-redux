@@ -12,6 +12,10 @@ const fse = require("fs-extra");
 const _1 = require(".");
 function isDirectory(path) {
     return __awaiter(this, void 0, void 0, function* () {
+        const exists = yield fse.pathExists(path);
+        if (!exists) {
+            return false;
+        }
         const stats = yield fse.lstat(path);
         return stats.isDirectory();
     });

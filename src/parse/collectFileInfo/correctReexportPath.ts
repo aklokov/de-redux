@@ -8,8 +8,8 @@ export async function correctReexportPath(path: string): Promise<string> {
   }
 
   const index = path.lastIndexOf('/');
-  const filename = trimExtension(path.substr(index + 1));
+  const filename = path.substr(index + 1);
   const dir = path.substr(0, index);
-  const reexport = await hasReexport(path, filename);
+  const reexport = await hasReexport(dir, filename);
   return reexport ? dir : path;
 }

@@ -6,6 +6,7 @@ export interface Action {
   constantContent: string;
   name: string;
   parameters: string;
+  noConstructor: boolean;
 }
 
 export interface ActionsFile {

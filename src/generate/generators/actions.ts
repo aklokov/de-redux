@@ -59,7 +59,6 @@ function generateContent(gen: any, file: ActionsFile): void {
         }
         gen.eol();
     }
-    gen.forceEol();
 }
 
 export const actionsGenerator = {

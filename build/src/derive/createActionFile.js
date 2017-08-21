@@ -14,13 +14,14 @@ function createActionFile(state, reductions) {
 }
 exports.createActionFile = createActionFile;
 function createAction(stateName, reduction) {
-    const fields = reduction.parameters.slice(1).map(parm => parm.name + ': ' + parm.typename);
+    const fields = reduction.parameters.slice(1).map(parm => `public ${parm.name}: ${parm.typename}`);
     const parameters = fields.join(', ');
     return {
         constantName: changeCase.constantCase(reduction.name),
         constantContent: `[${stateName}] - ${reduction.name}`,
         name: changeCase.pascalCase(reduction.name) + 'Action',
-        parameters
+        parameters,
+        noConstructor: !parameters.length
     };
 }
 //# sourceMappingURL=createActionFile.js.map

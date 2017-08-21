@@ -43,16 +43,18 @@ function generateContent(gen, action) {
     gen.eol();
     gen.append('export class ');
     gen.append((action.name).toString());
-    gen.append(' implements IAction {');
+    gen.append(' {');
     gen.eol();
     gen.append('  public type = ');
     gen.append((action.constantName).toString());
     gen.append(';');
     gen.eol();
-    gen.append('  constructor(');
-    gen.append((action.parameters).toString());
-    gen.append(') { }');
-    gen.eol();
+    if (!action.noConstructor) {
+        gen.append('  constructor(');
+        gen.append((action.parameters).toString());
+        gen.append(') { }');
+        gen.eol();
+    }
     gen.append('}');
     gen.eol();
 }

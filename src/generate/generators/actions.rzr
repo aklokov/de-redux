@@ -7,4 +7,3 @@
 @foreach(let action of file.actions) {
 @[actionGenerator(action)]@if(action !== file.actions[file.actions.length - 1]){@eol}
 }
-@eol

@@ -16,7 +16,7 @@ export async function parseImports(options: Options, content: string, path: stri
 async function parseMatch(options: Options, types: string, importline: string, path: string): Promise<Type[]> {
   const typenames = types.split(',');
   const importPath = calculatePath(options, path, importline);
-  const resultPath = await correctReexportPath(path);
+  const resultPath = await correctReexportPath(importPath);
   return typenames.map(typename => createType(typename, resultPath));
 }
 
