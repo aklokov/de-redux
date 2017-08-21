@@ -10,7 +10,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "vladimir-repin",
+  "author": "Vladimir Repin",
   "license": "MIT",
   "dependencies": {
     "change-case": "^3.0.1",
