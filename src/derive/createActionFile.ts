@@ -6,11 +6,21 @@ import * as _ from 'lodash';
 import * as changeCase from 'change-case';
 
 export function createActionFile(state: State, reductions: Reduction[]): ActionsFile {
-  const filePath = createFilePath(state.folder, state.name, constants.actionsFile);
+  const actionsFile = createFilePath(state.folder, state.name, constants.actionsFile);
+  if (!reductions) {
+    return {
+      actionsFile,
+      unlink: true,
+      actions: [],
+      imports: []
+    };
+  }
+
   return {
-    actionsFile: filePath,
+    actionsFile,
+    unlink: false,
     actions: reductions.filter(red => !isInit(red)).map(reduction => createAction(state.name, reduction)),
-    imports: createImports(filePath, _.flatten(reductions.map(red => red.parameters.slice(1))))
+    imports: createImports(actionsFile, _.flatten(reductions.map(red => red.parameters.slice(1))))
   };
 }
 

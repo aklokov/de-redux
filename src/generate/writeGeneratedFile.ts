@@ -36,3 +36,13 @@ export async function writeGeneratedFile(path: string, content: string): Promise
     console.log('error writing ' + path + ' : ' + err);
   }
 }
+
+export async function unlinkFile(path: string): Promise<void> {
+  const exists = await fse.pathExists(path);
+  if (!exists) {
+    return;
+  }
+
+  console.log('unlink ' + path);
+  return fse.unlink(path);
+}

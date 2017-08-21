@@ -51,4 +51,15 @@ function writeGeneratedFile(path, content) {
     });
 }
 exports.writeGeneratedFile = writeGeneratedFile;
+function unlinkFile(path) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const exists = yield fse.pathExists(path);
+        if (!exists) {
+            return;
+        }
+        console.log('unlink ' + path);
+        return fse.unlink(path);
+    });
+}
+exports.unlinkFile = unlinkFile;
 //# sourceMappingURL=writeGeneratedFile.js.map

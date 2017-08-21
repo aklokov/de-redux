@@ -1,8 +1,9 @@
 @import { ActionsFile } from '../../derive/model';
-@import { actionGenerator, importsGenerator } from '.';
+@import { actionGenerator, importsGenerator, disclaimer } from '.';
 @parameters file: ActionsFile
 @exportname actionsGenerator
 
+@[disclaimer()]
 @[importsGenerator(file.imports)]
 @foreach(let action of file.actions) {
 @[actionGenerator(action)]@if(action !== file.actions[file.actions.length - 1]){@eol}

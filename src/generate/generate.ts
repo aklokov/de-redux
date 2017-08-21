@@ -1,17 +1,24 @@
 import { Model, ActionsFile, DispatcherFile, ReducerFile, RootStateFile } from '../derive/model';
 import { Options } from '../Options';
 import { actionsGenerator } from './generators';
-import { writeGeneratedFile } from '.';
+import { writeGeneratedFile, unlinkFile } from '.';
 
 export async function generateFiles(options: Options, model: Model): Promise<void> {
-  const rootPromise = model.rootState ? [generateRootState(options, model.rootState)] : [];
+  const unlink = [
+    ...model.actionFiles.filter(af => af.unlink).map(af => af.actionsFile),
+    ...model.dispatcherFiles.filter(df => df.unlink).map(df => df.dispatcherFile),
+    ...model.reducerFiles.filter(rf => rf.unlink).map(rf => rf.reducerFile)
+  ];
+  await Promise.all(unlink.map(file => unlinkFile(file)));
 
-  const actionPromises = model.actionFiles.map(af => generateActionFile(options, af));
-  const reducerPromises = model.reducerFiles.map(rf => generateReducerFile(options, rf));
-  const dispatcherPromises = model.dispatcherFiles.map(df => generateDispatcherFile(options, df));
+  const rootPromise = model.rootState ? [generateRootState(options, model.rootState)] : [];
+  const actionPromises = model.actionFiles.filter(af => !af.unlink).map(af => generateActionFile(options, af));
+  const reducerPromises = model.reducerFiles.filter(df => !df.unlink).map(rf => generateReducerFile(options, rf));
+  const dispatcherPromises = model.dispatcherFiles.filter(rf => !rf.unlink).map(df => generateDispatcherFile(options, df));
 
   await Promise.all([...rootPromise, ...actionPromises, ...reducerPromises, ...dispatcherPromises]);
 }
+
 async function generateActionFile(options: Options, file: ActionsFile): Promise<void> {
   const content = actionsGenerator.generate(file);
   return writeGeneratedFile(file.actionsFile, content);

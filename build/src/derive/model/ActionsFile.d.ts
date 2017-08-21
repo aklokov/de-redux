@@ -8,6 +8,7 @@ export interface Action {
 }
 export interface ActionsFile {
     actionsFile: string;
+    unlink: boolean;
     actions: Action[];
     imports: Import[];
 }

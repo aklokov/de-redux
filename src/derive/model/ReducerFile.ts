@@ -9,5 +9,6 @@ export interface ChildReducer {
 export interface ReducerFile {
   actionsFile: string;
   reducerFile: string;
+  unlink: boolean;
   childReducers: ChildReducer[];
 }

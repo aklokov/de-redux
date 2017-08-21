@@ -7,7 +7,6 @@ import { toStringLookup } from 'hash-map';
 export function deriveModel(options: Options, input: InputModel): Model {
   const reductionMap = toStringLookup(input.reductions, red => red.stateId);
   const actionFiles = input.states
-    .filter(state => reductionMap[state.id])
     .map(state => createActionFile(state, reductionMap[state.id]));
 
   return {

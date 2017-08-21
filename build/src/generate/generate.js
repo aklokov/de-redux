@@ -12,10 +12,16 @@ const generators_1 = require("./generators");
 const _1 = require(".");
 function generateFiles(options, model) {
     return __awaiter(this, void 0, void 0, function* () {
+        const unlink = [
+            ...model.actionFiles.filter(af => af.unlink).map(af => af.actionsFile),
+            ...model.dispatcherFiles.filter(df => df.unlink).map(df => df.dispatcherFile),
+            ...model.reducerFiles.filter(rf => rf.unlink).map(rf => rf.reducerFile)
+        ];
+        yield Promise.all(unlink.map(file => _1.unlinkFile(file)));
         const rootPromise = model.rootState ? [generateRootState(options, model.rootState)] : [];
-        const actionPromises = model.actionFiles.map(af => generateActionFile(options, af));
-        const reducerPromises = model.reducerFiles.map(rf => generateReducerFile(options, rf));
-        const dispatcherPromises = model.dispatcherFiles.map(df => generateDispatcherFile(options, df));
+        const actionPromises = model.actionFiles.filter(af => !af.unlink).map(af => generateActionFile(options, af));
+        const reducerPromises = model.reducerFiles.filter(df => !df.unlink).map(rf => generateReducerFile(options, rf));
+        const dispatcherPromises = model.dispatcherFiles.filter(rf => !rf.unlink).map(df => generateDispatcherFile(options, df));
         yield Promise.all([...rootPromise, ...actionPromises, ...reducerPromises, ...dispatcherPromises]);
     });
 }

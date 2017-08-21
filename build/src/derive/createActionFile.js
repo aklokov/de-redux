@@ -5,11 +5,20 @@ const constants_1 = require("../constants");
 const _ = require("lodash");
 const changeCase = require("change-case");
 function createActionFile(state, reductions) {
-    const filePath = _1.createFilePath(state.folder, state.name, constants_1.constants.actionsFile);
+    const actionsFile = _1.createFilePath(state.folder, state.name, constants_1.constants.actionsFile);
+    if (!reductions) {
+        return {
+            actionsFile,
+            unlink: true,
+            actions: [],
+            imports: []
+        };
+    }
     return {
-        actionsFile: filePath,
+        actionsFile,
+        unlink: false,
         actions: reductions.filter(red => !_1.isInit(red)).map(reduction => createAction(state.name, reduction)),
-        imports: _1.createImports(filePath, _.flatten(reductions.map(red => red.parameters.slice(1))))
+        imports: _1.createImports(actionsFile, _.flatten(reductions.map(red => red.parameters.slice(1))))
     };
 }
 exports.createActionFile = createActionFile;

@@ -37,6 +37,10 @@ function generate(file) {
 function generateContent(gen, file) {
     const indent = gen.indent;
     gen.indent = indent + '';
+    _1.disclaimer.generateContent(gen);
+    gen.indent = indent;
+    gen.eol();
+    gen.indent = indent + '';
     _1.importsGenerator.generateContent(gen, file.imports);
     gen.indent = indent;
     gen.eol();
