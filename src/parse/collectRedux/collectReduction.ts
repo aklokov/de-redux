@@ -1,21 +1,14 @@
-import { combinePath } from '..';
-import { readFile } from '../../tools';
 import { Options } from '../../Options';
-import { parseImports, createFileImport } from '.';
-import { StringMap, toStringMap, execRegex } from '../../tools';
+import { execRegex, combinePath } from '../../tools';
 import { State, Type, Field, Reduction } from '../model';
 import { createField } from '.';
-
-export async function collectReduction(options: Options, path: string, file: string): Promise<Reduction[]> {
-  const content = await readFile(combinePath(path, file));
-  const imports = parseImports(options, content, path);
-  return parseReductions(content, createFileImport(path, file), imports);
-}
+import { StringMap } from 'hash-map';
+import { FileInfo } from '../collectFileInfo';
 
 const funcRegex = /export function ([^\(]*)\(([^\)]*)\): ([^{]*)/g;
-function parseReductions(content: string, path: string, imports: StringMap<Type>): Reduction[] {
-  const matches = execRegex(funcRegex, content);
-  return matches.map(match => toReduction(path, match, imports)).filter(r => r);
+export function collectReduction(options: Options, fileInfo: FileInfo): Reduction[] {
+  const matches = execRegex(funcRegex, fileInfo.content);
+  return matches.map(match => toReduction(fileInfo.importPath, match, fileInfo.imports)).filter(r => r);
 }
 
 function toReduction(path: string, match: string[], imports: StringMap<Type>): Reduction {

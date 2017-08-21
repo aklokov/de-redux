@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "files": [
-    "out/src"
+    "build/src"
   ],
-  "main": "out/src/index.js",
-  "typings": "out/src/index",
+  "main": "build/src/index.js",
+  "typings": "build/src/index",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -14,11 +14,12 @@
   "license": "MIT",
   "dependencies": {
     "change-case": "^3.0.1",
-    "lodash": "^4.17.4",
-    "simple-map": "^0.1.0"
+    "hash-map": "^1.0.2",
+    "lodash": "^4.17.4"
   },
   "devDependencies": {
     "@types/chai": "^4.0.3",
+    "@types/fs-extra": "^4.0.0",
     "@types/lodash": "^4.14.72",
     "@types/mocha": "^2.2.41",
     "@types/node": "^8.0.20",
@@ -35,6 +36,7 @@
     "razor-code-js": "git+ssh://git@github.com/repinvv/razor-code-js.git",
     "run-sequence": "^2.1.0",
     "tslint": "^5.6.0",
-    "typescript": "^2.4.2"
+    "typescript": "^2.4.2",
+    "typescript-reexport-generator": "^1.0.4"
   }
 }

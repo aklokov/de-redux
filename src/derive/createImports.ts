@@ -1,10 +1,11 @@
 import { Field, Type } from '../parse/model';
 import { Import } from './model';
 import * as _ from 'lodash';
-import { truncatePath, createRelativePath } from '.';
+import { createRelativePath } from '.';
+import { trimFilename } from '../tools';
 
 export function createImports(path: string, fields: Field[]): Import[] {
-  const src = truncatePath(path);
+  const src = trimFilename(path);
   const imported = _.flatten(fields.map(field => field.imported));
   const unique = _.uniqBy(imported, imp => imp.id);
   const grouped = _.groupBy(unique, un => un.path);

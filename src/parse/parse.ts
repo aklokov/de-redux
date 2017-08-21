@@ -1,31 +1,35 @@
 import { Model } from './model';
-import * as fs from 'fs';
-import { combinePath, isDirectory, mergeModels } from '.';
-import { readDir } from '../tools';
+import * as fse from 'fs-extra';
+import { mergeModels } from '.';
+import { isDirectory, combinePath } from '../tools';
 import { collectState, collectReduction } from './collectRedux';
+import { collectFileInfo } from './collectFileInfo';
 import { Options } from '../Options';
 import { constants } from '../constants';
 
 export async function parseFiles(options: Options, path: string): Promise<Model> {
-  const files = await readDir(path);
-  const promises = files.map(file => collectFile(options, path, file)).filter(promise => promise);
+  const files = await fse.readdir(path);
+  const promises = files.map(file => collectFile(options, path, file));
   const models = await Promise.all(promises);
-  return mergeModels(models);
+  return mergeModels(models.filter(model => model));
 }
 
-function collectFile(options: Options, path: string, file: string): Promise<Model> {
-  if (isDirectory(path, file)) {
-    return parseFiles(options, combinePath(path, file));
+
+async function collectFile(options: Options, path: string, file: string): Promise<Model> {
+  if (await isDirectory(combinePath(path, file))) {
+    return await parseFiles(options, combinePath(path, file));
   }
 
   if (file.endsWith(constants.stateExt)) {
-    return collectState(options, path, file)
-      .then(states => ({ reductions: [], states }));
+    const fileInfo = await collectFileInfo(options, path, file);
+    const states = collectState(options, fileInfo);
+    return { reductions: [], states };
   }
 
   if (file.endsWith(constants.reductionExt)) {
-    return collectReduction(options, path, file)
-      .then(reductions => ({ reductions, states: [] }));
+    const fileInfo = await collectFileInfo(options, path, file);
+    const reductions = collectReduction(options, fileInfo);
+    return { reductions, states: [] };
   }
 
   return null;
