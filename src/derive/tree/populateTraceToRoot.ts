@@ -1,7 +1,7 @@
 import { Tree, TreeNode, mapTree } from '.';
 
 export function populateTraceToRoot(tree: Tree): Tree {
-  return mapTree(tree.nodes.map(node => populateNodeTraceToRoot(node, tree)));
+  return mapTree(tree.nodes.map(node => populateNodeTraceToRoot(node, tree)), tree.rootState);
 }
 
 function populateNodeTraceToRoot(node: TreeNode, tree: Tree): TreeNode {
@@ -10,6 +10,10 @@ function populateNodeTraceToRoot(node: TreeNode, tree: Tree): TreeNode {
   }
 
   const traceToRoot = getTrace(node.state.id, node, tree, []);
+  return {
+    ...node,
+    traceToRoot
+  };
 }
 
 function getTrace(id: string, node: TreeNode, tree: Tree, currentTrace: string[]): string[] {

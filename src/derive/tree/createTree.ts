@@ -6,9 +6,6 @@ import { Options } from '../../Options';
 
 export function createTree(options: Options, states: State[]): Tree {
   const statesById = toStringMap(states, 'id');
-  let tree = mapTree(states.map(state => createNode(state, statesById)));
-  tree = populateParentIds(tree);
-  tree = createRootState(options, tree);
-  tree = populateTraceToRoot(tree);
-  return tree;
+  const tree = mapTree(states.map(state => createNode(state, statesById)));
+  return populateParentIds(tree);
 }

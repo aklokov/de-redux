@@ -18,4 +18,5 @@ export interface TreeNode {
 export interface Tree {
   nodes: TreeNode[];
   nodesById: StringMap<TreeNode>;
+  rootState?: State;
 }

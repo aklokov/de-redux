@@ -7,8 +7,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+function __export(m) {
+    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
+}
 Object.defineProperty(exports, "__esModule", { value: true });
 const parse_1 = require("./parse/parse");
+__export(require("./Options"));
 const deriveModel_1 = require("./derive/deriveModel");
 const generate_1 = require("./generate/generate");
 function generate(options) {

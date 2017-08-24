@@ -6,4 +6,5 @@ export interface Options {
   path: string;
   tsconfig?: any;
   generateRootIn?: string;
+  rootStateName?: string;
 }

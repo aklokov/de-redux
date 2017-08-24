@@ -1,8 +1,8 @@
-import { generate } from '../src';
+import { generate, Options } from '../src';
 
 describe('manualTest', function (): void {
   it('should not throw', async function (): Promise<void> {
-    const options = {
+    const options: Options = {
       path: '../../nielsen/csapps-metadata-manager/app',
       tsconfig: {
         baseUrl: '../../nielsen/csapps-metadata-manager',
@@ -15,7 +15,9 @@ describe('manualTest', function (): void {
           '@mdmapi/*': ['app/services/api/*'],
           '@mdmtools': ['app/services/tools/']
         }
-      }
+      },
+      generateRootIn: '../../nielsen/csapps-metadata-manager/redux',
+      rootStateName: 'MetadataState'
     };
     await generate(options);
     console.log('done');

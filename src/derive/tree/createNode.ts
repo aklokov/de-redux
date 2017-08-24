@@ -18,7 +18,7 @@ function createNodeChild(field: Field, statesById: StringMap<State>): NodeChild 
     return null;
   }
 
-  const state = statesById[field.typename];
+  const state = statesById[field.imported[0].id];
   if (!state) {
     return null;
   }
