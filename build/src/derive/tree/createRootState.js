@@ -15,7 +15,7 @@ function createRootState(tree, path, name = constants_1.constants.defaultRootSta
 exports.createRootState = createRootState;
 function fixNode(node, rootNode) {
     const fieldName = rootNode.children.find(child => child.childStateId === node.state.id).fieldName;
-    return Object.assign({}, node, { parentId: rootNode.state.id, parentFieldName: fieldName, isRoot: false });
+    return Object.assign({}, node, { isRoot: false });
 }
 function createState(name, path, rootNodes) {
     const stateFile = changeCase.paramCase(name) + constants_1.constants.state;

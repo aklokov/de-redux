@@ -7,9 +7,8 @@ export function createNode(state: State, statesById: StringMap<State>): TreeNode
     state,
     children: state.fields.map(field => createNodeChild(field, statesById)).filter(s => s),
     isRoot: false,
-    parentId: null,
-    parentFieldName: null,
-    traceToRoot: null
+    traceToRoot: null,
+    noSubscribe: false
   };
 }
 

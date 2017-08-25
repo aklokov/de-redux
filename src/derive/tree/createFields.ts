@@ -3,7 +3,6 @@ import { TreeNode } from '.';
 import { stringMap, StringMap } from 'hash-map';
 import * as changeCase from 'change-case';
 
-
 export function createFields(rootNodes: TreeNode[]): Field[] {
   const namesMap = stringMap<boolean>();
   const fields: Field[] = [];

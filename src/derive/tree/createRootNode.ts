@@ -8,9 +8,8 @@ export function createRootNode(state: State, rootNodes: TreeNode[]): TreeNode {
     state,
     children: state.fields.map(field => createNodeChild(field, nodesById)).filter(s => s),
     isRoot: true,
-    parentId: null,
-    parentFieldName: null,
-    traceToRoot: null
+    traceToRoot: null,
+    noSubscribe: false
   };
 }
 

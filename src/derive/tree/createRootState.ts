@@ -19,8 +19,6 @@ function fixNode(node: TreeNode, rootNode: TreeNode): TreeNode {
   const fieldName = rootNode.children.find(child => child.childStateId === node.state.id).fieldName;
   return {
     ...node,
-    parentId: rootNode.state.id,
-    parentFieldName: fieldName,
     isRoot: false
   };
 }

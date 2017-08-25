@@ -7,10 +7,9 @@ export interface NodeChild {
 export interface TreeNode {
     state: State;
     children: NodeChild[];
-    parentId: string;
-    parentFieldName: string;
     isRoot: boolean;
     traceToRoot: string[];
+    noSubscribe: boolean;
 }
 export interface Tree {
     nodes: TreeNode[];

@@ -5,9 +5,8 @@ function createNode(state, statesById) {
         state,
         children: state.fields.map(field => createNodeChild(field, statesById)).filter(s => s),
         isRoot: false,
-        parentId: null,
-        parentFieldName: null,
-        traceToRoot: null
+        traceToRoot: null,
+        noSubscribe: false
     };
 }
 exports.createNode = createNode;
