@@ -16,11 +16,12 @@ export interface IReduxService {
  }
 }
  @if(file.canSubscribe) {
+@eol
 export function selector(state: @file.rootStateName): @file.stateName {
   return state@file.traceToRoot;
 @}
  }
-
+@eol
 export class @(file.stateName)DispatcherImpl {
   constructor(private service: IReduxService) {
   }

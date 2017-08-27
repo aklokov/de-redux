@@ -15,7 +15,7 @@ export function createReducerFile(state: State, reductions: Reduction[], actions
 
   const path = trimFilename(reducerFile);
   const childReducers = node.children.map(child => createChildReducer(child, tree));
-  const imports = createImports(path, actionsFile.actionsFile, reductions, state);
+  const imports = createImports(path, actionsFile.actionsFile, reductions);
   const childImports = createChildReducerImports(path, childReducers);
   return {
     reducerFile,

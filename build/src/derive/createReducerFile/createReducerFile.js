@@ -12,7 +12,7 @@ function createReducerFile(state, reductions, actionsFile, tree) {
     }
     const path = tools_1.trimFilename(reducerFile);
     const childReducers = node.children.map(child => createChildReducer(child, tree));
-    const imports = _1.createImports(path, actionsFile.actionsFile, reductions, state);
+    const imports = _1.createImports(path, actionsFile.actionsFile, reductions);
     const childImports = _1.createChildReducerImports(path, childReducers);
     return {
         reducerFile,

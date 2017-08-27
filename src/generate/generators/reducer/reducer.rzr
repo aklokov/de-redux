@@ -19,7 +19,7 @@ const map = stringMap<actor>();
 @[reducerActionGenerator(action, file)]
 }
 @eol
-export function reducer(prev: @file.stateName, action: IAction): @file.stateName {
+export function reducer(prev: @file.stateName = init(), action: IAction): @file.stateName {
   const specificReducer = map[action.type];
   return (specificReducer && specificReducer(prev, action)) || prev;
 }

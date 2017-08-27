@@ -75,6 +75,7 @@ function generateContent(gen: any, file: DispatcherFile): void {
     gen.append('}');
     gen.eol();
     if (file.canSubscribe) {
+        gen.forceEol();
         gen.append('export function selector(state: ');
         gen.append((file.rootStateName).toString());
         gen.append('): ');
@@ -88,7 +89,7 @@ function generateContent(gen: any, file: DispatcherFile): void {
         gen.append('}');
         gen.eol();
     }
-    gen.eol();
+    gen.forceEol();
     gen.append('export class ');
     gen.append((file.stateName).toString());
     gen.append('DispatcherImpl {');

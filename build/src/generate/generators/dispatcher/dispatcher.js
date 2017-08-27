@@ -65,6 +65,7 @@ function generateContent(gen, file) {
     gen.append('}');
     gen.eol();
     if (file.canSubscribe) {
+        gen.forceEol();
         gen.append('export function selector(state: ');
         gen.append((file.rootStateName).toString());
         gen.append('): ');
@@ -78,7 +79,7 @@ function generateContent(gen, file) {
         gen.append('}');
         gen.eol();
     }
-    gen.eol();
+    gen.forceEol();
     gen.append('export class ');
     gen.append((file.stateName).toString());
     gen.append('DispatcherImpl {');
@@ -90,7 +91,7 @@ function generateContent(gen, file) {
     gen.forceEol();
     if (file.canSubscribe) {
         gen.append('  getState(): ');
-        gen.append((file.rootStateName).toString());
+        gen.append((file.stateName).toString());
         gen.append(' {');
         gen.eol();
         gen.append('    return selector(this.service.getState());');
@@ -99,7 +100,7 @@ function generateContent(gen, file) {
         gen.eol();
         gen.forceEol();
         gen.append('  subscribe(subscription: (state: ');
-        gen.append((file.rootStateName).toString());
+        gen.append((file.stateName).toString());
         gen.append(') => void): void {');
         gen.eol();
         gen.append('    this.service.subscribe(state => subscription(selector(state)));');

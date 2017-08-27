@@ -83,7 +83,7 @@ function generateContent(gen: any, file: ReducerFile): void {
     gen.forceEol();
     gen.append('export function reducer(prev: ');
     gen.append((file.stateName).toString());
-    gen.append(', action: IAction): ');
+    gen.append(' = init(), action: IAction): ');
     gen.append((file.stateName).toString());
     gen.append(' {');
     gen.eol();

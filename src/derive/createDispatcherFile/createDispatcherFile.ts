@@ -1,9 +1,9 @@
 import { DispatcherFile, ChildReducer, ActionsFile } from '../model';
 import { State, Reduction } from '../../parse/model';
-import { Tree, NodeChild } from '../tree';
+import { Tree, TreeNode, NodeChild } from '../tree';
 import { createFilePath, isInit } from '..';
 import { constants } from '../../constants';
-import { createImports } from '.';
+import { createImports, createFullImports } from '.';
 import { trimFilename } from '../../tools';
 
 export function createDispatcherFile(state: State, reductions: Reduction[], actionsFile: ActionsFile, tree: Tree): DispatcherFile {
@@ -11,21 +11,45 @@ export function createDispatcherFile(state: State, reductions: Reduction[], acti
   if (!reductions.length) {
     return createUnlink(dispatcherFile);
   }
-
+  const path = trimFilename(dispatcherFile);
   const node = tree.nodesById[state.id];
-  const rootNode = tree.nodesById[node.rootId];
   const canSubscribe = node.parentIds.length < 2;
-  return {
-    dispatcherFile,
-    unlink: false,
-    canSubscribe,
-    stateName: state.name,
-    rootStateName: canSubscribe ? rootNode.state.name : null,
-    traceToRoot: canSubscribe ? createTrace(node.traceToRoot) : null,
-    imports: [],
-    actions: []
-  };
+  if (canSubscribe) {
+    return createSubscribable();
+  } else {
+    return createUnsubscribable();
+  }
+
+  function createSubscribable(): DispatcherFile {
+    const root = tree.nodesById[node.rootId];
+    const imports = createFullImports(path, actionsFile.actionsFile, reductions, root.state);
+    return {
+      dispatcherFile,
+      unlink: false,
+      canSubscribe,
+      stateName: state.name,
+      rootStateName: root.state.name,
+      traceToRoot: createTrace(node.traceToRoot),
+      imports,
+      actions: []
+    };
+  }
+
+  function createUnsubscribable(): DispatcherFile {
+    const imports = createImports(path, actionsFile.actionsFile, reductions);
+    return {
+      dispatcherFile,
+      unlink: false,
+      canSubscribe,
+      stateName: state.name,
+      rootStateName: null,
+      traceToRoot: null,
+      imports,
+      actions: []
+    };
+  }
 }
+
 
 function createTrace(trace: string[]): string {
   const join = trace.join('.');

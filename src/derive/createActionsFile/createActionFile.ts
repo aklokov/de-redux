@@ -1,7 +1,7 @@
 import { ActionsFile, Action } from '../model';
 import { State, Reduction } from '../../parse/model';
 import { createFilePath, isInit, createActionName } from '..';
-import { createFieldImports } from '..';
+import { createReductionImports } from '..';
 import { constants } from '../../constants';
 import { trimFilename } from '../../tools';
 import * as _ from 'lodash';
@@ -21,7 +21,7 @@ export function createActionFile(state: State, reductions: Reduction[]): Actions
     actionsFile,
     unlink: false,
     actions: reductions.filter(red => !isInit(red)).map(reduction => createAction(state.name, reduction)),
-    imports: createFieldImports(path, _.flatten(reductions.map(red => red.parameters.slice(1))))
+    imports: createReductionImports(path, reductions)
   };
 }
 

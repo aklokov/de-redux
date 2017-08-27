@@ -1,15 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const _ = require("lodash");
 const __1 = require("..");
 const __2 = require("..");
 const stringMap = {
     importLine: '{ stringMap }',
     path: 'hash-map'
 };
-function createImports(path, actions, reductions, state) {
+function createImports(path, actions, reductions) {
     const actionsImport = __2.createActionsImport(path, actions);
-    const fieldImports = __2.createFieldImports(path, _.flatten(reductions.map(red => red.parameters)));
+    const fieldImports = __2.createReductionImports(path, reductions);
     const reductionImports = __2.createTypeImports(path, reductions);
     return [actionsImport, stringMap, ...fieldImports, ...reductionImports];
 }
