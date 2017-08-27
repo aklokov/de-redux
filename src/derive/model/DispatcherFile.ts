@@ -1,8 +1,17 @@
 import { Import } from '.';
 
+export interface DispatcherAction {
+
+}
+
 export interface DispatcherFile {
   dispatcherFile: string;
   unlink: boolean;
-  actionsFile: string;
-  pathFromRoot: string;
+
+  canSubscribe: boolean;
+  rootStateName: string;
+  stateName: string;
+  traceToRoot: string;
+  imports: Import[];
+  actions: DispatcherAction[];
 }

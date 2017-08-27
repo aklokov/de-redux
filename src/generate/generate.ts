@@ -1,6 +1,9 @@
 import { Model, ActionsFile, DispatcherFile, ReducerFile, RootStateFile } from '../derive/model';
 import { Options } from '../Options';
-import { actionsGenerator, reducerGenerator } from './generators';
+import { actionsGenerator } from './generators/actions';
+import { reducerGenerator } from './generators/reducer';
+import { dispatcherGenerator } from './generators/dispatcher';
+import { rootStateGenerator } from './generators/rootState';
 import { writeGeneratedFile, unlinkFile } from '.';
 
 export async function generateFiles(options: Options, model: Model): Promise<void> {
@@ -25,7 +28,8 @@ async function generateActionFile(options: Options, file: ActionsFile): Promise<
 }
 
 async function generateDispatcherFile(options: Options, file: DispatcherFile): Promise<void> {
-  return;
+  const content = dispatcherGenerator.generate(file);
+  return writeGeneratedFile(file.dispatcherFile, content);
 }
 
 async function generateReducerFile(options: Options, file: ReducerFile): Promise<void> {
@@ -34,5 +38,6 @@ async function generateReducerFile(options: Options, file: ReducerFile): Promise
 }
 
 async function generateRootState(options: Options, file: RootStateFile): Promise<void> {
-  return;
+  const content = rootStateGenerator.generate(file);
+  return writeGeneratedFile(file.rootStateFile, content);
 }

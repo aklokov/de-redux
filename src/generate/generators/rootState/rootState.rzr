@@ -1,0 +1,7 @@
+@import { RootStateFile } from '../../../derive/model';
+@import { importsGenerator, disclaimer, isLast } from '..';
+@parameters file: RootStateFile
+@exportname rootStateGenerator
+
+@[disclaimer()]
+@[importsGenerator(file.imports)]

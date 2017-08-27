@@ -1,0 +1,5 @@
+@import { DispatcherAction, DispatcherFile } from '../../../derive/model';
+@exportname dispatcherActionGenerator
+@parameters action: DispatcherAction, file: DispatcherFile
+
+

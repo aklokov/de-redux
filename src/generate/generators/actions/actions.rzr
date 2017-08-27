@@ -1,0 +1,17 @@
+@import { ActionsFile } from '../../../derive/model';
+@import { actionGenerator } from '.';
+@import { importsGenerator, disclaimer, isLast } from '..';
+@parameters file: ActionsFile
+@exportname actionsGenerator
+
+@[disclaimer()]
+@[importsGenerator(file.imports)]
+@foreach(let action of file.actions) {
+@[actionGenerator(action)]@eol
+}
+
+export const allActions = [
+ @foreach(let action of file.actions) {
+  @action.constantName@if(!isLast(action, file.actions)){,}
+ }
+];

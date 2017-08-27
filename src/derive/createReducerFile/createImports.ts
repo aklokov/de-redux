@@ -3,7 +3,7 @@ import { Tree } from '../tree';
 import { Import } from '../model';
 import * as _ from 'lodash';
 import { createRelativePath, createRelativePathToFile } from '..';
-import { createFieldImports, createTypeImports } from '..';
+import { createFieldImports, createTypeImports, createActionsImport } from '..';
 import { trimFilename } from '../../tools';
 import { ActionsFile, ChildReducer } from '../model';
 
@@ -13,12 +13,7 @@ const stringMap: Import = {
 };
 
 export function createImports(path: string, actions: string, reductions: Reduction[], state: State): Import[] {
-  const actionsImport: Import = {
-    importLine: '* as actions',
-    path: createRelativePathToFile(actions, path)
-  };
-
-
+  const actionsImport = createActionsImport(path, actions);
   const fieldImports = createFieldImports(path, _.flatten(reductions.map(red => red.parameters)));
   const reductionImports = createTypeImports(path, reductions);
   return [actionsImport, stringMap, ...fieldImports, ...reductionImports];

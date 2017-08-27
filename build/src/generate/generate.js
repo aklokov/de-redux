@@ -8,7 +8,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const generators_1 = require("./generators");
+const actions_1 = require("./generators/actions");
+const reducer_1 = require("./generators/reducer");
+const dispatcher_1 = require("./generators/dispatcher");
+const rootState_1 = require("./generators/rootState");
 const _1 = require(".");
 function generateFiles(options, model) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -28,24 +31,26 @@ function generateFiles(options, model) {
 exports.generateFiles = generateFiles;
 function generateActionFile(options, file) {
     return __awaiter(this, void 0, void 0, function* () {
-        const content = generators_1.actionsGenerator.generate(file);
+        const content = actions_1.actionsGenerator.generate(file);
         return _1.writeGeneratedFile(file.actionsFile, content);
     });
 }
 function generateDispatcherFile(options, file) {
     return __awaiter(this, void 0, void 0, function* () {
-        return;
+        const content = dispatcher_1.dispatcherGenerator.generate(file);
+        return _1.writeGeneratedFile(file.dispatcherFile, content);
     });
 }
 function generateReducerFile(options, file) {
     return __awaiter(this, void 0, void 0, function* () {
-        const content = generators_1.reducerGenerator.generate(file);
+        const content = reducer_1.reducerGenerator.generate(file);
         return _1.writeGeneratedFile(file.reducerFile, content);
     });
 }
 function generateRootState(options, file) {
     return __awaiter(this, void 0, void 0, function* () {
-        return;
+        const content = rootState_1.rootStateGenerator.generate(file);
+        return _1.writeGeneratedFile(file.rootStateFile, content);
     });
 }
 //# sourceMappingURL=generate.js.map

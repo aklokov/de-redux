@@ -8,10 +8,7 @@ const stringMap = {
     path: 'hash-map'
 };
 function createImports(path, actions, reductions, state) {
-    const actionsImport = {
-        importLine: '* as actions',
-        path: __1.createRelativePathToFile(actions, path)
-    };
+    const actionsImport = __2.createActionsImport(path, actions);
     const fieldImports = __2.createFieldImports(path, _.flatten(reductions.map(red => red.parameters)));
     const reductionImports = __2.createTypeImports(path, reductions);
     return [actionsImport, stringMap, ...fieldImports, ...reductionImports];
