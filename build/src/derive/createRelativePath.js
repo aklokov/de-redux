@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const tools_1 = require("../tools");
 function createRelativePath(path, src) {
     let pathSplit = path.split('/');
     let srcSplit = src.split('/');
@@ -8,7 +9,17 @@ function createRelativePath(path, src) {
         srcSplit = srcSplit.slice(1);
     }
     const resultSplit = [...srcSplit.map(s => '..'), ...pathSplit];
-    return resultSplit.join('/');
+    const result = resultSplit.join('/');
+    if (!result.length) {
+        return '.';
+    }
+    return result.startsWith('.') ? result : './';
 }
 exports.createRelativePath = createRelativePath;
+function createRelativePathToFile(file, src) {
+    const path = tools_1.trimFilename(file);
+    const filename = tools_1.trimExtension(file.substr(file.lastIndexOf('/')));
+    return createRelativePath(path, src) + filename;
+}
+exports.createRelativePathToFile = createRelativePathToFile;
 //# sourceMappingURL=createRelativePath.js.map

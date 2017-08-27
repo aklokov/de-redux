@@ -46,9 +46,9 @@ function generate(imports: Import[]): string {
 function generateContent(gen: any, imports: Import[]): void {
     const indent = gen.indent;
     for (let imp of imports) {
-        gen.append('import { ');
-        gen.append((imp.types).toString());
-        gen.append(' } from \'');
+        gen.append('import ');
+        gen.append((imp.importLine).toString());
+        gen.append(' from \'');
         gen.append((imp.path).toString());
         gen.append('\';');
         gen.eol();

@@ -1,4 +1,4 @@
 export interface Import {
-    types: string;
+    importLine: string;
     path: string;
 }

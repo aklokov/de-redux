@@ -3,6 +3,6 @@
 @exportname importsGenerator
 
 @foreach(let imp of imports) {
-import { @imp.types } from '@imp.path';
+import @imp.importLine from '@imp.path';
 }
 @eol

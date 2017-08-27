@@ -45,21 +45,47 @@ function generateContent(gen, file) {
     _1.importsGenerator.generateContent(gen, file.imports);
     gen.indent = indent;
     gen.eol();
+    gen.append('export type IAction =  { type: string };');
+    gen.eol();
+    gen.forceEol();
     gen.append('type actor = (prev: ');
     gen.append((file.stateName).toString());
-    gen.append(', action: { type: string }) => ');
+    gen.append(', action: IAction) => ');
     gen.append((file.stateName).toString());
     gen.append(';');
     gen.eol();
     gen.append('const map = stringMap<actor>();');
     gen.eol();
+    for (let child of file.childReducers) {
+        gen.forceEol();
+        gen.indent = indent + '';
+        _2.childReducerGenerator.generateContent(gen, child, file);
+        gen.indent = indent;
+        gen.eol();
+    }
     for (let action of file.actions) {
+        gen.forceEol();
         gen.indent = indent + '';
         _2.reducerActionGenerator.generateContent(gen, action, file);
         gen.indent = indent;
         gen.eol();
-        gen.forceEol();
     }
+    gen.forceEol();
+    gen.append('export function reducer(prev: ');
+    gen.append((file.stateName).toString());
+    gen.append(', action: IAction): ');
+    gen.append((file.stateName).toString());
+    gen.append(' {');
+    gen.eol();
+    gen.append('  const specificReducer = map[action.type];');
+    gen.eol();
+    gen.append('  return (specificReducer && specificReducer(prev, action)) || prev;');
+    gen.eol();
+    gen.append('}');
+    gen.eol();
+    gen.forceEol();
+    gen.append('export const allActions = actions.allActions;');
+    gen.eol();
 }
 exports.reducerGenerator = {
     generate,

@@ -9,7 +9,7 @@
 @[actionGenerator(action)]@eol
 }
 
-export allActions = [
+export const allActions = [
  @foreach(let action of file.actions) {
   @action.constantName@if(!isLast(action, file.actions)){,}
  }

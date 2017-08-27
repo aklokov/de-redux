@@ -39,7 +39,8 @@ function generateDispatcherFile(options, file) {
 }
 function generateReducerFile(options, file) {
     return __awaiter(this, void 0, void 0, function* () {
-        return;
+        const content = generators_1.reducerGenerator.generate(file);
+        return _1.writeGeneratedFile(file.reducerFile, content);
     });
 }
 function generateRootState(options, file) {

@@ -49,7 +49,7 @@ function generateContent(gen: any, action: ReducerAction, file: ReducerFile): vo
     gen.append((action.constantName).toString());
     gen.append('] = function(prev: ');
     gen.append((file.stateName).toString());
-    gen.append(', action: { type: string }): ');
+    gen.append(', action: IAction): ');
     gen.append((file.stateName).toString());
     gen.append(' {');
     gen.eol();

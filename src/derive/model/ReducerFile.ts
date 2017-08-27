@@ -7,6 +7,11 @@ export interface ReducerAction {
   reductionLine: string;
 }
 
+export interface ChildReducer {
+  fieldName: string;
+  path: string;
+}
+
 export interface ReducerFile {
   reducerFile: string;
   unlink: boolean;
@@ -14,4 +19,5 @@ export interface ReducerFile {
   imports: Import[];
   stateName: string;
   actions: ReducerAction[];
+  childReducers: ChildReducer[];
 }

@@ -61,7 +61,7 @@ function generateContent(gen: any, file: ActionsFile): void {
         gen.forceEol();
     }
     gen.eol();
-    gen.append('export allActions = [');
+    gen.append('export const allActions = [');
     gen.eol();
     for (let action of file.actions) {
         gen.append('  ');

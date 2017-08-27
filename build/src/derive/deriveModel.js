@@ -14,13 +14,22 @@ function deriveModel(options, input) {
     }
     tree = tree_2.populateTraceToRoot(tree);
     const reductionMap = hash_map_1.toStringLookup(input.reductions, red => red.stateId, hash_map_1.ds);
-    const actionFiles = states.map(state => createActionsFile_1.createActionFile(state, reductionMap[state.id]));
-    const reducers = states.map(state => createReducerFile_1.createReducerFile(state, reductionMap[state.id], tree));
-    return {
-        actionFiles,
-        reducerFiles: [],
-        dispatcherFiles: []
-    };
+    return createDerivedModel(states, reductionMap, tree);
 }
 exports.deriveModel = deriveModel;
+function createDerivedModel(states, reductionMap, tree) {
+    const actionFiles = [];
+    const reducerFiles = [];
+    const dispatcherFiles = [];
+    states.forEach(state => {
+        const actionFile = createActionsFile_1.createActionFile(state, reductionMap[state.id] || []);
+        actionFiles.push(actionFile);
+        reducerFiles.push(createReducerFile_1.createReducerFile(state, reductionMap[state.id] || [], actionFile, tree));
+    });
+    return {
+        actionFiles,
+        reducerFiles,
+        dispatcherFiles
+    };
+}
 //# sourceMappingURL=deriveModel.js.map
