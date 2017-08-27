@@ -4,11 +4,11 @@ import { stringMap, StringMap } from 'hash-map';
 import * as changeCase from 'change-case';
 import { constants } from '../../constants';
 import { combinePath } from '../../tools';
-import { mapTree, createFields, createRootNode } from '.';
+import { mapTree, createFields, createRootNode, isRoot } from '.';
 
 export function createRootState(tree: Tree, path: string, name: string = constants.defaultRootStateName): Tree {
-  const rootNodes = tree.nodes.filter(node => node.isRoot);
-  const restOfNodes = tree.nodes.filter(node => !node.isRoot);
+  const rootNodes = tree.nodes.filter(isRoot);
+  const restOfNodes = tree.nodes.filter(node => !isRoot(node));
   const state = createState(name, path, rootNodes);
   const rootNode = createRootNode(state, rootNodes);
   const nodes = [rootNode, ...rootNodes.map(node => fixNode(node, rootNode)), ...restOfNodes];
@@ -16,10 +16,9 @@ export function createRootState(tree: Tree, path: string, name: string = constan
 }
 
 function fixNode(node: TreeNode, rootNode: TreeNode): TreeNode {
-  const fieldName = rootNode.children.find(child => child.childStateId === node.state.id).fieldName;
   return {
     ...node,
-    isRoot: false
+    parentIds: [rootNode.state.id]
   };
 }
 

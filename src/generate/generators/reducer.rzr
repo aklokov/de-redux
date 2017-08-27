@@ -1,0 +1,17 @@
+@import { ReducerFile } from '../../derive/model';
+@import { importsGenerator, disclaimer, isLast } from '.';
+@import { reducerActionGenerator } from '.';
+@import { stringMap } from 'hash-map';
+@parameters file: ReducerFile
+@exportname reducerGenerator
+
+@[disclaimer()]
+@[importsGenerator(file.imports)]
+type actor = (prev: @file.stateName, action: { type: string }) => @file.stateName;
+const map = stringMap<actor>();
+@foreach(let action of file.actions){
+@[reducerActionGenerator(action, file)]
+@eol
+}
+
+export const allActions = actions.allActions;

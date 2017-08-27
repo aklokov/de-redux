@@ -1,11 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const __1 = require("..");
 const _1 = require(".");
-const constants_1 = require("../constants");
+const constants_1 = require("../../constants");
 const _ = require("lodash");
 const changeCase = require("change-case");
 function createActionFile(state, reductions) {
-    const actionsFile = _1.createFilePath(state.folder, state.name, constants_1.constants.actionsFile);
+    const actionsFile = __1.createFilePath(state.folder, state.name, constants_1.constants.actionsFile);
     if (!reductions) {
         return {
             actionsFile,
@@ -17,7 +18,7 @@ function createActionFile(state, reductions) {
     return {
         actionsFile,
         unlink: false,
-        actions: reductions.filter(red => !_1.isInit(red)).map(reduction => createAction(state.name, reduction)),
+        actions: reductions.filter(red => !__1.isInit(red)).map(reduction => createAction(state.name, reduction)),
         imports: _1.createImports(actionsFile, _.flatten(reductions.map(red => red.parameters.slice(1))))
     };
 }

@@ -6,9 +6,9 @@ function createRootNode(state, rootNodes) {
     return {
         state,
         children: state.fields.map(field => createNodeChild(field, nodesById)).filter(s => s),
-        isRoot: true,
-        traceToRoot: null,
-        noSubscribe: false
+        traceToRoot: [],
+        parentIds: [],
+        rootId: state.id
     };
 }
 exports.createRootNode = createRootNode;

@@ -48,11 +48,21 @@ function generateContent(gen, file) {
         gen.indent = indent + '';
         _1.actionGenerator.generateContent(gen, action);
         gen.indent = indent;
-        if (action !== file.actions[file.actions.length - 1]) {
-            gen.forceEol();
+        gen.forceEol();
+    }
+    gen.eol();
+    gen.append('export allActions = [');
+    gen.eol();
+    for (let action of file.actions) {
+        gen.append('  ');
+        gen.append((action.constantName).toString());
+        if (!_1.isLast(action, file.actions)) {
+            gen.append(',');
         }
         gen.eol();
     }
+    gen.append('];');
+    gen.eol();
 }
 exports.actionsGenerator = {
     generate,

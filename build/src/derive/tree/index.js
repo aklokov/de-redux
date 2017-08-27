@@ -8,7 +8,8 @@ __export(require("./createNode"));
 __export(require("./createRootNode"));
 __export(require("./createRootState"));
 __export(require("./createTree"));
+__export(require("./isRoot"));
 __export(require("./mapTree"));
-__export(require("./populateIsRoot"));
+__export(require("./populateParentIds"));
 __export(require("./populateTraceToRoot"));
 //# sourceMappingURL=index.js.map

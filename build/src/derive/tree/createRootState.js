@@ -5,8 +5,8 @@ const constants_1 = require("../../constants");
 const tools_1 = require("../../tools");
 const _1 = require(".");
 function createRootState(tree, path, name = constants_1.constants.defaultRootStateName) {
-    const rootNodes = tree.nodes.filter(node => node.isRoot);
-    const restOfNodes = tree.nodes.filter(node => !node.isRoot);
+    const rootNodes = tree.nodes.filter(_1.isRoot);
+    const restOfNodes = tree.nodes.filter(node => !_1.isRoot(node));
     const state = createState(name, path, rootNodes);
     const rootNode = _1.createRootNode(state, rootNodes);
     const nodes = [rootNode, ...rootNodes.map(node => fixNode(node, rootNode)), ...restOfNodes];
@@ -14,8 +14,7 @@ function createRootState(tree, path, name = constants_1.constants.defaultRootSta
 }
 exports.createRootState = createRootState;
 function fixNode(node, rootNode) {
-    const fieldName = rootNode.children.find(child => child.childStateId === node.state.id).fieldName;
-    return Object.assign({}, node, { isRoot: false });
+    return Object.assign({}, node, { parentIds: [rootNode.state.id] });
 }
 function createState(name, path, rootNodes) {
     const stateFile = changeCase.paramCase(name) + constants_1.constants.state;

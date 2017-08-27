@@ -7,24 +7,23 @@ function populateTraceToRoot(tree) {
 }
 exports.populateTraceToRoot = populateTraceToRoot;
 function populateTraceForNodes(tree) {
-    let toProcessChildren = tree.nodes.filter(node => node.isRoot);
-    const nodesMap = hash_map_1.stringMap();
-    const processed = [...toProcessChildren];
-    while (toProcessChildren.length) {
-        const node = toProcessChildren.shift();
-        node.children.forEach(child => {
-            const processedNode = nodesMap[child.childStateId];
-            if (processedNode) {
-                processedNode.noSubscribe = true;
-                processedNode.traceToRoot = [];
-                return;
-            }
-            const childNode = Object.assign({}, tree.nodesById[child.childStateId], { traceToRoot: [...(node.traceToRoot || []), child.fieldName] });
-            nodesMap[child.childStateId] = childNode;
-            processed.push(childNode);
-            toProcessChildren.push(childNode);
-        });
+    const processed = hash_map_1.stringMap();
+    return tree.nodes.map(node => populateTraceForNode(node, tree.nodesById, processed));
+}
+function populateTraceForNode(node, byId, processed) {
+    if (node.parentIds.length !== 1) {
+        return node;
     }
-    return processed;
+    const processedNode = processed[node.state.id];
+    if (processedNode) {
+        return processedNode;
+    }
+    const parentNode = populateTraceForNode(byId[node.parentIds[0]], byId, processed);
+    if (!parentNode.rootId) {
+        return processed[node.state.id] = node;
+    }
+    const child = parentNode.children.find(ch => ch.childStateId === node.state.id);
+    const result = Object.assign({}, node, { traceToRoot: [...parentNode.traceToRoot, child.fieldName], rootId: parentNode.rootId });
+    return processed[node.state.id] = result;
 }
 //# sourceMappingURL=populateTraceToRoot.js.map

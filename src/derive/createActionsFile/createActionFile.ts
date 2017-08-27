@@ -1,7 +1,8 @@
-import { ActionsFile, Action } from './model';
-import { State, Reduction } from '../parse/model';
-import { createFilePath, createImports, isInit } from '.';
-import { constants } from '../constants';
+import { ActionsFile, Action } from '../model';
+import { State, Reduction } from '../../parse/model';
+import { createFilePath, isInit } from '..';
+import { createImports } from '.';
+import { constants } from '../../constants';
 import * as _ from 'lodash';
 import * as changeCase from 'change-case';
 

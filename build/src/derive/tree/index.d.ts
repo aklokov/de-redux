@@ -4,6 +4,7 @@ export * from './createNode';
 export * from './createRootNode';
 export * from './createRootState';
 export * from './createTree';
+export * from './isRoot';
 export * from './mapTree';
-export * from './populateIsRoot';
+export * from './populateParentIds';
 export * from './populateTraceToRoot';

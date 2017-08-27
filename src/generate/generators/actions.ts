@@ -7,7 +7,7 @@
 // </auto-generated>
 // -----------------------------------------------------------------------------
 import { ActionsFile } from '../../derive/model';
-import { actionGenerator, importsGenerator, disclaimer } from '.';
+import { actionGenerator, importsGenerator, disclaimer, isLast } from '.';
 
 class Gen {
     public indent: string = '';
@@ -58,11 +58,21 @@ function generateContent(gen: any, file: ActionsFile): void {
         gen.indent = indent + '';
         actionGenerator.generateContent(gen, action);
         gen.indent = indent;
-        if (action !== file.actions[file.actions.length - 1]) {
-            gen.forceEol();
+        gen.forceEol();
+    }
+    gen.eol();
+    gen.append('export allActions = [');
+    gen.eol();
+    for (let action of file.actions) {
+        gen.append('  ');
+        gen.append((action.constantName).toString());
+        if (!isLast(action, file.actions)) {
+            gen.append(',');
         }
         gen.eol();
     }
+    gen.append('];');
+    gen.eol();
 }
 
 export const actionsGenerator = {

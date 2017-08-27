@@ -1,8 +1,8 @@
-import { Field, Type } from '../parse/model';
-import { Import } from './model';
+import { Field, Type } from '../../parse/model';
+import { Import } from '../model';
 import * as _ from 'lodash';
-import { createRelativePath } from '.';
-import { trimFilename } from '../tools';
+import { createRelativePath } from '..';
+import { trimFilename } from '../../tools';
 
 export function createImports(path: string, fields: Field[]): Import[] {
   const src = trimFilename(path);
