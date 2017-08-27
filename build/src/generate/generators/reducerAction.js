@@ -43,7 +43,7 @@ function generateContent(gen, action, file) {
     gen.append((file.stateName).toString());
     gen.append(' {');
     gen.eol();
-    gen.append('  const a = action as ');
+    gen.append('  const a = action as actions.');
     gen.append((action.name).toString());
     gen.append(';');
     gen.eol();

@@ -16,7 +16,7 @@ describe('manualTest', function (): void {
           '@mdmtools': ['app/services/tools/']
         }
       },
-      generateRootIn: '../../nielsen/csapps-metadata-manager/redux',
+      generateRootIn: '../../nielsen/csapps-metadata-manager/app/redux',
       rootStateName: 'MetadataState'
     };
     await generate(options);

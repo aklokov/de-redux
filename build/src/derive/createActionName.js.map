@@ -1,0 +1,1 @@
+{"version":3,"file":"createActionName.js","sourceRoot":"","sources":["../../../src/derive/createActionName.ts"],"names":[],"mappings":";;AAAA,0CAA0C;AAQ1C,0BAAiC,SAAoB;IACnD,MAAM,CAAC;QACL,YAAY,EAAE,UAAU,CAAC,YAAY,CAAC,SAAS,CAAC,IAAI,CAAC;QACrD,UAAU,EAAE,UAAU,CAAC,UAAU,CAAC,SAAS,CAAC,IAAI,CAAC,GAAG,QAAQ;KAC7D,CAAC;AACJ,CAAC;AALD,4CAKC"}

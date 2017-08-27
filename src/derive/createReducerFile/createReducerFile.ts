@@ -22,7 +22,7 @@ export function createReducerFile(state: State, reductions: Reduction[], actions
     unlink: false,
     stateName: state.name,
     imports: [...imports, ...childImports],
-    actions: reductions.map(red => createReducerAction(red, state, tree)).filter(i => i),
+    actions: reductions.filter(r => !isInit(r)).map(r => createReducerAction(r)),
     childReducers
   };
 }

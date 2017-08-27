@@ -12,9 +12,16 @@ function createImports(path, actions, reductions, state) {
         path: __1.createRelativePathToFile(actions, path)
     };
     const fieldImports = __1.createFieldImports(path, _.flatten(reductions.map(red => red.parameters)));
-    return [actionsImport, stringMap, ...fieldImports];
+    const reductionImports = reductions.map(red => createReductionImport(path, red));
+    return [actionsImport, stringMap, ...fieldImports, ...reductionImports];
 }
 exports.createImports = createImports;
+function createReductionImport(path, reduction) {
+    return {
+        importLine: `{ ${reduction.name} }`,
+        path: __1.createRelativePath(reduction.path, path)
+    };
+}
 function createChildReducerImports(path, children) {
     return children.map(child => ({
         importLine: `{ reducer as ${child.fieldName}Reducer, allActions as ${child.fieldName}Actions }`,

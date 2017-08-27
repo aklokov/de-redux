@@ -19,7 +19,7 @@ function createReducerFile(state, reductions, actionsFile, tree) {
         unlink: false,
         stateName: state.name,
         imports: [...imports, ...childImports],
-        actions: reductions.map(red => _1.createReducerAction(red, state, tree)).filter(i => i),
+        actions: reductions.filter(r => !__1.isInit(r)).map(r => _1.createReducerAction(r)),
         childReducers
     };
 }

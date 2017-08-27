@@ -1,7 +1,6 @@
 import { Import } from '.';
 
 export interface ReducerAction {
-  import: string;
   name: string;
   constantName: string;
   reductionLine: string;

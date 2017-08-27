@@ -5,7 +5,6 @@ const __2 = require("..");
 const constants_1 = require("../../constants");
 const tools_1 = require("../../tools");
 const _ = require("lodash");
-const changeCase = require("change-case");
 function createActionFile(state, reductions) {
     const actionsFile = __1.createFilePath(state.folder, state.name, constants_1.constants.actionsFile);
     if (!reductions.length) {
@@ -28,10 +27,11 @@ exports.createActionFile = createActionFile;
 function createAction(stateName, reduction) {
     const fields = reduction.parameters.slice(1).map(parm => `public ${parm.name}: ${parm.typename}`);
     const parameters = fields.join(', ');
+    const actionName = __1.createActionName(reduction);
     return {
-        constantName: changeCase.constantCase(reduction.name),
+        constantName: actionName.constantName,
         constantContent: `[${stateName}] - ${reduction.name}`,
-        name: changeCase.pascalCase(reduction.name) + 'Action',
+        name: actionName.actionName,
         parameters,
         noConstructor: !parameters.length
     };

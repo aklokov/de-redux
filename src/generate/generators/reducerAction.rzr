@@ -3,6 +3,6 @@
 @parameters action: ReducerAction, file: ReducerFile
 
 map[actions.@action.constantName] = function(prev: @file.stateName, action: IAction): @file.stateName {
-  const a = action as @action.name;
+  const a = action as actions.@action.name;
   return @action.reductionLine;
 }
