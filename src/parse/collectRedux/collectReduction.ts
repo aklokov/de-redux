@@ -22,9 +22,12 @@ function toReduction(path: string, match: string[], imports: StringMap<Type>): R
     return null;
   }
 
+  const trimName = name.trim();
+  const id = combinePath(path, trimName);
   return {
+    id,
     path,
-    name: name.trim(),
+    name: trimName,
     stateId: returnType.id,
     parameters: parameters
   };

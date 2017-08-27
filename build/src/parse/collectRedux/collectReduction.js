@@ -18,9 +18,12 @@ function toReduction(path, match, imports) {
     if (parameters.length && parameters[0].typename !== returnType.name) {
         return null;
     }
+    const trimName = name.trim();
+    const id = tools_1.combinePath(path, trimName);
     return {
+        id,
         path,
-        name: name.trim(),
+        name: trimName,
         stateId: returnType.id,
         parameters: parameters
     };

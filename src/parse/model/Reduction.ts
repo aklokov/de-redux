@@ -1,8 +1,6 @@
 import { Field, Type } from '.';
 
-export interface Reduction {
-  name: string;
-  path: string;
+export interface Reduction extends Type {
   stateId: string;
   parameters: Field[];
 }

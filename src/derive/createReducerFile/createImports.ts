@@ -2,7 +2,8 @@ import { State, Reduction, Field, Type } from '../../parse/model';
 import { Tree } from '../tree';
 import { Import } from '../model';
 import * as _ from 'lodash';
-import { createRelativePath, createRelativePathToFile, createFieldImports } from '..';
+import { createRelativePath, createRelativePathToFile } from '..';
+import { createFieldImports, createTypeImports } from '..';
 import { trimFilename } from '../../tools';
 import { ActionsFile, ChildReducer } from '../model';
 
@@ -17,8 +18,9 @@ export function createImports(path: string, actions: string, reductions: Reducti
     path: createRelativePathToFile(actions, path)
   };
 
+
   const fieldImports = createFieldImports(path, _.flatten(reductions.map(red => red.parameters)));
-  const reductionImports = reductions.map(red => createReductionImport(path, red));
+  const reductionImports = createTypeImports(path, reductions);
   return [actionsImport, stringMap, ...fieldImports, ...reductionImports];
 }
 

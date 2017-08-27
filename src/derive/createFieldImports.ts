@@ -2,15 +2,20 @@ import { Field, Type } from '../parse/model';
 import { Import } from './model';
 import * as _ from 'lodash';
 import { createTypeImport } from '.';
-import { trimFilename } from '../tools';
+import { trimFilename, splitInGroups } from '../tools';
 
 export function createFieldImports(path: string, fields: Field[]): Import[] {
-  const imported = _.flatten(fields.map(field => field.imported));
-  const unique = _.uniqBy(imported, imp => imp.id);
+  const types = _.flatten(fields.map(field => field.imported));
+  return createTypeImports(path, types);
+}
+
+export function createTypeImports(path: string, types: Type[]): Import[] {
+  const unique = _.uniqBy(types, imp => imp.id);
   const grouped = _.groupBy(unique, un => un.path);
-  const result = [];
+  let result = [];
   _.forIn(grouped, grp => {
-    result.push(createTypeImport(grp, path));
+    const groups = splitInGroups(grp, 5).map(grp => createTypeImport(grp, path));
+    result = [...result, ...groups];
   });
 
   return result;

@@ -10,5 +10,6 @@ __export(require("./execRegex"));
 __export(require("./isDirectory"));
 __export(require("./isFunction"));
 __export(require("./last-first"));
+__export(require("./splitInGroups"));
 __export(require("./stripLast"));
 //# sourceMappingURL=index.js.map

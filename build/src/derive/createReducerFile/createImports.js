@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const _ = require("lodash");
 const __1 = require("..");
+const __2 = require("..");
 const stringMap = {
     importLine: '{ stringMap }',
     path: 'hash-map'
@@ -11,8 +12,8 @@ function createImports(path, actions, reductions, state) {
         importLine: '* as actions',
         path: __1.createRelativePathToFile(actions, path)
     };
-    const fieldImports = __1.createFieldImports(path, _.flatten(reductions.map(red => red.parameters)));
-    const reductionImports = reductions.map(red => createReductionImport(path, red));
+    const fieldImports = __2.createFieldImports(path, _.flatten(reductions.map(red => red.parameters)));
+    const reductionImports = __2.createTypeImports(path, reductions);
     return [actionsImport, stringMap, ...fieldImports, ...reductionImports];
 }
 exports.createImports = createImports;
