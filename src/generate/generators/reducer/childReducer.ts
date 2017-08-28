@@ -70,7 +70,7 @@ function generateContent(gen: any, child: ChildReducer, reducer: ReducerFile): v
     gen.append('}');
     gen.eol();
     gen.forceEol();
-    gen.append('for(let action of ');
+    gen.append('for (let action of ');
     gen.append((child.fieldName).toString());
     gen.append('Actions) {');
     gen.eol();

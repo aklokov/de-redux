@@ -4,24 +4,32 @@ import { createFilePath, isInit, createActionName } from '..';
 import { createReductionImports } from '..';
 import { constants } from '../../constants';
 import { trimFilename } from '../../tools';
+import { Tree } from '../tree';
+import { needActionsFile } from '..';
 import * as _ from 'lodash';
 
-export function createActionFile(state: State, reductions: Reduction[]): ActionsFile {
+export function createActionFile(state: State, tree: Tree): ActionsFile {
   const actionsFile = createFilePath(state.folder, state.name, constants.actionsFile);
-  if (!reductions.length) {
-    return {
-      actionsFile,
-      unlink: true,
-      actions: [],
-      imports: []
-    };
+  if (!needActionsFile(state.id, tree)) {
+    return createUnlink(actionsFile);
   }
+
+  const reductions = tree.reductionMap[state.id];
   const path = trimFilename(actionsFile);
   return {
     actionsFile,
     unlink: false,
     actions: reductions.filter(red => !isInit(red)).map(reduction => createAction(state.name, reduction)),
     imports: createReductionImports(path, reductions)
+  };
+}
+
+function createUnlink(file: string): ActionsFile {
+  return {
+    actionsFile: file,
+    unlink: true,
+    actions: null,
+    imports: null
   };
 }
 

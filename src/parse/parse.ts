@@ -1,11 +1,12 @@
 import { Model } from './model';
 import * as fse from 'fs-extra';
 import { mergeModels } from '.';
-import { isDirectory, combinePath } from '../tools';
+import { isDirectory, combinePath, trimExtension } from '../tools';
 import { collectState, collectReduction } from './collectRedux';
 import { collectFileInfo } from './collectFileInfo';
 import { Options } from '../Options';
 import { constants } from '../constants';
+import * as changeCase from 'change-case';
 
 export async function parseFiles(options: Options, path: string): Promise<Model> {
   const files = await fse.readdir(path);
@@ -18,6 +19,15 @@ export async function parseFiles(options: Options, path: string): Promise<Model>
 async function collectFile(options: Options, path: string, file: string): Promise<Model> {
   if (await isDirectory(combinePath(path, file))) {
     return await parseFiles(options, combinePath(path, file));
+  }
+
+  if (options.generateRootIn === path) {
+    const rootFile = changeCase.paramCase(options.rootStateName);
+    const filename = trimExtension(file);
+    if (filename === rootFile + constants.state ||
+      filename === rootFile + constants.reduction) {
+      return null;
+    }
   }
 
   if (file.endsWith(constants.stateExt)) {

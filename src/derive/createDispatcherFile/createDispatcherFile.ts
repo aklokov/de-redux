@@ -3,14 +3,18 @@ import { State, Reduction } from '../../parse/model';
 import { Tree, TreeNode, NodeChild } from '../tree';
 import { createFilePath, isInit } from '..';
 import { constants } from '../../constants';
-import { createImports, createFullImports } from '.';
+import { createImports, createFullImports, createDispatcherAction } from '.';
 import { trimFilename } from '../../tools';
+import { needDispatcherFile } from '..';
 
-export function createDispatcherFile(state: State, reductions: Reduction[], actionsFile: ActionsFile, tree: Tree): DispatcherFile {
+
+export function createDispatcherFile(state: State, actionsFile: ActionsFile, tree: Tree): DispatcherFile {
   const dispatcherFile = createFilePath(state.folder, state.name, constants.dispatcherFile);
-  if (!reductions.length) {
+  if (!needDispatcherFile(state.id, tree)) {
     return createUnlink(dispatcherFile);
   }
+
+  const reductions = tree.reductionMap[state.id] || [];
   const path = trimFilename(dispatcherFile);
   const node = tree.nodesById[state.id];
   const canSubscribe = node.parentIds.length < 2;
@@ -22,7 +26,8 @@ export function createDispatcherFile(state: State, reductions: Reduction[], acti
 
   function createSubscribable(): DispatcherFile {
     const root = tree.nodesById[node.rootId];
-    const imports = createFullImports(path, actionsFile.actionsFile, reductions, root.state);
+    const imports = createFullImports(path, actionsFile.actionsFile, reductions, state, root.state);
+    const actions = reductions.filter(r => !isInit(r)).map(red => createDispatcherAction(red));
     return {
       dispatcherFile,
       unlink: false,
@@ -31,12 +36,13 @@ export function createDispatcherFile(state: State, reductions: Reduction[], acti
       rootStateName: root.state.name,
       traceToRoot: createTrace(node.traceToRoot),
       imports,
-      actions: []
+      actions
     };
   }
 
   function createUnsubscribable(): DispatcherFile {
-    const imports = createImports(path, actionsFile.actionsFile, reductions);
+    const imports = createImports(path, actionsFile.actionsFile, reductions, state);
+    const actions = reductions.map(red => createDispatcherAction(red));
     return {
       dispatcherFile,
       unlink: false,
@@ -45,7 +51,7 @@ export function createDispatcherFile(state: State, reductions: Reduction[], acti
       rootStateName: null,
       traceToRoot: null,
       imports,
-      actions: []
+      actions
     };
   }
 }

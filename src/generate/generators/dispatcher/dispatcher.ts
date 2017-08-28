@@ -98,8 +98,8 @@ function generateContent(gen: any, file: DispatcherFile): void {
     gen.eol();
     gen.append('  }');
     gen.eol();
-    gen.forceEol();
     if (file.canSubscribe) {
+        gen.forceEol();
         gen.append('  getState(): ');
         gen.append((file.stateName).toString());
         gen.append(' {');
@@ -117,11 +117,11 @@ function generateContent(gen: any, file: DispatcherFile): void {
         gen.eol();
         gen.append('  }');
         gen.eol();
-        gen.forceEol();
     }
     for (let action of file.actions) {
+        gen.forceEol();
         gen.indent = indent + '  ';
-        dispatcherActionGenerator.generateContent(gen, action, file);
+        dispatcherActionGenerator.generateContent(gen, action);
         gen.indent = indent;
         gen.eol();
     }

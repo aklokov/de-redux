@@ -5,3 +5,8 @@
 
 @[disclaimer()]
 @[importsGenerator(file.imports)]
+export interface @file.state.name {
+ @foreach(let field of file.state.fields){
+  @field.name: @field.typename;
+ }
+}

@@ -2,7 +2,7 @@ import { State, Reduction, Field, Type } from '../../parse/model';
 import { Tree } from '../tree';
 import { Import } from '../model';
 import * as _ from 'lodash';
-import { createRelativePath, createRelativePathToFile } from '..';
+import { createRelativePath, createRelativePathToFile, needActionsFile } from '..';
 import { createReductionImports, createTypeImports, createActionsImport } from '..';
 import { trimFilename } from '../../tools';
 import { ActionsFile, ChildReducer } from '../model';
@@ -12,11 +12,15 @@ const stringMap: Import = {
   path: 'hash-map'
 };
 
-export function createImports(path: string, actions: string, reductions: Reduction[]): Import[] {
-  const actionsImport = createActionsImport(path, actions);
+export function createImports(path: string, reductions: Reduction[], state: State): Import[] {
   const fieldImports = createReductionImports(path, reductions);
   const reductionImports = createTypeImports(path, reductions);
-  return [actionsImport, stringMap, ...fieldImports, ...reductionImports];
+  return [stringMap, ...fieldImports, ...reductionImports, ...createTypeImports(path, [state])];
+}
+
+export function createImportsWithAction(path: string, actions: string, reductions: Reduction[], state: State): Import[] {
+  const actionsImport = createActionsImport(path, actions);
+  return [actionsImport, ...createImports(path, reductions, state)];
 }
 
 function createReductionImport(path: string, reduction: Reduction): Import {
@@ -28,7 +32,7 @@ function createReductionImport(path: string, reduction: Reduction): Import {
 
 export function createChildReducerImports(path: string, children: ChildReducer[]): Import[] {
   return children.map(child => ({
-    importLine: `{ reducer as ${child.fieldName}Reducer, allActions as ${child.fieldName}Actions }`,
+    importLine: `{ reducer as ${child.fieldName}Reducer, allActions as ${child.fieldName}Actions, Init as ${child.fieldName}Init }`,
     path: createRelativePathToFile(child.path, path)
   }));
 }

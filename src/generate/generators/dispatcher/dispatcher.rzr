@@ -25,8 +25,8 @@ export function selector(state: @file.rootStateName): @file.stateName {
 export class @(file.stateName)DispatcherImpl {
   constructor(private service: IReduxService) {
   }
-@eol
  @if(file.canSubscribe) {
+@eol
   getState(): @file.stateName {
     return selector(this.service.getState());
   @}
@@ -34,9 +34,9 @@ export class @(file.stateName)DispatcherImpl {
   subscribe(subscription: (state: @file.stateName) => void): void {
     this.service.subscribe(state => subscription(selector(state)));
   @}
-@eol
  }
  @foreach(let action of file.actions){
-  @[dispatcherActionGenerator(action, file)]
+@eol
+  @[dispatcherActionGenerator(action)]
  }
 }

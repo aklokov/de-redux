@@ -6,7 +6,7 @@ import { constants } from '../../constants';
 import { combinePath } from '../../tools';
 import { mapTree, createFields, createRootNode, isRoot } from '.';
 
-export function createRootState(tree: Tree, path: string, name: string = constants.defaultRootStateName): Tree {
+export function createRootState(tree: Tree, path: string, name: string): Tree {
   const rootNodes = tree.nodes.filter(isRoot);
   const restOfNodes = tree.nodes.filter(node => !isRoot(node));
   const state = createState(name, path, rootNodes);

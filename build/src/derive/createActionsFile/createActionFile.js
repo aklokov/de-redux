@@ -4,16 +4,13 @@ const __1 = require("..");
 const __2 = require("..");
 const constants_1 = require("../../constants");
 const tools_1 = require("../../tools");
-function createActionFile(state, reductions) {
+const __3 = require("..");
+function createActionFile(state, tree) {
     const actionsFile = __1.createFilePath(state.folder, state.name, constants_1.constants.actionsFile);
-    if (!reductions.length) {
-        return {
-            actionsFile,
-            unlink: true,
-            actions: [],
-            imports: []
-        };
+    if (!__3.needActionsFile(state.id, tree)) {
+        return createUnlink(actionsFile);
     }
+    const reductions = tree.reductionMap[state.id];
     const path = tools_1.trimFilename(actionsFile);
     return {
         actionsFile,
@@ -23,6 +20,14 @@ function createActionFile(state, reductions) {
     };
 }
 exports.createActionFile = createActionFile;
+function createUnlink(file) {
+    return {
+        actionsFile: file,
+        unlink: true,
+        actions: null,
+        imports: null
+    };
+}
 function createAction(stateName, reduction) {
     const fields = reduction.parameters.slice(1).map(parm => `public ${parm.name}: ${parm.typename}`);
     const parameters = fields.join(', ');

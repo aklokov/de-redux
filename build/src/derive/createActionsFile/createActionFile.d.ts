@@ -1,3 +1,4 @@
 import { ActionsFile } from '../model';
-import { State, Reduction } from '../../parse/model';
-export declare function createActionFile(state: State, reductions: Reduction[]): ActionsFile;
+import { State } from '../../parse/model';
+import { Tree } from '../tree';
+export declare function createActionFile(state: State, tree: Tree): ActionsFile;

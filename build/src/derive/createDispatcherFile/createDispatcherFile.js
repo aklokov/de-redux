@@ -4,11 +4,13 @@ const __1 = require("..");
 const constants_1 = require("../../constants");
 const _1 = require(".");
 const tools_1 = require("../../tools");
-function createDispatcherFile(state, reductions, actionsFile, tree) {
+const __2 = require("..");
+function createDispatcherFile(state, actionsFile, tree) {
     const dispatcherFile = __1.createFilePath(state.folder, state.name, constants_1.constants.dispatcherFile);
-    if (!reductions.length) {
+    if (!__2.needDispatcherFile(state.id, tree)) {
         return createUnlink(dispatcherFile);
     }
+    const reductions = tree.reductionMap[state.id] || [];
     const path = tools_1.trimFilename(dispatcherFile);
     const node = tree.nodesById[state.id];
     const canSubscribe = node.parentIds.length < 2;
@@ -20,7 +22,8 @@ function createDispatcherFile(state, reductions, actionsFile, tree) {
     }
     function createSubscribable() {
         const root = tree.nodesById[node.rootId];
-        const imports = _1.createFullImports(path, actionsFile.actionsFile, reductions, root.state);
+        const imports = _1.createFullImports(path, actionsFile.actionsFile, reductions, state, root.state);
+        const actions = reductions.filter(r => !__1.isInit(r)).map(red => _1.createDispatcherAction(red));
         return {
             dispatcherFile,
             unlink: false,
@@ -29,11 +32,12 @@ function createDispatcherFile(state, reductions, actionsFile, tree) {
             rootStateName: root.state.name,
             traceToRoot: createTrace(node.traceToRoot),
             imports,
-            actions: []
+            actions
         };
     }
     function createUnsubscribable() {
-        const imports = _1.createImports(path, actionsFile.actionsFile, reductions);
+        const imports = _1.createImports(path, actionsFile.actionsFile, reductions, state);
+        const actions = reductions.map(red => _1.createDispatcherAction(red));
         return {
             dispatcherFile,
             unlink: false,
@@ -42,7 +46,7 @@ function createDispatcherFile(state, reductions, actionsFile, tree) {
             rootStateName: null,
             traceToRoot: null,
             imports,
-            actions: []
+            actions
         };
     }
 }

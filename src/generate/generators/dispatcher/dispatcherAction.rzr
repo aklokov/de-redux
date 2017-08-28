@@ -1,5 +1,7 @@
-@import { DispatcherAction, DispatcherFile } from '../../../derive/model';
+@import { DispatcherAction } from '../../../derive/model';
 @exportname dispatcherActionGenerator
-@parameters action: DispatcherAction, file: DispatcherFile
+@parameters action: DispatcherAction
 
-
+@(action.name)(@action.fullParameters): void {
+  this.service.dispatch(new actions.@(action.actionName)(@action.parameters));
+}

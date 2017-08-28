@@ -1,6 +1,7 @@
 export declare const constants: {
     index: string;
     state: string;
+    reduction: string;
     stateExt: string;
     reductionExt: string;
     actionsFile: string;

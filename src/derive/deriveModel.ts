@@ -8,6 +8,7 @@ import { createDispatcherFile } from './createDispatcherFile';
 import { toStringLookup, ds, StringMap } from 'hash-map';
 import { createTree, Tree } from './tree';
 import { createRootState, populateTraceToRoot } from './tree';
+import { createRootStateFile } from './createRootState';
 
 export function deriveModel(options: Options, input: InputModel): Model {
   let tree = createTree(options, input.states);
@@ -17,26 +18,31 @@ export function deriveModel(options: Options, input: InputModel): Model {
     states = [...states, tree.rootState];
   }
 
-  tree = populateTraceToRoot(tree);
-  const reductionMap = toStringLookup(input.reductions, red => red.stateId, ds);
-  return createDerivedModel(states, reductionMap, tree);
+  tree = {
+    ...populateTraceToRoot(tree),
+    reductionMap: toStringLookup(input.reductions, red => red.stateId, ds)
+  };
+
+  return createDerivedModel(states, tree);
 }
 
-function createDerivedModel(states: State[], reductionMap: StringMap<Reduction[]>, tree: Tree): Model {
+function createDerivedModel(states: State[], tree: Tree): Model {
   const actionFiles: ActionsFile[] = [];
   const reducerFiles: ReducerFile[] = [];
   const dispatcherFiles: DispatcherFile[] = [];
   states.forEach(state => {
-    const reductions = reductionMap[state.id] || [];
-    const actionFile = createActionFile(state, reductions);
+    const actionFile = createActionFile(state, tree);
     actionFiles.push(actionFile);
-    reducerFiles.push(createReducerFile(state, reductions, actionFile, tree));
-    dispatcherFiles.push(createDispatcherFile(state, reductions, actionFile, tree));
+    reducerFiles.push(createReducerFile(state, actionFile, tree));
+    dispatcherFiles.push(createDispatcherFile(state, actionFile, tree));
   });
+
+  const rootStateFile = tree.rootState && createRootStateFile(tree);
 
   return {
     actionFiles,
     reducerFiles,
-    dispatcherFiles
+    dispatcherFiles,
+    rootState: rootStateFile
   };
 }

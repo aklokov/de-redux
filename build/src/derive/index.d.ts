@@ -7,3 +7,4 @@ export * from './createRelativePath';
 export * from './createTypeImport';
 export * from './deriveModel';
 export * from './isInit';
+export * from './needFile';

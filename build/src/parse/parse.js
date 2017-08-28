@@ -14,6 +14,7 @@ const tools_1 = require("../tools");
 const collectRedux_1 = require("./collectRedux");
 const collectFileInfo_1 = require("./collectFileInfo");
 const constants_1 = require("../constants");
+const changeCase = require("change-case");
 function parseFiles(options, path) {
     return __awaiter(this, void 0, void 0, function* () {
         const files = yield fse.readdir(path);
@@ -27,6 +28,14 @@ function collectFile(options, path, file) {
     return __awaiter(this, void 0, void 0, function* () {
         if (yield tools_1.isDirectory(tools_1.combinePath(path, file))) {
             return yield parseFiles(options, tools_1.combinePath(path, file));
+        }
+        if (options.generateRootIn === path) {
+            const rootFile = changeCase.paramCase(options.rootStateName);
+            const filename = tools_1.trimExtension(file);
+            if (filename === rootFile + constants_1.constants.state ||
+                filename === rootFile + constants_1.constants.reduction) {
+                return null;
+            }
         }
         if (file.endsWith(constants_1.constants.stateExt)) {
             const fileInfo = yield collectFileInfo_1.collectFileInfo(options, path, file);

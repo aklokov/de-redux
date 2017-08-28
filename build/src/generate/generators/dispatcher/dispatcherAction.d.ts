@@ -1,5 +1,5 @@
-import { DispatcherAction, DispatcherFile } from '../../../derive/model';
+import { DispatcherAction } from '../../../derive/model';
 export declare const dispatcherActionGenerator: {
-    generate: (action: DispatcherAction, file: DispatcherFile) => string;
-    generateContent: (gen: any, action: DispatcherAction, file: DispatcherFile) => void;
+    generate: (action: DispatcherAction) => string;
+    generateContent: (gen: any, action: DispatcherAction) => void;
 };

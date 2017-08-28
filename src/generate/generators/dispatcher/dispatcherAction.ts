@@ -6,7 +6,7 @@
 //  manual changes to this file will be overwritten if the code is regenerated.
 // </auto-generated>
 // -----------------------------------------------------------------------------
-import { DispatcherAction, DispatcherFile } from '../../../derive/model';
+import { DispatcherAction } from '../../../derive/model';
 
 class Gen {
     public indent: string = '';
@@ -37,14 +37,27 @@ class Gen {
     }
 }
 
-function generate(action: DispatcherAction, file: DispatcherFile): string {
+function generate(action: DispatcherAction): string {
     const gen = new Gen();
-    generateContent(gen, action, file);
+    generateContent(gen, action);
     return gen.toString();
 }
 
-function generateContent(gen: any, action: DispatcherAction, file: DispatcherFile): void {
+function generateContent(gen: any, action: DispatcherAction): void {
     const indent = gen.indent;
+    gen.append((action.name).toString());
+    gen.append('(');
+    gen.append((action.fullParameters).toString());
+    gen.append('): void {');
+    gen.eol();
+    gen.append('  this.service.dispatch(new actions.');
+    gen.append((action.actionName).toString());
+    gen.append('(');
+    gen.append((action.parameters).toString());
+    gen.append('));');
+    gen.eol();
+    gen.append('}');
+    gen.eol();
 }
 
 export const dispatcherActionGenerator = {

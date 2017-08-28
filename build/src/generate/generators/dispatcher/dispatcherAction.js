@@ -28,13 +28,26 @@ class Gen {
         return this.lines.join('');
     }
 }
-function generate(action, file) {
+function generate(action) {
     const gen = new Gen();
-    generateContent(gen, action, file);
+    generateContent(gen, action);
     return gen.toString();
 }
-function generateContent(gen, action, file) {
+function generateContent(gen, action) {
     const indent = gen.indent;
+    gen.append((action.name).toString());
+    gen.append('(');
+    gen.append((action.fullParameters).toString());
+    gen.append('): void {');
+    gen.eol();
+    gen.append('  this.service.dispatch(new actions.');
+    gen.append((action.actionName).toString());
+    gen.append('(');
+    gen.append((action.parameters).toString());
+    gen.append('));');
+    gen.eol();
+    gen.append('}');
+    gen.eol();
 }
 exports.dispatcherActionGenerator = {
     generate,

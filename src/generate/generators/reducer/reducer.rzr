@@ -19,9 +19,29 @@ const map = stringMap<actor>();
 @[reducerActionGenerator(action, file)]
 }
 @eol
-export function reducer(prev: @file.stateName = init(), action: IAction): @file.stateName {
+@if(!file.initFields.length){
+export const Init = init;
+} else {
+export function Init(): @file.stateName {
+  return {
+ @foreach(let field of file.initFields){
+   @if(field.isNull){
+     @field.field: null@if(!isLast(field, file.initFields)){,}
+   } else {
+     @field.field: @(field.field)Init()@if(!isLast(field, file.initFields)){,}
+   }
+ }
+  @};
+@}
+}
+@eol
+export function reducer(prev: @file.stateName = Init(), action: IAction): @file.stateName {
   const specificReducer = map[action.type];
   return (specificReducer && specificReducer(prev, action)) || prev;
 }
 @eol
-export const allActions = actions.allActions;
+export const allActions = [
+@foreach(let exported of file.exportedActions) {
+  ...@exported@if(!isLast(exported, file.exportedActions)){,}
+}
+];

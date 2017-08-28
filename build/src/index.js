@@ -12,11 +12,13 @@ function __export(m) {
 }
 Object.defineProperty(exports, "__esModule", { value: true });
 const parse_1 = require("./parse/parse");
+const constants_1 = require("./constants");
 __export(require("./Options"));
 const deriveModel_1 = require("./derive/deriveModel");
 const generate_1 = require("./generate/generate");
 function generate(options) {
     return __awaiter(this, void 0, void 0, function* () {
+        options = Object.assign({ rootStateName: constants_1.constants.defaultRootStateName }, options);
         const parseModel = yield parse_1.parseFiles(options, options.path);
         const derive = deriveModel_1.deriveModel(options, parseModel);
         yield generate_1.generateFiles(options, derive);

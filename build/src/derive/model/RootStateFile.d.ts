@@ -1,11 +1,7 @@
 import { Import } from '.';
-export interface ChildState {
-    name: string;
-    typeName: string;
-}
+import { State } from '../../parse/model';
 export interface RootStateFile {
     rootStateFile: string;
+    state: State;
     imports: Import[];
-    name: string;
-    childStates: ChildState[];
 }

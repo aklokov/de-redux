@@ -81,9 +81,46 @@ function generateContent(gen: any, file: ReducerFile): void {
         gen.eol();
     }
     gen.forceEol();
+    if (!file.initFields.length) {
+        gen.append('export const Init = init;');
+        gen.eol();
+    } else {
+        gen.append('export function Init(): ');
+        gen.append((file.stateName).toString());
+        gen.append(' {');
+        gen.eol();
+        gen.append('  return {');
+        gen.eol();
+        for (let field of file.initFields) {
+            if (field.isNull) {
+                gen.append('     ');
+                gen.append((field.field).toString());
+                gen.append(': null');
+                if (!isLast(field, file.initFields)) {
+                    gen.append(',');
+                }
+                gen.eol();
+            } else {
+                gen.append('     ');
+                gen.append((field.field).toString());
+                gen.append(': ');
+                gen.append((field.field).toString());
+                gen.append('Init()');
+                if (!isLast(field, file.initFields)) {
+                    gen.append(',');
+                }
+                gen.eol();
+            }
+        }
+        gen.append('  };');
+        gen.eol();
+        gen.append('}');
+        gen.eol();
+    }
+    gen.forceEol();
     gen.append('export function reducer(prev: ');
     gen.append((file.stateName).toString());
-    gen.append(' = init(), action: IAction): ');
+    gen.append(' = Init(), action: IAction): ');
     gen.append((file.stateName).toString());
     gen.append(' {');
     gen.eol();
@@ -94,7 +131,17 @@ function generateContent(gen: any, file: ReducerFile): void {
     gen.append('}');
     gen.eol();
     gen.forceEol();
-    gen.append('export const allActions = actions.allActions;');
+    gen.append('export const allActions = [');
+    gen.eol();
+    for (let exported of file.exportedActions) {
+        gen.append('  ...');
+        gen.append((exported).toString());
+        if (!isLast(exported, file.exportedActions)) {
+            gen.append(',');
+        }
+        gen.eol();
+    }
+    gen.append('];');
     gen.eol();
 }
 

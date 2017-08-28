@@ -6,13 +6,17 @@ const stringMap = {
     importLine: '{ stringMap }',
     path: 'hash-map'
 };
-function createImports(path, actions, reductions) {
-    const actionsImport = __2.createActionsImport(path, actions);
+function createImports(path, reductions, state) {
     const fieldImports = __2.createReductionImports(path, reductions);
     const reductionImports = __2.createTypeImports(path, reductions);
-    return [actionsImport, stringMap, ...fieldImports, ...reductionImports];
+    return [stringMap, ...fieldImports, ...reductionImports, ...__2.createTypeImports(path, [state])];
 }
 exports.createImports = createImports;
+function createImportsWithAction(path, actions, reductions, state) {
+    const actionsImport = __2.createActionsImport(path, actions);
+    return [actionsImport, ...createImports(path, reductions, state)];
+}
+exports.createImportsWithAction = createImportsWithAction;
 function createReductionImport(path, reduction) {
     return {
         importLine: `{ ${reduction.name} }`,
@@ -21,7 +25,7 @@ function createReductionImport(path, reduction) {
 }
 function createChildReducerImports(path, children) {
     return children.map(child => ({
-        importLine: `{ reducer as ${child.fieldName}Reducer, allActions as ${child.fieldName}Actions }`,
+        importLine: `{ reducer as ${child.fieldName}Reducer, allActions as ${child.fieldName}Actions, Init as ${child.fieldName}Init }`,
         path: __1.createRelativePathToFile(child.path, path)
     }));
 }

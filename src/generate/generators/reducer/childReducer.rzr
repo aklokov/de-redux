@@ -9,6 +9,6 @@ function @(child.fieldName)Call(prev: @reducer.stateName, action: IAction): @red
   };
 }
 @eol
-for(let action of @(child.fieldName)Actions) {
+for (let action of @(child.fieldName)Actions) {
   map[action] = @(child.fieldName)Call;
 }

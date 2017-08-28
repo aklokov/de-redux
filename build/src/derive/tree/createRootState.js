@@ -4,7 +4,7 @@ const changeCase = require("change-case");
 const constants_1 = require("../../constants");
 const tools_1 = require("../../tools");
 const _1 = require(".");
-function createRootState(tree, path, name = constants_1.constants.defaultRootStateName) {
+function createRootState(tree, path, name) {
     const rootNodes = tree.nodes.filter(_1.isRoot);
     const restOfNodes = tree.nodes.filter(node => !_1.isRoot(node));
     const state = createState(name, path, rootNodes);

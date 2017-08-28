@@ -12,4 +12,5 @@ __export(require("./createRelativePath"));
 __export(require("./createTypeImport"));
 __export(require("./deriveModel"));
 __export(require("./isInit"));
+__export(require("./needFile"));
 //# sourceMappingURL=index.js.map

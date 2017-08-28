@@ -1,7 +1,10 @@
 import { Import } from '.';
 
 export interface DispatcherAction {
-
+  name: string;
+  actionName: string;
+  parameters: string;
+  fullParameters: string;
 }
 
 export interface DispatcherFile {
