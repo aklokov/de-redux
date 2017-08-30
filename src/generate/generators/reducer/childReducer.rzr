@@ -10,5 +10,10 @@ function @(child.fieldName)Call(prev: @reducer.stateName, action: IAction): @red
 }
 @eol
 for (let action of @(child.fieldName)Actions) {
-  map[action] = @(child.fieldName)Call;
+  const existing = map[action];
+  if (existing) {
+    map[action] = (prev, action) => @(child.fieldName)Call(existing(prev, action), action);
+  } else {
+    map[action] = @(child.fieldName)Call;
+  }
 }
