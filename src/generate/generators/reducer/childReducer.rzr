@@ -2,7 +2,7 @@
 @exportname childReducerGenerator
 @parameters child: ChildReducer, reducer: ReducerFile
 
-function @(child.fieldName)Call(prev: @reducer.stateName, action: IAction): @reducer.stateName {
+function @(child.fieldName)Call(prev: @reducer.stateName, action: { type: string }): @reducer.stateName {
   return {
     ...prev,
     @(child.fieldName): @(child.fieldName)Reducer(prev.@child.fieldName, action)

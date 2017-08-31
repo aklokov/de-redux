@@ -6,9 +6,8 @@
 
 @[disclaimer()]
 @[importsGenerator(file.imports)]
-export type IAction =  { type: string };
 @eol
-type actor = (prev: @file.stateName, action: IAction) => @file.stateName;
+type actor = (prev: @file.stateName, action: { type: string }) => @file.stateName;
 const map = stringMap<actor>();
 @foreach(let child of file.childReducers){
 @eol
@@ -35,12 +34,12 @@ export function Init(): @file.stateName {
 @}
 }
 @eol
-export function reducer(prev: @file.stateName = Init(), action: IAction): @file.stateName {
+export function reducer(prev: @file.stateName = Init(), action: { type: string }): @file.stateName {
   const specificReducer = map[action.type];
   return (specificReducer && specificReducer(prev, action)) || prev;
 }
 @eol
-export const allActions = [
+export const reduceable = [
 @foreach(let exported of file.exportedActions) {
   ...@exported@if(!isLast(exported, file.exportedActions)){,}
 }

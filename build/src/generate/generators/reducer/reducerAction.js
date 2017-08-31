@@ -39,7 +39,7 @@ function generateContent(gen, action, file) {
     gen.append((action.constantName).toString());
     gen.append('] = function(prev: ');
     gen.append((file.stateName).toString());
-    gen.append(', action: IAction): ');
+    gen.append(', action: { type: string }): ');
     gen.append((file.stateName).toString());
     gen.append(' {');
     gen.eol();

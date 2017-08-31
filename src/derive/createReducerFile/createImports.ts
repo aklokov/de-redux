@@ -32,7 +32,7 @@ function createReductionImport(path: string, reduction: Reduction): Import {
 
 export function createChildReducerImports(path: string, children: ChildReducer[]): Import[] {
   return children.map(child => ({
-    importLine: `{ reducer as ${child.fieldName}Reducer, allActions as ${child.fieldName}Actions, Init as ${child.fieldName}Init }`,
+    importLine: `{ reducer as ${child.fieldName}Reducer, reduceable as ${child.fieldName}Actions, Init as ${child.fieldName}Init }`,
     path: createRelativePathToFile(child.path, path)
   }));
 }

@@ -49,7 +49,7 @@ function generateContent(gen: any, child: ChildReducer, reducer: ReducerFile): v
     gen.append((child.fieldName).toString());
     gen.append('Call(prev: ');
     gen.append((reducer.stateName).toString());
-    gen.append(', action: IAction): ');
+    gen.append(', action: { type: string }): ');
     gen.append((reducer.stateName).toString());
     gen.append(' {');
     gen.eol();

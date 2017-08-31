@@ -45,12 +45,10 @@ function generateContent(gen, file) {
     __1.importsGenerator.generateContent(gen, file.imports);
     gen.indent = indent;
     gen.eol();
-    gen.append('export type IAction =  { type: string };');
-    gen.eol();
     gen.forceEol();
     gen.append('type actor = (prev: ');
     gen.append((file.stateName).toString());
-    gen.append(', action: IAction) => ');
+    gen.append(', action: { type: string }) => ');
     gen.append((file.stateName).toString());
     gen.append(';');
     gen.eol();
@@ -112,7 +110,7 @@ function generateContent(gen, file) {
     gen.forceEol();
     gen.append('export function reducer(prev: ');
     gen.append((file.stateName).toString());
-    gen.append(' = Init(), action: IAction): ');
+    gen.append(' = Init(), action: { type: string }): ');
     gen.append((file.stateName).toString());
     gen.append(' {');
     gen.eol();
@@ -123,7 +121,7 @@ function generateContent(gen, file) {
     gen.append('}');
     gen.eol();
     gen.forceEol();
-    gen.append('export const allActions = [');
+    gen.append('export const reduceable = [');
     gen.eol();
     for (let exported of file.exportedActions) {
         gen.append('  ...');

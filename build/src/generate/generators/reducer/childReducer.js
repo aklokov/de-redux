@@ -39,7 +39,7 @@ function generateContent(gen, child, reducer) {
     gen.append((child.fieldName).toString());
     gen.append('Call(prev: ');
     gen.append((reducer.stateName).toString());
-    gen.append(', action: IAction): ');
+    gen.append(', action: { type: string }): ');
     gen.append((reducer.stateName).toString());
     gen.append(' {');
     gen.eol();
