@@ -8,7 +8,7 @@
 // -----------------------------------------------------------------------------
 import { DispatcherFile } from '../../../derive/model';
 import { importsGenerator, disclaimer, isLast } from '..';
-import { dispatcherActionGenerator } from '.';
+import { dispatcherActionGenerator, selectorSubscribeGenerator, directSubscribeGenerator } from '.';
 
 class Gen {
     public indent: string = '';
@@ -74,7 +74,7 @@ function generateContent(gen: any, file: DispatcherFile): void {
     }
     gen.append('}');
     gen.eol();
-    if (file.canSubscribe) {
+    if (file.canSubscribe && !!file.traceToRoot.length) {
         gen.forceEol();
         gen.append('export function selector(state: ');
         gen.append((file.rootStateName).toString());
@@ -82,7 +82,7 @@ function generateContent(gen: any, file: DispatcherFile): void {
         gen.append((file.stateName).toString());
         gen.append(' {');
         gen.eol();
-        gen.append('  return state');
+        gen.append('  return state.');
         gen.append((file.traceToRoot).toString());
         gen.append(';');
         gen.eol();
@@ -99,24 +99,17 @@ function generateContent(gen: any, file: DispatcherFile): void {
     gen.append('  }');
     gen.eol();
     if (file.canSubscribe) {
-        gen.forceEol();
-        gen.append('  getState(): ');
-        gen.append((file.stateName).toString());
-        gen.append(' {');
-        gen.eol();
-        gen.append('    return selector(this.service.getState());');
-        gen.eol();
-        gen.append('  }');
-        gen.eol();
-        gen.forceEol();
-        gen.append('  subscribe(subscription: (state: ');
-        gen.append((file.stateName).toString());
-        gen.append(') => void): void {');
-        gen.eol();
-        gen.append('    this.service.subscribe(state => subscription(selector(state)));');
-        gen.eol();
-        gen.append('  }');
-        gen.eol();
+        if (!!file.traceToRoot.length) {
+            gen.indent = indent + '  ';
+            selectorSubscribeGenerator.generateContent(gen, file);
+            gen.indent = indent;
+            gen.eol();
+        } else {
+            gen.indent = indent + '  ';
+            directSubscribeGenerator.generateContent(gen, file);
+            gen.indent = indent;
+            gen.eol();
+        }
     }
     for (let action of file.actions) {
         gen.forceEol();

@@ -1,1 +1,4 @@
-export declare function createFilePath(path: string, name: string, suffix: string): string;
+import { State } from '../parse/model';
+export declare function createActionFileName(state: State): string;
+export declare function createReducerFileName(state: State): string;
+export declare function createDispatcherFileName(state: State): string;

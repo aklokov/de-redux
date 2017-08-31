@@ -27,18 +27,10 @@ export function deriveModel(options: Options, input: InputModel): Model {
 }
 
 function createDerivedModel(states: State[], tree: Tree): Model {
-  const actionFiles: ActionsFile[] = [];
-  const reducerFiles: ReducerFile[] = [];
-  const dispatcherFiles: DispatcherFile[] = [];
-  states.forEach(state => {
-    const actionFile = createActionFile(state, tree);
-    actionFiles.push(actionFile);
-    reducerFiles.push(createReducerFile(state, actionFile, tree));
-    dispatcherFiles.push(createDispatcherFile(state, actionFile, tree));
-  });
-
+  const actionFiles = states.map(state => createActionFile(state, tree));
+  const reducerFiles = states.map(state => createReducerFile(state, tree));
+  const dispatcherFiles = states.map(state => createDispatcherFile(state, tree));
   const rootStateFile = tree.rootState && createRootStateFile(tree);
-
   return {
     actionFiles,
     reducerFiles,

@@ -1,6 +1,6 @@
 import { ActionsFile, Action } from '../model';
 import { State, Reduction } from '../../parse/model';
-import { createFilePath, isInit, createActionName } from '..';
+import { createActionFileName, isInit, createActionName } from '..';
 import { createReductionImports } from '..';
 import { constants } from '../../constants';
 import { trimFilename } from '../../tools';
@@ -9,7 +9,7 @@ import { needActionsFile } from '..';
 import * as _ from 'lodash';
 
 export function createActionFile(state: State, tree: Tree): ActionsFile {
-  const actionsFile = createFilePath(state.folder, state.name, constants.actionsFile);
+  const actionsFile = createActionFileName(state);
   if (!needActionsFile(state.id, tree)) {
     return createUnlink(actionsFile);
   }

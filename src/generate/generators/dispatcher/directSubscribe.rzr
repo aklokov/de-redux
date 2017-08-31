@@ -1,0 +1,11 @@
+@import { DispatcherFile } from '../../../derive/model';
+@exportname directSubscribeGenerator
+@parameters file: DispatcherFile
+@eol
+getState(): @file.stateName {
+  return this.service.getState();
+}
+@eol
+subscribe(subscription: (state: @file.stateName) => void): void {
+  this.service.subscribe(subscription);
+}

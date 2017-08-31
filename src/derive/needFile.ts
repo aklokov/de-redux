@@ -9,5 +9,10 @@ export function needReducerFile(id: string, tree: Tree): boolean {
 }
 
 export function needDispatcherFile(id: string, tree: Tree): boolean {
-  return !!tree.reductionMap[id];
+  return !!tree.reductionMap[id] || canSubscribe(id, tree);
+}
+
+export function canSubscribe(id: string, tree: Tree): boolean {
+  const node = tree.nodesById[id];
+  return node.parentIds.length < 2;
 }

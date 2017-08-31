@@ -1,13 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const __1 = require("..");
-const constants_1 = require("../../constants");
 const _1 = require(".");
 const _2 = require(".");
 const tools_1 = require("../../tools");
 const __2 = require("..");
-function createReducerFile(state, actionsFile, tree) {
-    const reducerFile = createReducerFileName(state);
+function createReducerFile(state, tree) {
+    const reducerFile = __1.createReducerFileName(state);
     const node = tree.nodesById[state.id];
     if (!__2.needReducerFile(state.id, tree)) {
         return createUnlink(reducerFile);
@@ -19,7 +18,7 @@ function createReducerFile(state, actionsFile, tree) {
         .filter(child => __2.needReducerFile(child.childStateId, tree))
         .map(child => createChildReducer(child, tree));
     const imports = needActions
-        ? _1.createImportsWithAction(path, actionsFile.actionsFile, reductions, state)
+        ? _1.createImportsWithAction(path, reductions, state)
         : _1.createImports(path, reductions, state);
     const childImports = _1.createChildReducerImports(path, childReducers);
     const exportedActions = _2.createExportedActions(childReducers, needActions);
@@ -53,10 +52,7 @@ function createChildReducer(child, tree) {
     const childState = tree.nodesById[child.childStateId].state;
     return {
         fieldName: child.fieldName,
-        path: createReducerFileName(childState)
+        path: __1.createReducerFileName(childState)
     };
-}
-function createReducerFileName(state) {
-    return __1.createFilePath(state.folder, state.name, constants_1.constants.reducerFile);
 }
 //# sourceMappingURL=createReducerFile.js.map

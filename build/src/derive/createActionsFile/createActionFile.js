@@ -2,11 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const __1 = require("..");
 const __2 = require("..");
-const constants_1 = require("../../constants");
 const tools_1 = require("../../tools");
 const __3 = require("..");
 function createActionFile(state, tree) {
-    const actionsFile = __1.createFilePath(state.folder, state.name, constants_1.constants.actionsFile);
+    const actionsFile = __1.createActionFileName(state);
     if (!__3.needActionsFile(state.id, tree)) {
         return createUnlink(actionsFile);
     }

@@ -9,7 +9,12 @@ function needReducerFile(id, tree) {
 }
 exports.needReducerFile = needReducerFile;
 function needDispatcherFile(id, tree) {
-    return !!tree.reductionMap[id];
+    return !!tree.reductionMap[id] || canSubscribe(id, tree);
 }
 exports.needDispatcherFile = needDispatcherFile;
+function canSubscribe(id, tree) {
+    const node = tree.nodesById[id];
+    return node.parentIds.length < 2;
+}
+exports.canSubscribe = canSubscribe;
 //# sourceMappingURL=needFile.js.map

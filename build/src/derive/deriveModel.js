@@ -19,15 +19,9 @@ function deriveModel(options, input) {
 }
 exports.deriveModel = deriveModel;
 function createDerivedModel(states, tree) {
-    const actionFiles = [];
-    const reducerFiles = [];
-    const dispatcherFiles = [];
-    states.forEach(state => {
-        const actionFile = createActionsFile_1.createActionFile(state, tree);
-        actionFiles.push(actionFile);
-        reducerFiles.push(createReducerFile_1.createReducerFile(state, actionFile, tree));
-        dispatcherFiles.push(createDispatcherFile_1.createDispatcherFile(state, actionFile, tree));
-    });
+    const actionFiles = states.map(state => createActionsFile_1.createActionFile(state, tree));
+    const reducerFiles = states.map(state => createReducerFile_1.createReducerFile(state, tree));
+    const dispatcherFiles = states.map(state => createDispatcherFile_1.createDispatcherFile(state, tree));
     const rootStateFile = tree.rootState && createRootState_1.createRootStateFile(tree);
     return {
         actionFiles,

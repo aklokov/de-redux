@@ -12,8 +12,8 @@ function createImports(path, reductions, state) {
     return [stringMap, ...fieldImports, ...reductionImports, ...__2.createTypeImports(path, [state])];
 }
 exports.createImports = createImports;
-function createImportsWithAction(path, actions, reductions, state) {
-    const actionsImport = __2.createActionsImport(path, actions);
+function createImportsWithAction(path, reductions, state) {
+    const actionsImport = __2.createActionsImport(path, __2.createActionFileName(state));
     return [actionsImport, ...createImports(path, reductions, state)];
 }
 exports.createImportsWithAction = createImportsWithAction;

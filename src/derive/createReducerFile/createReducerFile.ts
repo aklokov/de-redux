@@ -1,7 +1,7 @@
 import { ReducerFile, ChildReducer, ActionsFile } from '../model';
 import { State, Reduction } from '../../parse/model';
 import { Tree, NodeChild } from '../tree';
-import { createFilePath, isInit } from '..';
+import { createReducerFileName, isInit } from '..';
 import { constants } from '../../constants';
 import { createImports, createImportsWithAction, createChildReducerImports } from '.';
 import { createReducerAction, createExportedActions, createInitFields } from '.';
@@ -9,7 +9,7 @@ import { trimFilename } from '../../tools';
 import { needReducerFile, needActionsFile } from '..';
 
 
-export function createReducerFile(state: State, actionsFile: ActionsFile, tree: Tree): ReducerFile {
+export function createReducerFile(state: State, tree: Tree): ReducerFile {
   const reducerFile = createReducerFileName(state);
   const node = tree.nodesById[state.id];
   if (!needReducerFile(state.id, tree)) {
@@ -23,7 +23,7 @@ export function createReducerFile(state: State, actionsFile: ActionsFile, tree: 
     .filter(child => needReducerFile(child.childStateId, tree))
     .map(child => createChildReducer(child, tree));
   const imports = needActions
-    ? createImportsWithAction(path, actionsFile.actionsFile, reductions, state)
+    ? createImportsWithAction(path, reductions, state)
     : createImports(path, reductions, state);
   const childImports = createChildReducerImports(path, childReducers);
   const exportedActions = createExportedActions(childReducers, needActions);
@@ -60,8 +60,4 @@ function createChildReducer(child: NodeChild, tree: Tree): ChildReducer {
     fieldName: child.fieldName,
     path: createReducerFileName(childState)
   };
-}
-
-function createReducerFileName(state: State): string {
-  return createFilePath(state.folder, state.name, constants.reducerFile);
 }

@@ -1,6 +1,6 @@
 @import { DispatcherFile } from '../../../derive/model';
 @import { importsGenerator, disclaimer, isLast } from '..';
-@import { dispatcherActionGenerator } from '.';
+@import { dispatcherActionGenerator, selectorSubscribeGenerator, directSubscribeGenerator } from '.';
 @parameters file: DispatcherFile
 @exportname dispatcherGenerator
 
@@ -15,10 +15,10 @@ export interface IReduxService {
   subscribe: (subscription: (state: @file.rootStateName) => void) => void;
  }
 }
- @if(file.canSubscribe) {
+ @if(file.canSubscribe && !!file.traceToRoot.length) {
 @eol
 export function selector(state: @file.rootStateName): @file.stateName {
-  return state@file.traceToRoot;
+  return state.@file.traceToRoot;
 @}
  }
 @eol
@@ -26,14 +26,11 @@ export class @(file.stateName)DispatcherImpl {
   constructor(private service: IReduxService) {
   }
  @if(file.canSubscribe) {
-@eol
-  getState(): @file.stateName {
-    return selector(this.service.getState());
-  @}
-@eol
-  subscribe(subscription: (state: @file.stateName) => void): void {
-    this.service.subscribe(state => subscription(selector(state)));
-  @}
+  @if(!!file.traceToRoot.length){
+  @[selectorSubscribeGenerator(file)]
+  } else {
+  @[directSubscribeGenerator(file)]
+  }
  }
  @foreach(let action of file.actions){
 @eol

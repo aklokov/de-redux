@@ -3,7 +3,7 @@ import { Tree } from '../tree';
 import { Import } from '../model';
 import * as _ from 'lodash';
 import { createRelativePath, createRelativePathToFile, needActionsFile } from '..';
-import { createReductionImports, createTypeImports, createActionsImport } from '..';
+import { createReductionImports, createTypeImports, createActionsImport, createActionFileName } from '..';
 import { trimFilename } from '../../tools';
 import { ActionsFile, ChildReducer } from '../model';
 
@@ -18,8 +18,8 @@ export function createImports(path: string, reductions: Reduction[], state: Stat
   return [stringMap, ...fieldImports, ...reductionImports, ...createTypeImports(path, [state])];
 }
 
-export function createImportsWithAction(path: string, actions: string, reductions: Reduction[], state: State): Import[] {
-  const actionsImport = createActionsImport(path, actions);
+export function createImportsWithAction(path: string, reductions: Reduction[], state: State): Import[] {
+  const actionsImport = createActionsImport(path, createActionFileName(state));
   return [actionsImport, ...createImports(path, reductions, state)];
 }
 

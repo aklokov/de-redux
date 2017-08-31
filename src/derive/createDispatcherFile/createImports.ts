@@ -1,14 +1,22 @@
 import { State, Reduction, Field, Type } from '../../parse/model';
-import { createActionsImport, createTypeImports, createReductionImports } from '..';
+import { createActionsImport, createTypeImports, createReductionImports, createActionFileName, needActionsFile, canSubscribe } from '..';
 import { Import } from '../model';
+import { Tree } from '../tree';
 import * as _ from 'lodash';
 
-export function createImports(path: string, actions: string, reductions: Reduction[], state: State): Import[] {
-  const actionsImport = createActionsImport(path, actions);
-  const fieldImports = createReductionImports(path, reductions);
-  return [actionsImport, ...fieldImports,  ...createTypeImports(path, [state])];
-}
+export function createImports(path: string, state: State, tree: Tree): Import[] {
+  const reductions = tree.reductionMap[state.id] || [];
+  let imports = [...createReductionImports(path, reductions), ...createTypeImports(path, [state])];
+  if (needActionsFile(state.id, tree)) {
+    imports.push(createActionsImport(path, createActionFileName(state)));
+  }
 
-export function createFullImports(path: string, actions: string, reductions: Reduction[], state: State, rootState: State): Import[] {
-  return [...createImports(path, actions, reductions, state), ...createTypeImports(path, [rootState])];
+  if (canSubscribe(state.id, tree)) {
+    const node = tree.nodesById[state.id];
+    if (node.rootId !== state.id) {
+      imports = [...imports, ...createTypeImports(path, [tree.nodesById[node.rootId].state])];
+    }
+  }
+
+  return imports;
 }
