@@ -1,6 +1,17 @@
-import { Field, Type } from '.';
-
-export interface Reduction extends Type {
+export interface Reduction {
+  name: string;
+  importPath: string;
   stateId: string;
-  parameters: Field[];
+  imports: Import[];
+  parameters: Parameter[];
+}
+
+export interface Parameter {
+  name: string;
+  typeName: string;
+}
+
+export interface Import {
+  type: string;
+  importPath: string;
 }

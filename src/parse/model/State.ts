@@ -1,6 +1,16 @@
-import { Type, Field } from './';
+export interface State {
+  id: string;
+  name: string;
+  importPath: string;
 
-export interface State extends Type {
-  folder: string;
-  fields: Field[];
+  folderPath: string;
+  fields: StateField[];
+}
+
+export interface StateField {
+  id: string;
+  typeName: string;
+  importPath: string;
+  fieldName: string;
+  isArray: boolean; // to be used later
 }

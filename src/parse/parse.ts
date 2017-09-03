@@ -1,46 +1,27 @@
-import { Model } from './model';
-import * as fse from 'fs-extra';
-import { mergeModels } from '.';
-import { isDirectory, combinePath, trimExtension } from '../tools';
-import { collectState, collectReduction } from './collectRedux';
-import { collectFileInfo } from './collectFileInfo';
+import { Model, State, Reduction } from './model';
 import { Options } from '../Options';
-import { constants } from '../constants';
-import * as changeCase from 'change-case';
+import { collectFiles, FileInfo } from './collectFiles';
+import { filterStates } from '.';
+import { parseState } from './parseState';
+import { parseReduction } from './parseReduction';
+import * as fse from 'fs-extra';
 
-export async function parseFiles(options: Options, path: string): Promise<Model> {
-  const files = await fse.readdir(path);
-  const promises = files.map(file => collectFile(options, path, file));
-  const models = await Promise.all(promises);
-  return mergeModels(models.filter(model => model));
+export async function parseFiles(options: Options, path: string | string[]): Promise<Model> {
+  const filesModel = await collectFiles(path);
+  const states = await Promise.all(filterStates(options, filesModel.states).map(getState));
+  const reductions = await Promise.all(filesModel.reductions.map(getReduction));
+  return {
+    states,
+    reductions
+  };
 }
 
+async function getState(file: FileInfo): Promise<State> {
+  const content = await fse.readFile(file.filePath, 'utf8');
+  return parseState(file, content);
+}
 
-async function collectFile(options: Options, path: string, file: string): Promise<Model> {
-  if (await isDirectory(combinePath(path, file))) {
-    return await parseFiles(options, combinePath(path, file));
-  }
-
-  if (options.generateRootIn === path) {
-    const rootFile = changeCase.paramCase(options.rootStateName);
-    const filename = trimExtension(file);
-    if (filename === rootFile + constants.state ||
-      filename === rootFile + constants.reduction) {
-      return null;
-    }
-  }
-
-  if (file.endsWith(constants.stateExt)) {
-    const fileInfo = await collectFileInfo(options, path, file);
-    const states = collectState(options, fileInfo);
-    return { reductions: [], states };
-  }
-
-  if (file.endsWith(constants.reductionExt)) {
-    const fileInfo = await collectFileInfo(options, path, file);
-    const reductions = collectReduction(options, fileInfo);
-    return { reductions, states: [] };
-  }
-
-  return null;
+async function getReduction(file: FileInfo): Promise<Reduction> {
+  const content = await fse.readFile(file.filePath, 'utf8');
+  return parseReduction(file, content);
 }

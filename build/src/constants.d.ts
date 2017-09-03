@@ -1,4 +1,5 @@
 export declare const constants: {
+    ts: string;
     index: string;
     state: string;
     reduction: string;

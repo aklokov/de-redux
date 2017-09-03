@@ -3,7 +3,7 @@ export declare enum Quotes {
     double = "double",
 }
 export interface Options {
-    path: string;
+    path: string | string[];
     tsconfig?: any;
     generateRootIn?: string;
     rootStateName?: string;

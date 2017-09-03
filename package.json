@@ -37,6 +37,6 @@
     "run-sequence": "^2.1.0",
     "tslint": "^5.6.0",
     "typescript": "^2.4.2",
-    "typescript-reexport-generator": "^1.0.4"
+    "typescript-reexport-generator": "^1.1.0"
   }
 }

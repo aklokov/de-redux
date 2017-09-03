@@ -8,46 +8,33 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const fse = require("fs-extra");
+const collectFiles_1 = require("./collectFiles");
 const _1 = require(".");
-const tools_1 = require("../tools");
-const collectRedux_1 = require("./collectRedux");
-const collectFileInfo_1 = require("./collectFileInfo");
-const constants_1 = require("../constants");
-const changeCase = require("change-case");
+const parseState_1 = require("./parseState");
+const parseReduction_1 = require("./parseReduction");
+const fse = require("fs-extra");
 function parseFiles(options, path) {
     return __awaiter(this, void 0, void 0, function* () {
-        const files = yield fse.readdir(path);
-        const promises = files.map(file => collectFile(options, path, file));
-        const models = yield Promise.all(promises);
-        return _1.mergeModels(models.filter(model => model));
+        const filesModel = yield collectFiles_1.collectFiles(path);
+        const states = yield Promise.all(_1.filterStates(options, filesModel.states).map(getState));
+        const reductions = yield Promise.all(filesModel.reductions.map(getReduction));
+        return {
+            states,
+            reductions
+        };
     });
 }
 exports.parseFiles = parseFiles;
-function collectFile(options, path, file) {
+function getState(file) {
     return __awaiter(this, void 0, void 0, function* () {
-        if (yield tools_1.isDirectory(tools_1.combinePath(path, file))) {
-            return yield parseFiles(options, tools_1.combinePath(path, file));
-        }
-        if (options.generateRootIn === path) {
-            const rootFile = changeCase.paramCase(options.rootStateName);
-            const filename = tools_1.trimExtension(file);
-            if (filename === rootFile + constants_1.constants.state ||
-                filename === rootFile + constants_1.constants.reduction) {
-                return null;
-            }
-        }
-        if (file.endsWith(constants_1.constants.stateExt)) {
-            const fileInfo = yield collectFileInfo_1.collectFileInfo(options, path, file);
-            const states = collectRedux_1.collectState(options, fileInfo);
-            return { reductions: [], states };
-        }
-        if (file.endsWith(constants_1.constants.reductionExt)) {
-            const fileInfo = yield collectFileInfo_1.collectFileInfo(options, path, file);
-            const reductions = collectRedux_1.collectReduction(options, fileInfo);
-            return { reductions, states: [] };
-        }
-        return null;
+        const content = yield fse.readFile(file.filePath, 'utf8');
+        return parseState_1.parseState(file, content);
+    });
+}
+function getReduction(file) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const content = yield fse.readFile(file.filePath, 'utf8');
+        return parseReduction_1.parseReduction(file, content);
     });
 }
 //# sourceMappingURL=parse.js.map

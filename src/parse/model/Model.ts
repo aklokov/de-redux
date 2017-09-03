@@ -1,4 +1,4 @@
-import { State, Reduction, Type } from './';
+import { State, Reduction } from '.';
 
 export interface Model {
     states: State[];
