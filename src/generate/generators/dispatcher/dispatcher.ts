@@ -56,11 +56,11 @@ function generateContent(gen: any, file: DispatcherFile): void {
     gen.indent = indent;
     gen.eol();
     gen.eol();
-    gen.append('export interface IAction { type: string; }');
+    gen.append('export interface I');
+    gen.append((file.stateName).toString());
+    gen.append('ReduxService {');
     gen.eol();
-    gen.append('export interface IReduxService {');
-    gen.eol();
-    gen.append('  dispatch: (action: IAction) => void;');
+    gen.append('  dispatch: (action: { type: string; }) => void;');
     gen.eol();
     if (file.canSubscribe) {
         gen.append('  getState: () => ');
@@ -76,7 +76,7 @@ function generateContent(gen: any, file: DispatcherFile): void {
     gen.eol();
     if (file.canSubscribe && !!file.traceToRoot.length) {
         gen.forceEol();
-        gen.append('export function selector(state: ');
+        gen.append('function selector(state: ');
         gen.append((file.rootStateName).toString());
         gen.append('): ');
         gen.append((file.stateName).toString());
@@ -94,7 +94,9 @@ function generateContent(gen: any, file: DispatcherFile): void {
     gen.append((file.stateName).toString());
     gen.append('DispatcherImpl {');
     gen.eol();
-    gen.append('  constructor(private service: IReduxService) {');
+    gen.append('  constructor(private service: I');
+    gen.append((file.stateName).toString());
+    gen.append('ReduxService) {');
     gen.eol();
     gen.append('  }');
     gen.eol();

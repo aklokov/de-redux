@@ -7,9 +7,8 @@
 @[disclaimer()]
 @[importsGenerator(file.imports)]
 
-export interface IAction { type: string; }
-export interface IReduxService {
-  dispatch: (action: IAction) => void;
+export interface I@(file.stateName)ReduxService {
+  dispatch: (action: { type: string; }) => void;
  @if(file.canSubscribe) {
   getState: () => @file.rootStateName;
   subscribe: (subscription: (state: @file.rootStateName) => void) => void;
@@ -17,13 +16,13 @@ export interface IReduxService {
 }
  @if(file.canSubscribe && !!file.traceToRoot.length) {
 @eol
-export function selector(state: @file.rootStateName): @file.stateName {
+function selector(state: @file.rootStateName): @file.stateName {
   return state.@file.traceToRoot;
 @}
  }
 @eol
 export class @(file.stateName)DispatcherImpl {
-  constructor(private service: IReduxService) {
+  constructor(private service: I@(file.stateName)ReduxService) {
   }
  @if(file.canSubscribe) {
   @if(!!file.traceToRoot.length){
