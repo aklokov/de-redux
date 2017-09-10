@@ -8,7 +8,6 @@ export interface State {
 }
 
 export interface StateField {
-  id: string;
   typeName: string;
   importPath: string;
 

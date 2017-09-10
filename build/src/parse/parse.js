@@ -12,13 +12,15 @@ const collectFiles_1 = require("./collectFiles");
 const _1 = require(".");
 const parseState_1 = require("./parseState");
 const parseReduction_1 = require("./parseReduction");
-const fse = require("fs-extra");
 const _ = require("lodash");
 function parseFiles(options, path) {
     return __awaiter(this, void 0, void 0, function* () {
         const filesModel = yield collectFiles_1.collectFiles(path);
-        const states = yield Promise.all(_1.filterStates(options, filesModel.states).map(getStates));
-        const reductions = yield Promise.all(filesModel.reductions.map(getReductions));
+        const statePromises = _1.filterStates(options, filesModel.states)
+            .map(file => _1.prepareFile(options, file).then(parseState_1.parseStateFile));
+        const reductionPromises = filesModel.reductions
+            .map(file => _1.prepareFile(options, file).then(parseReduction_1.parseReductionFile));
+        const [states, reductions] = yield Promise.all([Promise.all(statePromises), Promise.all(reductionPromises)]);
         return {
             states: _.flatten(states),
             reductions: _.flatten(reductions)
@@ -26,16 +28,4 @@ function parseFiles(options, path) {
     });
 }
 exports.parseFiles = parseFiles;
-function getStates(file) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const content = yield fse.readFile(file.filePath, 'utf8');
-        return parseState_1.parseState(file, content);
-    });
-}
-function getReductions(file) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const content = yield fse.readFile(file.filePath, 'utf8');
-        return parseReduction_1.parseReduction(file, content);
-    });
-}
 //# sourceMappingURL=parse.js.map

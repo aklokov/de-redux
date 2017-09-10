@@ -6,4 +6,5 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __export(require("./createRootFilePath"));
 __export(require("./filterStates"));
 __export(require("./parse"));
+__export(require("./prepareFile"));
 //# sourceMappingURL=index.js.map
