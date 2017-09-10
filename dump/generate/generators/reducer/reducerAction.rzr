@@ -1,8 +1,0 @@
-@import { ReducerAction, ReducerFile } from '../../../derive/model';
-@exportname reducerActionGenerator
-@parameters action: ReducerAction, file: ReducerFile
-
-map[actions.@action.constantName] = function(prev: @file.stateName, action: { type: string }): @file.stateName {
-  const a = action as actions.@action.name;
-  return @action.reductionLine;
-}

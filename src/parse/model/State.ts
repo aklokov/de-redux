@@ -11,6 +11,7 @@ export interface StateField {
   id: string;
   typeName: string;
   importPath: string;
+
   fieldName: string;
   isArray: boolean; // to be used later
 }

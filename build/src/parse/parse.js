@@ -13,25 +13,26 @@ const _1 = require(".");
 const parseState_1 = require("./parseState");
 const parseReduction_1 = require("./parseReduction");
 const fse = require("fs-extra");
+const _ = require("lodash");
 function parseFiles(options, path) {
     return __awaiter(this, void 0, void 0, function* () {
         const filesModel = yield collectFiles_1.collectFiles(path);
-        const states = yield Promise.all(_1.filterStates(options, filesModel.states).map(getState));
-        const reductions = yield Promise.all(filesModel.reductions.map(getReduction));
+        const states = yield Promise.all(_1.filterStates(options, filesModel.states).map(getStates));
+        const reductions = yield Promise.all(filesModel.reductions.map(getReductions));
         return {
-            states,
-            reductions
+            states: _.flatten(states),
+            reductions: _.flatten(reductions)
         };
     });
 }
 exports.parseFiles = parseFiles;
-function getState(file) {
+function getStates(file) {
     return __awaiter(this, void 0, void 0, function* () {
         const content = yield fse.readFile(file.filePath, 'utf8');
         return parseState_1.parseState(file, content);
     });
 }
-function getReduction(file) {
+function getReductions(file) {
     return __awaiter(this, void 0, void 0, function* () {
         const content = yield fse.readFile(file.filePath, 'utf8');
         return parseReduction_1.parseReduction(file, content);

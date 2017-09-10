@@ -1,8 +1,0 @@
-@import { Import } from '../../derive/model';
-@parameters imports: Import[]
-@exportname importsGenerator
-
-@foreach(let imp of imports) {
-import @imp.importLine from '@imp.path';
-}
-@eol
