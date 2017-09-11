@@ -26,15 +26,23 @@ function parseMatch(options, types, importline, path) {
     return __awaiter(this, void 0, void 0, function* () {
         const typenames = types.split(',');
         const importPath = _1.calculatePath(options, path, importline);
-        const resultPath = yield _1.correctReexportPath(importPath);
-        return typenames.map(typename => createType(typename, resultPath));
+        const promises = typenames
+            .map(t => t.trim())
+            .map(typename => createExportedType(typename, importPath));
+        const result = yield Promise.all(promises);
+        return result;
+    });
+}
+function createExportedType(typename, path) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const correctedPath = yield _1.correctReexportPath(path, typename);
+        return createType(typename, correctedPath);
     });
 }
 function createType(name, path) {
-    const resultName = name.trim();
     return {
-        id: tools_1.combinePath(path, resultName),
-        name: resultName,
+        id: tools_1.combinePath(path, name),
+        name,
         path
     };
 }

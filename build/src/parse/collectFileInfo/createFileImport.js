@@ -20,10 +20,6 @@ exports.hasReexport = hasReexport;
 function createFileImport(path, file) {
     return __awaiter(this, void 0, void 0, function* () {
         const filename = tools_1.trimExtension(file);
-        const reexported = yield hasReexport(path, filename);
-        if (reexported) {
-            return path;
-        }
         return tools_1.combinePath(path, filename);
     });
 }

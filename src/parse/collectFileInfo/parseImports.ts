@@ -16,15 +16,22 @@ export async function parseImports(options: Options, content: string, path: stri
 async function parseMatch(options: Options, types: string, importline: string, path: string): Promise<Type[]> {
   const typenames = types.split(',');
   const importPath = calculatePath(options, path, importline);
-  const resultPath = await correctReexportPath(importPath);
-  return typenames.map(typename => createType(typename, resultPath));
+  const promises = typenames
+    .map(t => t.trim())
+    .map(typename => createExportedType(typename, importPath));
+  const result = await Promise.all(promises);
+  return result;
+}
+
+async function createExportedType(typename: string, path: string): Promise<Type> {
+  const correctedPath = await correctReexportPath(path, typename);
+  return createType(typename, correctedPath);
 }
 
 function createType(name: string, path: string): Type {
-  const resultName = name.trim();
   return {
-    id: combinePath(path, resultName),
-    name: resultName,
+    id: combinePath(path, name),
+    name,
     path
   };
 }
