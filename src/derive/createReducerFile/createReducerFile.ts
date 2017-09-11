@@ -26,7 +26,10 @@ export function createReducerFile(state: State, tree: Tree): ReducerFile {
     ? createImportsWithAction(path, reductions, state)
     : createImports(path, reductions, state);
   const childImports = createChildReducerImports(path, childReducers);
-  const exportedActions = createExportedActions(childReducers, needActions);
+  const exportedActions = createExportedActions(childReducers);
+  if (needActions) {
+    exportedActions.push('actions.' + state.name + 'Actions');
+  }
   const needInit = !reductions.some(red => isInit(red));
   const initFields = needInit ? createInitFields(node, tree) : [];
   return {
@@ -58,6 +61,7 @@ function createChildReducer(child: NodeChild, tree: Tree): ChildReducer {
   const childState = tree.nodesById[child.childStateId].state;
   return {
     fieldName: child.fieldName,
+    stateName: childState.name,
     path: createReducerFileName(childState)
   };
 }

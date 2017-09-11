@@ -5,11 +5,11 @@
 function @(child.fieldName)Call(prev: @reducer.stateName, action: { type: string }): @reducer.stateName {
   return {
     ...prev,
-    @(child.fieldName): @(child.fieldName)Reducer(prev.@child.fieldName, action)
+    @(child.fieldName): @(child.stateName)Reducer(prev.@child.fieldName, action)
   };
 }
 @eol
-for (let action of @(child.fieldName)Actions) {
+for (let action of @(child.stateName)Reduceable) {
   const existing = map[action];
   if (existing) {
     map[action] = (prev, action) => @(child.fieldName)Call(existing(prev, action), action);

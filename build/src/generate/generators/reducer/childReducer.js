@@ -50,7 +50,7 @@ function generateContent(gen, child, reducer) {
     gen.append('    ');
     gen.append((child.fieldName).toString());
     gen.append(': ');
-    gen.append((child.fieldName).toString());
+    gen.append((child.stateName).toString());
     gen.append('Reducer(prev.');
     gen.append((child.fieldName).toString());
     gen.append(', action)');
@@ -61,8 +61,8 @@ function generateContent(gen, child, reducer) {
     gen.eol();
     gen.forceEol();
     gen.append('for (let action of ');
-    gen.append((child.fieldName).toString());
-    gen.append('Actions) {');
+    gen.append((child.stateName).toString());
+    gen.append('Reduceable) {');
     gen.eol();
     gen.append('  const existing = map[action];');
     gen.eol();

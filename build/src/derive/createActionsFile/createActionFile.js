@@ -14,6 +14,7 @@ function createActionFile(state, tree) {
     return {
         actionsFile,
         unlink: false,
+        stateName: state.name,
         actions: reductions.filter(red => !__1.isInit(red)).map(reduction => createAction(state.name, reduction)),
         imports: __2.createReductionImports(path, reductions)
     };
@@ -23,6 +24,7 @@ function createUnlink(file) {
     return {
         actionsFile: file,
         unlink: true,
+        stateName: null,
         actions: null,
         imports: null
     };

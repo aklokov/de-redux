@@ -2,13 +2,16 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const __1 = require("..");
 function createInitFields(node, tree) {
-    const children = node.children.map(child => ({
-        field: child.fieldName,
-        isNull: !__1.needReducerFile(child.childStateId, tree)
-    }));
+    const children = node.children.map(child => {
+        return {
+            field: child.fieldName,
+            stateName: tree.nodesById[child.childStateId].state.name,
+            isNull: !__1.needReducerFile(child.childStateId, tree)
+        };
+    });
     const fields = node.state.fields
         .filter(field => !isChild(field, node))
-        .map(field => ({ field: field.name, isNull: true }));
+        .map(field => ({ field: field.name, isNull: true, stateName: null }));
     return [...children, ...fields];
 }
 exports.createInitFields = createInitFields;

@@ -19,6 +19,7 @@ export function createActionFile(state: State, tree: Tree): ActionsFile {
   return {
     actionsFile,
     unlink: false,
+    stateName: state.name,
     actions: reductions.filter(red => !isInit(red)).map(reduction => createAction(state.name, reduction)),
     imports: createReductionImports(path, reductions)
   };
@@ -28,6 +29,7 @@ function createUnlink(file: string): ActionsFile {
   return {
     actionsFile: file,
     unlink: true,
+    stateName: null,
     actions: null,
     imports: null
   };

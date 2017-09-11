@@ -80,10 +80,14 @@ function generateContent(gen: any, file: ReducerFile): void {
     }
     gen.forceEol();
     if (!file.initFields.length) {
-        gen.append('export const Init = init;');
+        gen.append('export const ');
+        gen.append((file.stateName).toString());
+        gen.append('Init = init;');
         gen.eol();
     } else {
-        gen.append('export function Init(): ');
+        gen.append('export function ');
+        gen.append((file.stateName).toString());
+        gen.append('Init(): ');
         gen.append((file.stateName).toString());
         gen.append(' {');
         gen.eol();
@@ -102,7 +106,7 @@ function generateContent(gen: any, file: ReducerFile): void {
                 gen.append('     ');
                 gen.append((field.field).toString());
                 gen.append(': ');
-                gen.append((field.field).toString());
+                gen.append((field.stateName).toString());
                 gen.append('Init()');
                 if (!isLast(field, file.initFields)) {
                     gen.append(',');
@@ -116,9 +120,13 @@ function generateContent(gen: any, file: ReducerFile): void {
         gen.eol();
     }
     gen.forceEol();
-    gen.append('export function reducer(prev: ');
+    gen.append('export function ');
     gen.append((file.stateName).toString());
-    gen.append(' = Init(), action: { type: string }): ');
+    gen.append('Reducer(prev: ');
+    gen.append((file.stateName).toString());
+    gen.append(' = ');
+    gen.append((file.stateName).toString());
+    gen.append('Init(), action: { type: string }): ');
     gen.append((file.stateName).toString());
     gen.append(' {');
     gen.eol();
@@ -129,7 +137,9 @@ function generateContent(gen: any, file: ReducerFile): void {
     gen.append('}');
     gen.eol();
     gen.forceEol();
-    gen.append('export const reduceable = [');
+    gen.append('export const  ');
+    gen.append((file.stateName).toString());
+    gen.append('Reduceable = [');
     gen.eol();
     for (let exported of file.exportedActions) {
         gen.append('  ...');

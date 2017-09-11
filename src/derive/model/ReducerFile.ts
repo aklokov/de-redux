@@ -8,11 +8,13 @@ export interface ReducerAction {
 
 export interface ChildReducer {
   fieldName: string;
+  stateName: string;
   path: string;
 }
 
 export interface InitField {
   field: string;
+  stateName: string;
   isNull: boolean;
 }
 

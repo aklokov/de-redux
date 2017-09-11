@@ -52,7 +52,9 @@ function generateContent(gen, file) {
         gen.forceEol();
     }
     gen.eol();
-    gen.append('export const allActions = [');
+    gen.append('export const ');
+    gen.append((file.stateName).toString());
+    gen.append('Actions = [');
     gen.eol();
     for (let action of file.actions) {
         gen.append('  ');

@@ -25,7 +25,7 @@ function createReductionImport(path, reduction) {
 }
 function createChildReducerImports(path, children) {
     return children.map(child => ({
-        importLine: `{ reducer as ${child.fieldName}Reducer, reduceable as ${child.fieldName}Actions, Init as ${child.fieldName}Init }`,
+        importLine: `{ ${child.stateName}Reducer, ${child.stateName}Reduceable, ${child.stateName}Init }`,
         path: __1.createRelativePathToFile(child.path, path)
     }));
 }
