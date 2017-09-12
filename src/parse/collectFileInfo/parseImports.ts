@@ -2,7 +2,7 @@ import { Type } from '../model';
 import { StringMap, toStringMap } from 'hash-map';
 import { calculatePath, correctReexportPath } from '.';
 import { Options } from '../../Options';
-import { execRegex, combinePath } from '../../tools';
+import { execRegex, combinePath, first } from '../../tools';
 import * as _ from 'lodash';
 
 const regex = /import[\s]*{(.*)}[\s]*from[\s]*['|"](.*)['|"]/g;
@@ -24,6 +24,7 @@ async function parseMatch(options: Options, types: string, importline: string, p
 }
 
 async function createExportedType(typename: string, path: string): Promise<Type> {
+  typename = first(typename.split(' ').filter(s => s.length));
   const correctedPath = await correctReexportPath(path, typename);
   return createType(typename, correctedPath);
 }

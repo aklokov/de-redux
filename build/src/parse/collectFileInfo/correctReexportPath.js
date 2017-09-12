@@ -31,7 +31,8 @@ function correctReexportPath(path, type) {
                 return tools_1.combinePath(path, tools_1.trimExtension(file));
             }
         }
-        throw new Error('type ' + type + ' export is not found in ' + path);
+        console.warn('type ' + type + ' export is not found in ' + path);
+        return path;
     });
 }
 exports.correctReexportPath = correctReexportPath;
