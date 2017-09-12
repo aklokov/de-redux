@@ -92,7 +92,7 @@ function generateContent(gen: any, file: DispatcherFile): void {
     gen.forceEol();
     gen.append('export class ');
     gen.append((file.stateName).toString());
-    gen.append('DispatcherImpl {');
+    gen.append('Dispatcher {');
     gen.eol();
     gen.append('  constructor(private service: I');
     gen.append((file.stateName).toString());

@@ -21,7 +21,7 @@ function selector(state: @file.rootStateName): @file.stateName {
 @}
  }
 @eol
-export class @(file.stateName)DispatcherImpl {
+export class @(file.stateName)Dispatcher {
   constructor(private service: I@(file.stateName)ReduxService) {
   }
  @if(file.canSubscribe) {
