@@ -35,6 +35,7 @@ function parseMatch(options, types, importline, path) {
 }
 function createExportedType(typename, path) {
     return __awaiter(this, void 0, void 0, function* () {
+        typename = tools_1.first(typename.split(' ').filter(s => s.length));
         const correctedPath = yield _1.correctReexportPath(path, typename);
         return createType(typename, correctedPath);
     });

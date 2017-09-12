@@ -26,7 +26,8 @@ export async function correctReexportPath(path: string, type: string): Promise<s
     }
   }
 
-  throw new Error('type ' + type + ' export is not found in ' + path);
+  console.warn('type ' + type + ' export is not found in ' + path);
+  return path;
 }
 
 function typeIsExported(content: string, type: string): boolean {
