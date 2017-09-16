@@ -10,11 +10,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const parseImports_1 = require("./parseImports");
 const fse = require("fs-extra");
-function prepareFile(options, file) {
+function prepareFile(options, filePath) {
     return __awaiter(this, void 0, void 0, function* () {
-        const content = yield fse.readFile(file.filePath, 'utf8');
+        const content = yield fse.readFile(filePath, 'utf8');
         const imports = parseImports_1.parseImports(options.tsconfig, content);
-        return Object.assign({}, file, { content, imports });
+        return { filePath, content, imports };
     });
 }
 exports.prepareFile = prepareFile;

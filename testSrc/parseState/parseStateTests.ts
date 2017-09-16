@@ -1,4 +1,4 @@
-import { FileInfo } from '../../src/parse/collectFiles';
+import { PreparedFile } from '../../src/parse';
 import { parseStateFile } from '../../src/parse/parseState';
 import { expect } from 'chai';
 import { checkState } from '.';
@@ -6,16 +6,16 @@ import { checkState } from '.';
 describe('parseState', function (): void {
   it('should parse simple state', async function (): Promise<void> {
     // arrange
-    const fileInfo: FileInfo = {
+    const file: PreparedFile = {
       filePath: './file1.state.ts',
-      importPath: '.'
-    };
-
-    const content = `
+      content: `
     export interface SomeState {
       n: number;
     }
-`;
+`,
+      imports: []
+    };
+
     const expected = {
       id: './SomeState',
       name: 'SomeState',
@@ -25,7 +25,7 @@ describe('parseState', function (): void {
     };
 
     // act
-    const result = parseStateFile(fileInfo, content);
+    const result = parseStateFile(file);
 
     // assert
     expect(result.length).to.be.equal(1);

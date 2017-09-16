@@ -6,8 +6,6 @@ import { checkImports } from '.';
 describe('parseImports', function (): void {
   it('should return imports from same directory', async function (): Promise<void> {
     // arrange
-    const fileInfo: FileInfo = { filePath: '', importPath: './someDir/dir2' };
-
     const content = `
     import { Type1 } from '.';
     import { Type2 } from './';
@@ -26,8 +24,6 @@ describe('parseImports', function (): void {
 
   it('should return imports from same root directory', async function (): Promise<void> {
     // arrange
-    const fileInfo: FileInfo = { filePath: '', importPath: '.' };
-
     const content = `
     import { Type1 } from '.';
     import { Type2 } from './';
@@ -46,8 +42,6 @@ describe('parseImports', function (): void {
 
   it('should return imports from sub directory or neighbour file', async function (): Promise<void> {
     // arrange
-    const fileInfo: FileInfo = { filePath: '', importPath: './parent' };
-
     const content = `
     import { Type1 } from './child';
 `;
@@ -64,8 +58,6 @@ describe('parseImports', function (): void {
 
   it('should return imports from parent directory', async function (): Promise<void> {
     // arrange
-    const fileInfo: FileInfo = { filePath: '', importPath: './parent/child' };
-
     const content = `
     import { Type1 } from '..';
     import { Type2 } from '../';
@@ -84,8 +76,6 @@ describe('parseImports', function (): void {
 
   it('should return imports from neighbour directory or parent file', async function (): Promise<void> {
     // arrange
-    const fileInfo: FileInfo = { filePath: '', importPath: './parent/child' };
-
     const content = `
     import { Type1 } from '../neighbour';
 `;
@@ -102,8 +92,6 @@ describe('parseImports', function (): void {
 
   it('should return imports from outside root', async function (): Promise<void> {
     // arrange
-    const fileInfo: FileInfo = { filePath: '', importPath: './parent' };
-
     const content = `
     import { Type1 } from '../../otherPath';
 `;

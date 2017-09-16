@@ -7,7 +7,7 @@ function createRootFilePath(options) {
     if (!options.generateRootIn) {
         return null;
     }
-    const fileName = changeCase.paramCase(options.rootStateName) + constants_1.constants.ts;
+    const fileName = changeCase.paramCase(options.rootStateName) + constants_1.constants.stateExt;
     return tools_1.combinePath(options.generateRootIn, fileName);
 }
 exports.createRootFilePath = createRootFilePath;

@@ -8,6 +8,6 @@ export function createRootFilePath(options: Options): string {
     return null;
   }
 
-  const fileName = changeCase.paramCase(options.rootStateName) + constants.ts;
+  const fileName = changeCase.paramCase(options.rootStateName) + constants.stateExt;
   return combinePath(options.generateRootIn, fileName);
 }

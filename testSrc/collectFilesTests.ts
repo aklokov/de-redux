@@ -1,29 +1,28 @@
-import { collectFiles, FileInfo } from '../src/parse/collectFiles';
+import { collectFiles, FileInfo, FileType } from '../src/parse/collectFiles';
 import { expect } from 'chai';
 
 describe('collectFiles', function (): void {
   it('should collect files with imports', async function (): Promise<void> {
     // arrange
-    const states: FileInfo[] = [
+    const files: FileInfo[] = [
       {
         filePath: './testFolder/file1.state.ts',
-        importPath: './testFolder'
+        type: FileType.State
       },
       {
         filePath: './testFolder/folder3/file1.state.ts',
-        importPath: './testFolder/folder3/file1.state'
+        type: FileType.State
+      },
+      {
+        filePath: './testFolder/folder2/some.reduction.ts',
+        type: FileType.Reduction
       }];
-    const reductions: FileInfo[] = [{
-      filePath: './testFolder/folder2/some.reduction.ts',
-      importPath: './testFolder/folder2/some.reduction'
-    }];
 
     // act
     const result = await collectFiles('./testFolder');
 
     // assert
-    compareFiles(result.states, states);
-    compareFiles(result.reductions, reductions);
+    compareFiles(result, files);
   });
 });
 
@@ -32,6 +31,6 @@ function compareFiles(files: FileInfo[], expected: FileInfo[]): void {
   expected.forEach(exp => {
     const file = files.find(f => f.filePath === exp.filePath);
     expect(file).to.be.not.equal(undefined);
-    expect(file.importPath).to.be.equal(exp.importPath);
+    expect(file.type).to.be.equal(exp.type);
   });
 }

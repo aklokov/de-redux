@@ -24,6 +24,7 @@
     "@types/mocha": "^2.2.41",
     "@types/node": "^8.0.20",
     "chai": "^4.1.1",
+    "cross-spawn": "^5.1.0",
     "gulp": "^3.9.1",
     "gulp-mocha": "^3.0.1",
     "gulp-rename": "^1.2.2",
@@ -37,6 +38,6 @@
     "run-sequence": "^2.1.0",
     "tslint": "^5.6.0",
     "typescript": "^2.4.2",
-    "typescript-reexport-generator": "^1.1.0"
+    "typescript-reexport-generator": "^1.1.2"
   }
 }

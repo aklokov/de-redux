@@ -1,11 +1,15 @@
 const gulp = require('gulp');
-const ts = require('gulp-tsc');
-const settings = require('../settings');
-const tsconfig = require('../../tsconfig');
+var spawn = require('cross-spawn');
+var path = require('path')
 
-gulp.task('build-ts', function () {
-    const options = Object.assign({}, tsconfig.compilerOptions);
-    return gulp.src(settings.projectTsFiles)
-        .pipe(ts(options))
-        .pipe(gulp.dest(settings.buildPath));
+gulp.task('build-ts', function (done) {
+  const spawned = spawn('tsc', [], { stdio: 'inherit' });
+  spawned.setMaxListeners(0);
+  spawned.on('close', function(exitCode){
+    if (exitCode !== 0) {
+      throw new Error('compilation error');
+    }
+    
+    done();
+  });
 });

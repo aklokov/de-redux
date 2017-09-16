@@ -1,21 +1,23 @@
-import { CollectedModel, getFilesWithIsDir, mergeModels, getFolderModel, normalizePath } from '.';
+import { FileInfo, getFilesWithIsDir, getFolderFiles, normalizePath } from '.';
 import { constants } from '../../constants';
 import { toStringDict, StringMap } from 'hash-map';
+import * as _ from 'lodash';
 
-export async function collectFiles(path: string | string[]): Promise<CollectedModel> {
+export async function collectFiles(path: string | string[]): Promise<FileInfo[]> {
   if (Array.isArray(path)) {
     const models = await Promise.all(path.map(collectFilesImpl));
-    return mergeModels(models);
+    return _.flatten(models);
   }
 
   return await collectFilesImpl(path);
 }
 
-async function collectFilesImpl(path: string): Promise<CollectedModel> {
+async function collectFilesImpl(path: string): Promise<FileInfo[]> {
   path = normalizePath(path);
   const allFiles = await getFilesWithIsDir(path);
   const folders = allFiles.filter(file => file.isDir).map(file => file.fullPath);
   const folderModels = await Promise.all(folders.map(collectFiles));
-  const thisModel = await getFolderModel(allFiles.filter(file => !file.isDir));
-  return mergeModels([...folderModels, thisModel]);
+  const flat = _.flatten(folderModels);
+  const thisModel = await getFolderFiles(allFiles.filter(file => !file.isDir));
+  return [...flat, ...thisModel];
 }

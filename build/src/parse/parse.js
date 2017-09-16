@@ -15,10 +15,10 @@ const parseReduction_1 = require("./parseReduction");
 const _ = require("lodash");
 function parseFiles(options, path) {
     return __awaiter(this, void 0, void 0, function* () {
-        const filesModel = yield collectFiles_1.collectFiles(path);
-        const statePromises = _1.filterStates(options, filesModel.states)
+        const files = yield collectFiles_1.collectFiles(path);
+        const statePromises = _1.getStates(options, files)
             .map(file => _1.prepareFile(options, file).then(parseState_1.parseStateFile));
-        const reductionPromises = filesModel.reductions
+        const reductionPromises = _1.getReductions(files)
             .map(file => _1.prepareFile(options, file).then(parseReduction_1.parseReductionFile));
         const [states, reductions] = yield Promise.all([Promise.all(statePromises), Promise.all(reductionPromises)]);
         return {
