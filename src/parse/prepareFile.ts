@@ -1,5 +1,6 @@
 import { parseImports, Import } from './parseImports';
 import { Options } from '../Options';
+import { trimFilename } from '../tools';
 import * as fse from 'fs-extra';
 
 export interface PreparedFile {
@@ -10,6 +11,6 @@ export interface PreparedFile {
 
 export async function prepareFile(options: Options, filePath: string): Promise<PreparedFile> {
   const content = await fse.readFile(filePath, 'utf8');
-  const imports = parseImports(options.tsconfig, content);
+  const imports = parseImports(options.tsconfig, content, trimFilename(filePath));
   return { filePath, content, imports };
 }

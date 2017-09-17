@@ -1,4 +1,5 @@
 export interface Import {
-    typename: string;
+    typeName: string;
+    aliasName: string;
     importPath: string;
 }
