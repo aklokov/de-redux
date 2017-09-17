@@ -1,4 +1,5 @@
-import { Import, calculatePath } from '.';
+import { calculateRealPath } from '.';
+import { Import } from '../model';
 import { execRegex } from '../../tools';
 import * as _ from 'lodash';
 
@@ -10,23 +11,23 @@ export function parseImports(tsConfig: any, content: string, path: string): Impo
 }
 
 function parseMatch(tsConfig: any, types: string, importline: string, path: string): Import[] {
-  const importPath = calculatePath(tsConfig, path, importline);
-  return types.split(',').map(type => createImport(type, importPath)).filter(x => x);
+  const realPath = calculateRealPath(tsConfig, path, importline);
+  return types.split(',').map(type => createImport(type, realPath)).filter(x => x);
 }
 
-function createImport(type: string, importPath: string): Import {
+function createImport(type: string, realPath: string): Import {
   const parts = type.split(' ').filter(s => s.length);
   if (parts.length === 3 && parts[1] === 'as') {
     return {
       typeName: parts[0],
       aliasName: parts[2],
-      importPath
+      realPath
     };
   } else if (parts.length > 0) {
     return {
       typeName: parts[0],
       aliasName: parts[0],
-      importPath
+      realPath
     };
   }
 }

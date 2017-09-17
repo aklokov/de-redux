@@ -1,5 +1,5 @@
 
-import { calculatePath } from '../src/parse/parseImports';
+import { calculateRealPath } from '../src/parse/parseImports';
 import { expect } from 'chai';
 import { checkImports } from '.';
 
@@ -11,7 +11,7 @@ describe('calculatePath', function (): void {
     const expected = './someDir/dir2';
 
     // act
-    const result = calculatePath({}, path, importPath);
+    const result = calculateRealPath({}, path, importPath);
 
     // assert
     expect(result).to.be.equal(expected);
@@ -24,7 +24,7 @@ describe('calculatePath', function (): void {
     const expected = './someDir/dir2';
 
     // act
-    const result = calculatePath({}, path, importPath);
+    const result = calculateRealPath({}, path, importPath);
 
     // assert
     expect(result).to.be.equal(expected);
@@ -37,7 +37,7 @@ describe('calculatePath', function (): void {
     const expected = '.';
 
     // act
-    const result = calculatePath({}, path, importPath);
+    const result = calculateRealPath({}, path, importPath);
 
     // assert
     expect(result).to.be.equal(expected);
@@ -50,7 +50,7 @@ describe('calculatePath', function (): void {
     const expected = './parent/child';
 
     // act
-    const result = calculatePath({}, path, importPath);
+    const result = calculateRealPath({}, path, importPath);
 
     // assert
     expect(result).to.be.equal(expected);
@@ -63,7 +63,7 @@ describe('calculatePath', function (): void {
     const expected = './parent';
 
     // act
-    const result = calculatePath({}, path, importPath);
+    const result = calculateRealPath({}, path, importPath);
 
     // assert
     expect(result).to.be.equal(expected);
@@ -77,7 +77,7 @@ describe('calculatePath', function (): void {
     const expected = './parent/neighbour';
 
     // act
-    const result = calculatePath({}, path, importPath);
+    const result = calculateRealPath({}, path, importPath);
 
     // assert
     expect(result).to.be.equal(expected);
@@ -91,7 +91,7 @@ describe('calculatePath', function (): void {
     const expected = '../otherPath';
 
     // act
-    const result = calculatePath({}, path, importPath);
+    const result = calculateRealPath({}, path, importPath);
 
     // assert
     expect(result).to.be.equal(expected);

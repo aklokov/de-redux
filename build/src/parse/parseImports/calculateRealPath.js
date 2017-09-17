@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const _ = require("lodash");
 const tools_1 = require("../../tools");
-function calculatePath(tsconfig, path, importLine) {
+function calculateRealPath(tsconfig, path, importLine) {
     const splitPath = path.split('/');
     const splitImport = importLine.replace(/\\/g, '/').split('/').filter(line => line.length);
     if (splitImport[0] !== '.' && splitImport[0] !== '..') {
@@ -10,7 +10,7 @@ function calculatePath(tsconfig, path, importLine) {
     }
     return calculateDiff(splitPath, splitImport);
 }
-exports.calculatePath = calculatePath;
+exports.calculateRealPath = calculateRealPath;
 function applyPath(tsconfig, split) {
     split[0] = tryReplace(tsconfig, split[0]);
     return split.join('/');
@@ -55,4 +55,4 @@ function subtractPath(path) {
         return path.slice(0, path.length - 1);
     }
 }
-//# sourceMappingURL=calculatePath.js.map
+//# sourceMappingURL=calculateRealPath.js.map

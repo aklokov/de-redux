@@ -19,7 +19,7 @@ describe('parseState', function (): void {
     const expected = {
       id: './SomeState',
       name: 'SomeState',
-      importPath: '.',
+      realPath: '.',
       folderPath: '.',
       fields: []
     };

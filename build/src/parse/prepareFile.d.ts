@@ -1,4 +1,4 @@
-import { Import } from './parseImports';
+import { Import } from './model';
 import { Options } from '../Options';
 export interface PreparedFile {
     filePath: string;

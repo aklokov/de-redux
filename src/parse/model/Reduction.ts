@@ -1,3 +1,5 @@
+import { Import } from '.';
+
 export interface Reduction {
   name: string;
   importPath: string;
@@ -9,9 +11,5 @@ export interface Reduction {
 export interface Parameter {
   name: string;
   typeName: string;
-}
-
-export interface Import {
-  type: string;
-  importPath: string;
+  optional: boolean;
 }

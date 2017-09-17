@@ -11,23 +11,23 @@ function parseImports(tsConfig, content, path) {
 }
 exports.parseImports = parseImports;
 function parseMatch(tsConfig, types, importline, path) {
-    const importPath = _1.calculatePath(tsConfig, path, importline);
-    return types.split(',').map(type => createImport(type, importPath)).filter(x => x);
+    const realPath = _1.calculateRealPath(tsConfig, path, importline);
+    return types.split(',').map(type => createImport(type, realPath)).filter(x => x);
 }
-function createImport(type, importPath) {
+function createImport(type, realPath) {
     const parts = type.split(' ').filter(s => s.length);
     if (parts.length === 3 && parts[1] === 'as') {
         return {
             typeName: parts[0],
             aliasName: parts[2],
-            importPath
+            realPath
         };
     }
     else if (parts.length > 0) {
         return {
             typeName: parts[0],
             aliasName: parts[0],
-            importPath
+            realPath
         };
     }
 }

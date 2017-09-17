@@ -1,4 +1,5 @@
-import { parseImports, Import } from './parseImports';
+import { parseImports } from './parseImports';
+import { Import } from './model';
 import { Options } from '../Options';
 import { trimFilename } from '../tools';
 import * as fse from 'fs-extra';

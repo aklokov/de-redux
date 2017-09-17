@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
 import { last, combinePath } from '../../tools';
 
-export function calculatePath(tsconfig: any, path: string, importLine: string): string {
+export function calculateRealPath(tsconfig: any, path: string, importLine: string): string {
   const splitPath = path.split('/');
   const splitImport = importLine.replace(/\\/g, '/').split('/').filter(line => line.length);
   if (splitImport[0] !== '.' && splitImport[0] !== '..') {

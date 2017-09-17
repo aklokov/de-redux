@@ -1,3 +1,2 @@
-export * from './Import';
-export * from './calculatePath';
+export * from './calculateRealPath';
 export * from './parseImports';

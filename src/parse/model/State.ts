@@ -1,7 +1,7 @@
 export interface State {
   id: string;
   name: string;
-  importPath: string;
+  realPath: string;
 
   folderPath: string;
   fields: StateField[];
@@ -9,8 +9,9 @@ export interface State {
 
 export interface StateField {
   typeName: string;
-  importPath: string;
+  realPath: string;
 
   fieldName: string;
-  isArray: boolean; // to be used later
+  isOptional: boolean;
+  isArray: boolean;
 }

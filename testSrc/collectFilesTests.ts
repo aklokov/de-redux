@@ -7,15 +7,18 @@ describe('collectFiles', function (): void {
     const files: FileInfo[] = [
       {
         filePath: './testFolder/file1.state.ts',
-        type: FileType.State
+        type: FileType.State,
+        reexported: true
       },
       {
         filePath: './testFolder/folder3/file1.state.ts',
-        type: FileType.State
+        type: FileType.State,
+        reexported: false
       },
       {
         filePath: './testFolder/folder2/some.reduction.ts',
-        type: FileType.Reduction
+        type: FileType.Reduction,
+        reexported: false
       }];
 
     // act

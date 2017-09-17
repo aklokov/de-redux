@@ -1,13 +1,14 @@
 export interface State {
     id: string;
     name: string;
-    importPath: string;
+    realPath: string;
     folderPath: string;
     fields: StateField[];
 }
 export interface StateField {
     typeName: string;
-    importPath: string;
+    realPath: string;
     fieldName: string;
+    isOptional: boolean;
     isArray: boolean;
 }
