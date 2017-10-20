@@ -11,9 +11,13 @@ export async function generate(options: Options): Promise<void> {
     ...options
   };
 
+  // try {
   const parseModel = await parseFiles(options, options.path);
   const derive = deriveModel(options, parseModel);
   await generateFiles(options, derive);
+  // } catch (err) {
+  //    console.log(err);
+  // }
 }
 
 

@@ -13,8 +13,7 @@ function needDispatcherFile(id, tree) {
 }
 exports.needDispatcherFile = needDispatcherFile;
 function canSubscribe(id, tree) {
-    const node = tree.nodesById[id];
-    return node.parentIds.length < 2;
+    return false;
 }
 exports.canSubscribe = canSubscribe;
 //# sourceMappingURL=needFile.js.map

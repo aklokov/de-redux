@@ -40,7 +40,7 @@ export function createDispatcherFile(state: State, tree: Tree): DispatcherFile {
 
   function createUnsubscribable(): DispatcherFile {
     const imports = createImports(path, state, tree);
-    const actions = reductions.map(red => createDispatcherAction(red));
+    const actions = reductions.filter(r => !isInit(r)).map(red => createDispatcherAction(red));
     return {
       dispatcherFile,
       unlink: false,

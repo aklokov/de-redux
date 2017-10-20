@@ -13,6 +13,7 @@ export function needDispatcherFile(id: string, tree: Tree): boolean {
 }
 
 export function canSubscribe(id: string, tree: Tree): boolean {
-  const node = tree.nodesById[id];
-  return node.parentIds.length < 2;
+  return false;
+  // const node = tree.nodesById[id];
+  // return node.parentIds.length === 1;
 }

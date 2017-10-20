@@ -35,7 +35,7 @@ function createDispatcherFile(state, tree) {
     }
     function createUnsubscribable() {
         const imports = _1.createImports(path, state, tree);
-        const actions = reductions.map(red => _1.createDispatcherAction(red));
+        const actions = reductions.filter(r => !__1.isInit(r)).map(red => _1.createDispatcherAction(red));
         return {
             dispatcherFile,
             unlink: false,

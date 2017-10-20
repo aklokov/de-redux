@@ -15,9 +15,7 @@ describe('manualTest', function (): void {
           '@mdmapi/*': ['app/services/api/*'],
           '@mdmtools': ['app/services/tools/']
         }
-      },
-      generateRootIn: '../../nielsen/csapps-metadata-manager/app/redux',
-      rootStateName: 'MetadataState'
+      }
     };
     await generate(options);
     console.log('done');
