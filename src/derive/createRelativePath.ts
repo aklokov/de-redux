@@ -1,6 +1,10 @@
 import { trimFilename, trimExtension } from '../tools';
 
 export function createRelativePath(path: string, src: string): string {
+  if (!path.startsWith('.') && !path.startsWith('..')) {
+    return path;
+  }
+
   let pathSplit = path.split('/');
   let srcSplit = src.split('/');
   while (pathSplit.length && srcSplit.length && pathSplit[0] === srcSplit[0]) {

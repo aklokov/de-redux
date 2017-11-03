@@ -8,12 +8,16 @@ describe('manualTest', function (): void {
         baseUrl: '../../nielsen/csapps-metadata-manager',
         paths:
         {
-          '@mdmapp/*': ['app/*'],
-          '@mdmcomponents/*': ['app/components/*'],
-          '@mdminterfaces/*': ['app/interfaces/*'],
           '@mdmservices/*': ['app/services/*'],
+          '@mdmstate/*': ['app/state/*'],
+          '@mdmstore-service': ['app/services/store.service'],
+          '@mdmtools': ['app/services/tools/'],
+          '@environment': ['testbed/client/environments/environment'],
+
+          '@mdmcomponents/*': ['app/components/*'],
           '@mdmapi/*': ['app/services/api/*'],
-          '@mdmtools': ['app/services/tools/']
+          '@mdmbl/*': ['app/services/bl/*'],
+          '@mdmhl/*': ['app/services/hl/*']
         }
       }
     };
