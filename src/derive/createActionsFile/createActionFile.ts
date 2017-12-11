@@ -14,7 +14,7 @@ export function createActionFile(state: State, tree: Tree): ActionsFile {
     return createUnlink(actionsFile);
   }
 
-  const reductions = tree.reductionMap[state.id];
+  const reductions = tree.reductionMap.get(state.id);
   const path = trimFilename(actionsFile);
   return {
     actionsFile,

@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const hash_map_1 = require("hash-map");
+const maptools_1 = require("maptools");
 function mapTree(nodes, rootState) {
     return {
         nodes,
-        nodesById: hash_map_1.toStringMap(nodes, node => node.state.id),
+        nodesById: maptools_1.map(nodes, node => node.state.id),
         rootState
     };
 }

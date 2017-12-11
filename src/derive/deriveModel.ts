@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 import { createActionFile } from './createActionsFile';
 import { createReducerFile } from './createReducerFile';
 import { createDispatcherFile } from './createDispatcherFile';
-import { toStringLookup, ds, StringMap } from 'hash-map';
+import { lookup } from 'maptools';
 import { createTree, Tree } from './tree';
 import { createRootState, populateTraceToRoot } from './tree';
 import { createRootStateFile } from './createRootState';
@@ -20,7 +20,7 @@ export function deriveModel(options: Options, input: InputModel): Model {
 
   tree = {
     ...populateTraceToRoot(tree),
-    reductionMap: toStringLookup(input.reductions, red => red.stateId, ds)
+    reductionMap: lookup(input.reductions, red => red.stateId)
   };
 
   return createDerivedModel(states, tree);

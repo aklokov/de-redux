@@ -2,14 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const __1 = require("..");
 const __2 = require("..");
-const stringMap = {
-    importLine: '{ stringMap }',
-    path: 'hash-map'
-};
 function createImports(path, reductions, state) {
     const fieldImports = __2.createReductionImports(path, reductions);
     const reductionImports = __2.createTypeImports(path, reductions);
-    return [stringMap, ...fieldImports, ...reductionImports, ...__2.createTypeImports(path, [state])];
+    return [...fieldImports, ...reductionImports, ...__2.createTypeImports(path, [state])];
 }
 exports.createImports = createImports;
 function createImportsWithAction(path, reductions, state) {

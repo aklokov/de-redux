@@ -7,15 +7,10 @@ import { createReductionImports, createTypeImports, createActionsImport, createA
 import { trimFilename } from '../../tools';
 import { ActionsFile, ChildReducer } from '../model';
 
-const stringMap: Import = {
-  importLine: '{ stringMap }',
-  path: 'hash-map'
-};
-
 export function createImports(path: string, reductions: Reduction[], state: State): Import[] {
   const fieldImports = createReductionImports(path, reductions);
   const reductionImports = createTypeImports(path, reductions);
-  return [stringMap, ...fieldImports, ...reductionImports, ...createTypeImports(path, [state])];
+  return [...fieldImports, ...reductionImports, ...createTypeImports(path, [state])];
 }
 
 export function createImportsWithAction(path: string, reductions: Reduction[], state: State): Import[] {

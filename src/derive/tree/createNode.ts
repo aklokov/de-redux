@@ -1,8 +1,7 @@
 import { State, Field } from '../../parse/model';
 import { TreeNode, NodeChild } from '.';
-import { StringMap } from 'hash-map';
 
-export function createNode(state: State, statesById: StringMap<State>): TreeNode {
+export function createNode(state: State, statesById: Map<string, State>): TreeNode {
   return {
     state,
     children: state.fields.map(field => createNodeChild(field, statesById)).filter(s => s),
@@ -12,12 +11,12 @@ export function createNode(state: State, statesById: StringMap<State>): TreeNode
   };
 }
 
-function createNodeChild(field: Field, statesById: StringMap<State>): NodeChild {
+function createNodeChild(field: Field, statesById: Map<string, State>): NodeChild {
   if (field.imported.length !== 1 || field.imported[0].name !== field.typename) {
     return null;
   }
 
-  const state = statesById[field.imported[0].id];
+  const state = statesById.get(field.imported[0].id);
   if (!state) {
     return null;
   }

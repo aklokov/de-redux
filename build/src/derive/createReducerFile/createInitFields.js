@@ -5,7 +5,7 @@ function createInitFields(node, tree) {
     const children = node.children.map(child => {
         return {
             field: child.fieldName,
-            stateName: tree.nodesById[child.childStateId].state.name,
+            stateName: tree.nodesById.get(child.childStateId).state.name,
             isNull: !__1.needReducerFile(child.childStateId, tree)
         };
     });

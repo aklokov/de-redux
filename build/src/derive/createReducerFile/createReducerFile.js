@@ -7,12 +7,12 @@ const tools_1 = require("../../tools");
 const __2 = require("..");
 function createReducerFile(state, tree) {
     const reducerFile = __1.createReducerFileName(state);
-    const node = tree.nodesById[state.id];
+    const node = tree.nodesById.get(state.id);
     if (!__2.needReducerFile(state.id, tree)) {
         return createUnlink(reducerFile);
     }
     const needActions = __2.needActionsFile(state.id, tree);
-    const reductions = tree.reductionMap[state.id] || [];
+    const reductions = tree.reductionMap.get(state.id) || [];
     const path = tools_1.trimFilename(reducerFile);
     const childReducers = node.children
         .filter(child => __2.needReducerFile(child.childStateId, tree))
@@ -52,7 +52,7 @@ function createUnlink(file) {
     };
 }
 function createChildReducer(child, tree) {
-    const childState = tree.nodesById[child.childStateId].state;
+    const childState = tree.nodesById.get(child.childStateId).state;
     return {
         fieldName: child.fieldName,
         stateName: childState.name,

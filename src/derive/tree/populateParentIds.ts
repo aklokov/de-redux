@@ -1,5 +1,5 @@
 import { Tree, TreeNode, NodeChild, mapTree } from '.';
-import { toStringLookup } from 'hash-map';
+import { lookup } from 'maptools';
 import * as _ from 'lodash';
 
 export function populateParentIds(tree: Tree): Tree {
@@ -13,10 +13,10 @@ interface ParentChild {
 
 function populateNodesParentIds(nodes: TreeNode[]): TreeNode[] {
   const pairs = _.flatten(nodes.map(getPairs));
-  const lookup = toStringLookup(pairs, pair => pair.childId, pair => pair.parentId);
+  const pairsLookup = lookup(pairs, pair => pair.childId, pair => pair.parentId);
   return nodes.map(node => ({
     ...node,
-    parentIds: lookup[node.state.id] || []
+    parentIds: pairsLookup.get(node.state.id) || []
   }));
 }
 

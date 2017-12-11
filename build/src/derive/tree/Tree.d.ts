@@ -1,5 +1,4 @@
 import { State, Reduction } from '../../parse/model';
-import { StringMap } from 'hash-map';
 export interface NodeChild {
     childStateId: string;
     fieldName: string;
@@ -13,7 +12,7 @@ export interface TreeNode {
 }
 export interface Tree {
     nodes: TreeNode[];
-    nodesById: StringMap<TreeNode>;
+    nodesById: Map<string, TreeNode>;
     rootState?: State;
-    reductionMap?: StringMap<Reduction[]>;
+    reductionMap?: Map<string, Reduction[]>;
 }

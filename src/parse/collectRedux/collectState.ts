@@ -3,18 +3,14 @@ import { Options } from '../../Options';
 import { execRegex } from '../../tools';
 import { State, Type, Field } from '../model';
 import { createField } from '.';
-import { toStringMap, StringMap } from 'hash-map';
+import { map, merge } from 'maptools';
 import { FileInfo } from '../collectFileInfo';
 
 const typeRegex = /export interface (.*) {\r?\n((?:.*?|\r?\n)*?)}/g;
 export function collectState(options: Options, fileInfo: FileInfo): State[] {
   const matches = execRegex(typeRegex, fileInfo.content);
   const tempStates = matches.map(match => createTempState(fileInfo.folder, fileInfo.importPath, match[1], match[2]));
-  const fullImports = {
-    ...fileInfo.imports,
-    ...toStringMap(tempStates, ts => ts.name)
-  };
-
+  const fullImports = merge(fileInfo.imports, map(tempStates, ts => ts.name));
   return tempStates.map(ts => toState(ts, fullImports));
 }
 
@@ -34,7 +30,7 @@ function createTempState(folder: string, importPath: string, name: string, conte
 }
 
 const fieldRegex = /(.*):([^;]*);?/g;
-function toState(ts: TempState, imports: StringMap<Type>): State {
+function toState(ts: TempState, imports: Map<string, Type>): State {
   const matches = execRegex(fieldRegex, ts.content);
   return {
     id: ts.id,

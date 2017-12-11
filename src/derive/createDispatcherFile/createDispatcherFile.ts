@@ -13,7 +13,7 @@ export function createDispatcherFile(state: State, tree: Tree): DispatcherFile {
     return createUnlink(dispatcherFile);
   }
 
-  const reductions = tree.reductionMap[state.id] || [];
+  const reductions = tree.reductionMap.get(state.id) || [];
   const path = trimFilename(dispatcherFile);
   if (canSubscribe(state.id, tree)) {
     return createSubscribable();
@@ -22,8 +22,8 @@ export function createDispatcherFile(state: State, tree: Tree): DispatcherFile {
   }
 
   function createSubscribable(): DispatcherFile {
-    const node = tree.nodesById[state.id];
-    const root = tree.nodesById[node.rootId];
+    const node = tree.nodesById.get(state.id);
+    const root = tree.nodesById.get(node.rootId);
     const imports = createImports(path, state, tree);
     const actions = reductions.filter(r => !isInit(r)).map(red => createDispatcherAction(red));
     return {

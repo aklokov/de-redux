@@ -1,6 +1,6 @@
 {
   "name": "de-redux",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "",
   "files": [
     "build/src"
@@ -14,8 +14,8 @@
   "license": "MIT",
   "dependencies": {
     "change-case": "^3.0.1",
-    "hash-map": "^2.0.1",
     "lodash": "^4.17.4",
+    "maptools": "^1.0.3",
     "typescript-reexport-generator": "^1.1.2"
   },
   "devDependencies": {

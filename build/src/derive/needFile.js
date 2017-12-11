@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 function needActionsFile(id, tree) {
-    return !!tree.reductionMap[id];
+    return !!tree.reductionMap.get(id);
 }
 exports.needActionsFile = needActionsFile;
 function needReducerFile(id, tree) {
-    return !!tree.reductionMap[id] || !!tree.nodesById[id].children.length;
+    return !!tree.reductionMap.get(id) || !!tree.nodesById.get(id).children.length;
 }
 exports.needReducerFile = needReducerFile;
 function needDispatcherFile(id, tree) {
-    return !!tree.reductionMap[id] || canSubscribe(id, tree);
+    return !!tree.reductionMap.get(id) || canSubscribe(id, tree);
 }
 exports.needDispatcherFile = needDispatcherFile;
 function canSubscribe(id, tree) {

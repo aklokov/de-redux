@@ -3,12 +3,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const tools_1 = require("../../tools");
 const tools_2 = require("../../tools");
 const _1 = require(".");
-const hash_map_1 = require("hash-map");
+const maptools_1 = require("maptools");
 const typeRegex = /export interface (.*) {\r?\n((?:.*?|\r?\n)*?)}/g;
 function collectState(options, fileInfo) {
     const matches = tools_2.execRegex(typeRegex, fileInfo.content);
     const tempStates = matches.map(match => createTempState(fileInfo.folder, fileInfo.importPath, match[1], match[2]));
-    const fullImports = Object.assign({}, fileInfo.imports, hash_map_1.toStringMap(tempStates, ts => ts.name));
+    const fullImports = maptools_1.merge(fileInfo.imports, maptools_1.map(tempStates, ts => ts.name));
     return tempStates.map(ts => toState(ts, fullImports));
 }
 exports.collectState = collectState;

@@ -10,7 +10,7 @@ function collectReduction(options, fileInfo) {
 exports.collectReduction = collectReduction;
 function toReduction(path, match, imports) {
     const [content, name, args, returnTypeName] = match;
-    const returnType = imports[returnTypeName.trim()];
+    const returnType = imports.get(returnTypeName.trim());
     if (!returnType) {
         return null;
     }

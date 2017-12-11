@@ -1,6 +1,5 @@
 import { State, Field } from '../../parse/model';
 import { Tree, TreeNode } from '.';
-import { stringMap, StringMap } from 'hash-map';
 import * as changeCase from 'change-case';
 import { constants } from '../../constants';
 import { combinePath } from '../../tools';

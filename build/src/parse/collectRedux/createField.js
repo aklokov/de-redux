@@ -12,7 +12,7 @@ function createField(name, typename, imports) {
     return {
         name: trimQuestionMark(name),
         typename: typename.trim(),
-        imported: split.map(type => imports[type.trim()]).filter(type => type)
+        imported: split.map(type => imports.get(type.trim())).filter(type => type)
     };
 }
 exports.createField = createField;

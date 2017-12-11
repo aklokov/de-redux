@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const hash_map_1 = require("hash-map");
+const maptools_1 = require("maptools");
 function createRootNode(state, rootNodes) {
-    const nodesById = hash_map_1.toStringMap(rootNodes, node => node.state.id);
+    const nodesById = maptools_1.map(rootNodes, node => node.state.id);
     return {
         state,
         children: state.fields.map(field => createNodeChild(field, nodesById)).filter(s => s),
@@ -13,7 +13,7 @@ function createRootNode(state, rootNodes) {
 }
 exports.createRootNode = createRootNode;
 function createNodeChild(field, nodesById) {
-    const node = nodesById[field.imported[0].id];
+    const node = nodesById.get(field.imported[0].id);
     return {
         childStateId: node.state.id,
         fieldName: field.name

@@ -1,10 +1,9 @@
 import { Field } from '../../parse/model';
 import { TreeNode } from '.';
-import { stringMap, StringMap } from 'hash-map';
 import * as changeCase from 'change-case';
 
 export function createFields(rootNodes: TreeNode[]): Field[] {
-  const namesMap = stringMap<boolean>();
+  const namesMap = new Map<string, boolean>();
   const fields: Field[] = [];
   rootNodes.forEach(node => {
     const name = createName(node.state.name, namesMap);
@@ -17,13 +16,13 @@ export function createFields(rootNodes: TreeNode[]): Field[] {
   return fields;
 }
 
-function createName(typeName: string, names: StringMap<boolean>): string {
+function createName(typeName: string, names: Map<string, boolean>): string {
   let name = changeCase.camelCase(typeName);
   let i = 1;
-  while (names[name]) {
+  while (names.has(name)) {
     name = name + (i++);
   }
 
-  names[name] = true;
+  names.set(name, true);
   return name;
 }

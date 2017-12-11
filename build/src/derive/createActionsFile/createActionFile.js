@@ -9,7 +9,7 @@ function createActionFile(state, tree) {
     if (!__3.needActionsFile(state.id, tree)) {
         return createUnlink(actionsFile);
     }
-    const reductions = tree.reductionMap[state.id];
+    const reductions = tree.reductionMap.get(state.id);
     const path = tools_1.trimFilename(actionsFile);
     return {
         actionsFile,

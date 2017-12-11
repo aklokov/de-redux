@@ -52,7 +52,7 @@ function generateContent(gen, file) {
     gen.append((file.stateName).toString());
     gen.append(';');
     gen.eol();
-    gen.append('const map = stringMap<actor>();');
+    gen.append('const map = {};');
     gen.eol();
     for (let child of file.childReducers) {
         gen.forceEol();

@@ -1,16 +1,16 @@
 import { Type } from '../model';
-import { StringMap, toStringMap } from 'hash-map';
+import { map } from 'maptools';
 import { calculatePath, correctReexportPath } from '.';
 import { Options } from '../../Options';
 import { execRegex, combinePath, first } from '../../tools';
 import * as _ from 'lodash';
 
 const regex = /import[\s]*{(.*)}[\s]*from[\s]*['|"](.*)['|"]/g;
-export async function parseImports(options: Options, content: string, path: string): Promise<StringMap<Type>> {
+export async function parseImports(options: Options, content: string, path: string): Promise<Map<string, Type>> {
   const matches = execRegex(regex, content);
   const typeGroups = await Promise.all(matches.map(match => parseMatch(options, match[1], match[2], path)));
   const types = _.flatten(typeGroups);
-  return toStringMap(types, type => type.name);
+  return map(types, type => type.name);
 }
 
 async function parseMatch(options: Options, types: string, importline: string, path: string): Promise<Type[]> {

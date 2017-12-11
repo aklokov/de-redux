@@ -8,7 +8,7 @@
 @[importsGenerator(file.imports)]
 @eol
 type actor = (prev: @file.stateName, action: { type: string }) => @file.stateName;
-const map = stringMap<actor>();
+const map = {};
 @foreach(let child of file.childReducers){
 @eol
 @[childReducerGenerator(child, file)]

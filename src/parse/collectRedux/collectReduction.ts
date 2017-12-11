@@ -2,7 +2,6 @@ import { Options } from '../../Options';
 import { execRegex, combinePath } from '../../tools';
 import { State, Type, Field, Reduction } from '../model';
 import { createField } from '.';
-import { StringMap } from 'hash-map';
 import { FileInfo } from '../collectFileInfo';
 
 const funcRegex = /export function ([^\(]*)\(([^\)]*)\): ([^{]*)/g;
@@ -11,9 +10,9 @@ export function collectReduction(options: Options, fileInfo: FileInfo): Reductio
   return matches.map(match => toReduction(fileInfo.importPath, match, fileInfo.imports)).filter(r => r);
 }
 
-function toReduction(path: string, match: string[], imports: StringMap<Type>): Reduction {
+function toReduction(path: string, match: string[], imports: Map<string, Type>): Reduction {
   const [content, name, args, returnTypeName] = match;
-  const returnType = imports[returnTypeName.trim()];
+  const returnType = imports.get(returnTypeName.trim());
   if (!returnType) {
     return null;
   }
@@ -33,7 +32,7 @@ function toReduction(path: string, match: string[], imports: StringMap<Type>): R
   };
 }
 
-function toField(parm: string, imports: StringMap<Type>): Field {
+function toField(parm: string, imports: Map<string, Type>): Field {
   const split = parm.split(':');
   return createField(split[0], split[1], imports);
 }

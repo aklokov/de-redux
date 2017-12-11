@@ -14,7 +14,7 @@ function createNodeChild(field, statesById) {
     if (field.imported.length !== 1 || field.imported[0].name !== field.typename) {
         return null;
     }
-    const state = statesById[field.imported[0].id];
+    const state = statesById.get(field.imported[0].id);
     if (!state) {
         return null;
     }

@@ -11,13 +11,13 @@ import { needReducerFile, needActionsFile } from '..';
 
 export function createReducerFile(state: State, tree: Tree): ReducerFile {
   const reducerFile = createReducerFileName(state);
-  const node = tree.nodesById[state.id];
+  const node = tree.nodesById.get(state.id);
   if (!needReducerFile(state.id, tree)) {
     return createUnlink(reducerFile);
   }
 
   const needActions = needActionsFile(state.id, tree);
-  const reductions = tree.reductionMap[state.id] || [];
+  const reductions = tree.reductionMap.get(state.id) || [];
   const path = trimFilename(reducerFile);
   const childReducers = node.children
     .filter(child => needReducerFile(child.childStateId, tree))
@@ -58,7 +58,7 @@ function createUnlink(file: string): ReducerFile {
 }
 
 function createChildReducer(child: NodeChild, tree: Tree): ChildReducer {
-  const childState = tree.nodesById[child.childStateId].state;
+  const childState = tree.nodesById.get(child.childStateId).state;
   return {
     fieldName: child.fieldName,
     stateName: childState.name,

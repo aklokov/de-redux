@@ -5,16 +5,16 @@ import { Tree } from '../tree';
 import * as _ from 'lodash';
 
 export function createImports(path: string, state: State, tree: Tree): Import[] {
-  const reductions = tree.reductionMap[state.id] || [];
+  const reductions = tree.reductionMap.get(state.id) || [];
   let imports = [...createReductionImports(path, reductions), ...createTypeImports(path, [state])];
   if (needActionsFile(state.id, tree)) {
     imports.push(createActionsImport(path, createActionFileName(state)));
   }
 
   if (canSubscribe(state.id, tree)) {
-    const node = tree.nodesById[state.id];
+    const node = tree.nodesById.get(state.id);
     if (node.rootId !== state.id) {
-      imports = [...imports, ...createTypeImports(path, [tree.nodesById[node.rootId].state])];
+      imports = [...imports, ...createTypeImports(path, [tree.nodesById.get(node.rootId).state])];
     }
   }
 

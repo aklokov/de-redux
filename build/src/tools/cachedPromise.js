@@ -8,17 +8,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const hash_map_1 = require("hash-map");
 function cachedPromise(func) {
-    const map = hash_map_1.stringMap();
+    const map = new Map();
     return function (key) {
         return __awaiter(this, void 0, void 0, function* () {
-            const existing = map[key];
+            const existing = map.get(key);
             if (existing !== undefined) {
                 return existing;
             }
             const result = yield func(key);
-            map[key] = result;
+            map.set(key, result);
             return result;
         });
     };

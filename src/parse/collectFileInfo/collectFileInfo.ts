@@ -1,5 +1,4 @@
 import { Type } from '../model';
-import { StringMap } from 'hash-map';
 import { createFileImport, parseImports } from '.';
 import { combinePath } from '../../tools';
 import * as fse from 'fs-extra';
@@ -10,7 +9,7 @@ export interface FileInfo {
   folder: string;
   file: string;
   content: string;
-  imports: StringMap<Type>;
+  imports: Map<string, Type>;
 }
 
 async function read(path: string, file: string): Promise<string> {
