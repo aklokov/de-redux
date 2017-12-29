@@ -1,5 +1,5 @@
 import { Tree, TreeNode, NodeChild } from '.';
-import { map } from 'maptools';
+import { map } from '@vlr/map-tools';
 import { State, Field } from '../../parse/model';
 
 export function mapTree(nodes: TreeNode[], rootState?: State): Tree {

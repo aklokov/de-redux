@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const createActionsFile_1 = require("./createActionsFile");
 const createReducerFile_1 = require("./createReducerFile");
 const createDispatcherFile_1 = require("./createDispatcherFile");
-const maptools_1 = require("maptools");
+const map_tools_1 = require("@vlr/map-tools");
 const tree_1 = require("./tree");
 const tree_2 = require("./tree");
 const createRootState_1 = require("./createRootState");
@@ -14,7 +14,7 @@ function deriveModel(options, input) {
         tree = tree_2.createRootState(tree, options.generateRootIn, options.rootStateName);
         states = [...states, tree.rootState];
     }
-    tree = Object.assign({}, tree_2.populateTraceToRoot(tree), { reductionMap: maptools_1.lookup(input.reductions, red => red.stateId) });
+    tree = Object.assign({}, tree_2.populateTraceToRoot(tree), { reductionMap: map_tools_1.lookup(input.reductions, red => red.stateId) });
     return createDerivedModel(states, tree);
 }
 exports.deriveModel = deriveModel;

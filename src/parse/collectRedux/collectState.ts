@@ -3,7 +3,7 @@ import { Options } from '../../Options';
 import { execRegex } from '../../tools';
 import { State, Type, Field } from '../model';
 import { createField } from '.';
-import { map, merge } from 'maptools';
+import { map, merge } from '@vlr/map-tools';
 import { FileInfo } from '../collectFileInfo';
 
 const typeRegex = /export interface (.*) {\r?\n((?:.*?|\r?\n)*?)}/g;

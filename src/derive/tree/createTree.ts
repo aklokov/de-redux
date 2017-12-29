@@ -1,6 +1,6 @@
 import { State, Field } from '../../parse/model';
 import { Tree, TreeNode, NodeChild } from '.';
-import { map } from 'maptools';
+import { map } from '@vlr/map-tools';
 import { createNode, populateParentIds, mapTree } from '.';
 import { Options } from '../../Options';
 

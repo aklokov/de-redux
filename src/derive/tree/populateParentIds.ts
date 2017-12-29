@@ -1,5 +1,5 @@
 import { Tree, TreeNode, NodeChild, mapTree } from '.';
-import { lookup } from 'maptools';
+import { lookup } from '@vlr/map-tools';
 import * as _ from 'lodash';
 
 export function populateParentIds(tree: Tree): Tree {

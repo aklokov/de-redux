@@ -1,6 +1,6 @@
 {
   "name": "de-redux",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "",
   "files": [
     "build/src"
@@ -13,9 +13,9 @@
   "author": "Vladimir Repin",
   "license": "MIT",
   "dependencies": {
+    "@vlr/map-tools": "^1.0.6",
     "change-case": "^3.0.1",
     "lodash": "^4.17.4",
-    "maptools": "^1.0.3",
     "typescript-reexport-generator": "^1.1.2"
   },
   "devDependencies": {

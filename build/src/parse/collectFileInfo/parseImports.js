@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const maptools_1 = require("maptools");
+const map_tools_1 = require("@vlr/map-tools");
 const _1 = require(".");
 const tools_1 = require("../../tools");
 const _ = require("lodash");
@@ -18,7 +18,7 @@ function parseImports(options, content, path) {
         const matches = tools_1.execRegex(regex, content);
         const typeGroups = yield Promise.all(matches.map(match => parseMatch(options, match[1], match[2], path)));
         const types = _.flatten(typeGroups);
-        return maptools_1.map(types, type => type.name);
+        return map_tools_1.map(types, type => type.name);
     });
 }
 exports.parseImports = parseImports;

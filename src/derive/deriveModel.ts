@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 import { createActionFile } from './createActionsFile';
 import { createReducerFile } from './createReducerFile';
 import { createDispatcherFile } from './createDispatcherFile';
-import { lookup } from 'maptools';
+import { lookup } from '@vlr/map-tools';
 import { createTree, Tree } from './tree';
 import { createRootState, populateTraceToRoot } from './tree';
 import { createRootStateFile } from './createRootState';

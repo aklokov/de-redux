@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const maptools_1 = require("maptools");
+const map_tools_1 = require("@vlr/map-tools");
 function createRootNode(state, rootNodes) {
-    const nodesById = maptools_1.map(rootNodes, node => node.state.id);
+    const nodesById = map_tools_1.map(rootNodes, node => node.state.id);
     return {
         state,
         children: state.fields.map(field => createNodeChild(field, nodesById)).filter(s => s),

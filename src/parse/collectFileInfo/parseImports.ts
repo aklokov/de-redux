@@ -1,5 +1,5 @@
 import { Type } from '../model';
-import { map } from 'maptools';
+import { map } from '@vlr/map-tools';
 import { calculatePath, correctReexportPath } from '.';
 import { Options } from '../../Options';
 import { execRegex, combinePath, first } from '../../tools';

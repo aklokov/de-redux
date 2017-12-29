@@ -1,6 +1,6 @@
 import { State, Field } from '../../parse/model';
 import { TreeNode, NodeChild } from '.';
-import { map } from 'maptools';
+import { map } from '@vlr/map-tools';
 
 export function createRootNode(state: State, rootNodes: TreeNode[]): TreeNode {
   const nodesById = map(rootNodes, node => node.state.id);
